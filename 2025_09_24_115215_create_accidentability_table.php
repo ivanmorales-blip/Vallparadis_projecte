@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('accidentability', function (Blueprint $table) {
             $table->id();
+            $table-> date('data', 255);
+            $table-> string('tipus', 255);
+            $table-> text('descripcio', 255);
+            $table-> text('context', 255);
+            $table->date('durada');
+            $table->foreign('id_profesional')->references('id')->on('profesionals')->onDelete('cascade');
             $table->timestamps();
         });
     }

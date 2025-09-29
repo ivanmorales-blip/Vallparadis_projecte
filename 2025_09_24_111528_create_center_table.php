@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('center', function (Blueprint $table) {
             $table->id();
-            $table->
+            $table-> string('nom', 255);
+            $table-> string('adreça', 255);
+            $table->integer('telefon');
+            $table-> string('email', 255);
             $table->timestamps();
         });
     }

@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('documentation', function (Blueprint $table) {
             $table->id();
+            $table-> date('data', 255);
+            $table-> string('tipus', 255);
+            $table-> string('nom_fitxer', 255);
+            $table-> text('arxiu', 255);
+            $table->foreign('id_profesional')->references('id')->on('profesionals')->onDelete('cascade');
             $table->timestamps();
         });
     }

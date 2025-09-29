@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('general_services', function (Blueprint $table) {
             $table->id();
+            $table-> string('tipus', 255);
+            $table-> string('contacte', 255);
+            $table-> string('encarregat', 255);
+            $table->foreign('id_centre')->references('id')->on('center')->onDelete('cascade');
             $table->timestamps();
         });
     }

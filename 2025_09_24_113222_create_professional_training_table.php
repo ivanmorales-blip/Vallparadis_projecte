@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('professional_training', function (Blueprint $table) {
             $table->id();
+            $table->foreign('id_profesional')->references('id')->on('profesionals')->onDelete('cascade');
+            $table->foreign('id_training')->references('id')->on('training')->onDelete('cascade');
             $table->timestamps();
         });
     }

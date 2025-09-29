@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('training', function (Blueprint $table) {
             $table->id();
+            $table-> string('nom_curs', 255);
+            $table-> date('data_inici', 255);
+            $table-> date('data_fi', 255);
+            $table-> string('hores', 255);
+            $table-> text('objectiu', 255);
             $table->timestamps();
         });
     }

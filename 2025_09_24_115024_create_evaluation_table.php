@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('evaluation', function (Blueprint $table) {
             $table->id();
+            $table-> date('data', 255);
+            $table-> integer('sumatori');
+            $table-> string('observacions', 255);
+            $table-> text('arxiu', 255);
+            $table->foreign('id_profesional')->references('id')->on('profesionals')->onDelete('cascade');
+            $table->foreign('id_profesional_avaluador')->references('id')->on('profesionals')->onDelete('cascade');
             $table->timestamps();
         });
     }
