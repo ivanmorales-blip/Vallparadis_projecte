@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('box_offices', function (Blueprint $table) {
             $table->id();
+            $table->foreign('professional_id')->references('id')->on('professional')->onDelete('cascade');
+            $table->string('numero_taquilles', 255);
+            $table->string('estat', 255);
             $table->timestamps();
         });
     }
