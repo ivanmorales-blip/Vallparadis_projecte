@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('projectes_comissions', function (Blueprint $table) {
             $table->id();
             $table->string('nom', 255);
+            $table->string('tipus', 255);
+            $table->date('data_inici');
             
+            $table->text('descripcio')
+            $table->text('observacions')
             $table->timestamps();
         });
     }
