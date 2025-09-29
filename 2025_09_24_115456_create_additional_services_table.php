@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('additional_services', function (Blueprint $table) {
             $table->id();
+            $table->foreign('centre_id')->references('id')->on('centre')->onDelete('cascade');
+            $table->string('tipus', 255);
+            $table->date('data_inici');
+            $table->string('responsable', 255);
+            $table->string('contacte', 255);
+            $table->text('observacions');
             $table->timestamps();
         });
     }
