@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('maintenance', function (Blueprint $table) {
             $table->id();
+            $table->foreign('centre_id')->references('id')->on('centre')->onDelete('cascade');
+            $table->dateTime('data_obertura');
+            $table->text('descripcio');
+            $table->text('responsable');
+            $table->text('documentacio');            
             $table->timestamps();
         });
     }
