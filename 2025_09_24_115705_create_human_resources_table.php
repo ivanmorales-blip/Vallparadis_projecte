@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('human_resources', function (Blueprint $table) {
             $table->id();
+            $table->foreign('professional_id')->references('id')->on('professional')->onDelete('cascade');
+            $table->foreign('centre_id')->references('id')->on('centre')->onDelete('cascade');
+            $table->date('data_opertura');
+            $table->text('descripcio');
+            $table->string('estat', 255);
             $table->timestamps();
         });
     }
