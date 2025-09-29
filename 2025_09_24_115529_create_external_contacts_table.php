@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('external_contacts', function (Blueprint $table) {
             $table->id();
+            $table->foreign('centre_id')->references('id')->on('centre')->onDelete('cascade');
+            $table->string('tipus_servei', 255);
+            $table->string('empresa_departament', 255);
+            $table->string('responsable', 255);
+            $table->string('telefon', 255);
+            $table->string('correu', 255);
+            $table->text('observacions');
             $table->timestamps();
         });
     }
