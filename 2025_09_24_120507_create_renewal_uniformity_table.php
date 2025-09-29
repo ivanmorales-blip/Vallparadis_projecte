@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreign('professional_id')->references('id')->on('professional')->onDelete('cascade');
             $table->datetime('data_renovacio');
-            $table->string('material_entregat');
+            $table->string('material_entregat', 255);
             $table->foreign('professional_entregat_id')->references('id')->on('professional')->onDelete('cascade');
             $table->text('Arxiu');
             $table->timestamps();
