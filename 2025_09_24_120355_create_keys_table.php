@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('keys', function (Blueprint $table) {
             $table->id();
+            $table->foreign('professional_id')->references('id')->on('professional')->onDelete('cascade');
+            $table->string('codi_clau');
             $table->timestamps();
         });
     }
