@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('projectes_comissions', function (Blueprint $table) {
             $table->id();
+            $table->string('nom', 255);
+            
             $table->timestamps();
         });
     }
