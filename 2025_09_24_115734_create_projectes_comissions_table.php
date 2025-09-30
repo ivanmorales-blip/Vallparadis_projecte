@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('tipus', 255);
             $table->date('data_inici');
             $table->foreign('professional_id')->references('id')->on('professional')->onDelete('cascade');
-            $table->text('descripcio')
-            $table->text('observacions')
+            $table->text('descripcio');
+            $table->text('observacions');
             $table->timestamps();
         });
     }
