@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class profesional extends Model
+class Human_resources extends Model
 {
     //
 }

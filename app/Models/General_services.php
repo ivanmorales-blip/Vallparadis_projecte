@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class training extends Model
+class General_services extends Model
 {
     //
 }
