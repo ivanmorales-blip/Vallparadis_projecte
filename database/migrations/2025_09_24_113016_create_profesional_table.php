@@ -20,6 +20,8 @@ return new class extends Migration
             $table-> string('estat_vinculacio', 255);
             $table->unsignedBigInteger('id_center');
             $table->foreign('id_center')->references('id')->on('center')->onDelete('cascade');
+            $table->string('numero_taquilles', 255);
+            $table->string('clau', 255);
             $table->timestamps();
         });
     }
