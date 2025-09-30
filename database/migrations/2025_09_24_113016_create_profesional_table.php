@@ -16,7 +16,6 @@ return new class extends Migration
             $table-> string('nom', 255);
             $table-> string('cognom', 255);
             $table-> string('telefon', 255);
-            $table-> string('adreça', 255);
             $table-> string('email', 255);
             $table-> string('estat_vinculacio', 255);
             $table->unsignedBigInteger('id_center');

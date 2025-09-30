@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreign('profesional_id')->references('id')->on('profesional')->onDelete('cascade');
             $table->text('descripcio');
             $table->text('observacions');
+            $table->unsignedBigInteger('centre_id');
+            $table->foreign('centre_id')->references('id')->on('center')->onDelete('cascade');
             $table->timestamps();
         });
     }
