@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profesional extends Model
 {
-    public function uniform(): HasMany{
+    protected $table= "profesional";
+    protected $fillable = ['nom','cognoms','telefon','correu','adreça','estat'];
+
+    /*public function uniform(): HasMany{
         return $this->hasMany(Uniformity::class);
-    }
+    }*/
 }

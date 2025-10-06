@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('profesional', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_center');
+            $table->foreign('id_center')->references('id')->on('center')->onDelete('cascade');
+            $table-> string('nom', 255);
+            $table-> string('cognom', 255);
+            $table->integer('telefon');
+            $table-> string('correu', 255);
+            $table-> string('adreça', 255);
+            $table-> string('estat', 255);
             $table->timestamps();
         });
     }
