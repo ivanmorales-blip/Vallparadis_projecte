@@ -9,3 +9,8 @@ Route::get('/', function () {
 Route::get('/altaCenter',[CenterController::class,"create"]);
 Route::post('/insertCenter',[CenterController::class,"store"])
     ->name("insertCenter");
+
+Route::get('/altaProfesional',[CenterController::class,"create"]);
+Route::post('/insertProfesional',[CenterController::class,"store"])
+    ->name("insertProfesional");
+
