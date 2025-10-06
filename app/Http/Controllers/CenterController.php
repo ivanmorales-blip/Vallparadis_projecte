@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Center;
 class CenterController extends Controller
 {
     /**
@@ -27,7 +27,12 @@ class CenterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Center::create([
+            'nom' => $request->input('nom'),
+            'adreça' => $request->input('adresa'),
+            'telefon' => $request->input('telefon'),
+            'email' => $request->input('mail'),
+        ]);
     }
 
     /**

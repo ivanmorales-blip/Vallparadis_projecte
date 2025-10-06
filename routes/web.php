@@ -6,4 +6,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-route::get('/altaCenter',[CenterController::class,"create"]);
+Route::get('/altaCenter',[CenterController::class,"create"]);
+Route::post('/insertCenter',[CenterController::class,"store"])
+    ->name("insertCenter");

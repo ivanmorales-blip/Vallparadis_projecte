@@ -7,39 +7,40 @@
 </head>
 <body>
     aqui va la vista
-    <form>
-<!-- Nom -->
-<div>
-<label for="nom">Nom *</label>
-<input id="nom" name="nom" type="text" required>
-</div>
+<form action="{{route('insertCenter')}}" method="POST">
+    <!-- Nom -->
+    @csrf
+    <div>
+        <label for="nom">Nom *</label>
+        <input id="nom" name="nom" type="text" required>
+    </div>
 
 
-<!-- Adreça -->
-<div>
-<label for="adresa">Adreça</label>
-<textarea id="adresa" name="adresa" rows="2"></textarea>
-</div>
+    <!-- Adreça -->
+    <div>
+        <label for="adresa">Adreça</label>
+        <textarea id="adresa" name="adresa" rows="2"></textarea>
+    </div>
 
 
-<!-- Telefon -->
-<div>
-<label for="telefon">Telèfon *</label>
-<input id="telefon" name="telefon" type="tel" required>
-</div>
+    <!-- Telefon -->
+    <div>
+        <label for="telefon">Telèfon *</label>
+        <input id="telefon" name="telefon" type="tel" required>
+    </div>
 
 
-<!-- Mail -->
-<div>
-<label for="mail">Correu electrònic *</label>
-<input id="mail" name="mail" type="email" required>
-</div>
+    <!-- Mail -->
+    <div>
+        <label for="mail">Correu electrònic *</label>
+        <input id="mail" name="mail" type="email" required>
+    </div>
 
 
-<div>
-<button type="submit">Enviar</button>
-<button type="reset">Netejar</button>
-</div>
+    <div>
+        <button type="submit">Enviar</button>
+        <button type="reset">Netejar</button>
+    </div>
 </form>
 </body>
 </html>
