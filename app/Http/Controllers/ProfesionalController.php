@@ -18,7 +18,8 @@ class ProfesionalController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
+    {   
+        $centres;
         return view("profesional.formulario_alta_profesional");
     }
 
@@ -29,11 +30,11 @@ class ProfesionalController extends Controller
     {
         enter::create([
             'nom' => $request->input('nom'),
-            'adreça' => $request->input('cognoms'),
+            'cognoms' => $request->input('cognoms'),
             'telefon' => $request->input('telefon'),
             'email' => $request->input('correu'),
             'adreça' => $request->input('adreça'),
-            'telefon' => $request->input('estat'),
+            'estat' => $request->input('estat'),
         ]);
     }
 
