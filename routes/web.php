@@ -14,3 +14,6 @@ Route::get('/altaProfesional',[CenterController::class,"create"]);
 Route::post('/insertProfesional',[CenterController::class,"store"])
     ->name("insertProfesional");
 
+Route::get('/altaProjectes_comissions',[CenterController::class,"create"]);
+Route::post('/insertProjectes_comissions',[CenterController::class,"store"])
+    ->name("insertProjectes_comissions");
