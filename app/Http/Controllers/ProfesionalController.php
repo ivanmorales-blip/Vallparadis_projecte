@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Profesional;
 class ProfesionalController extends Controller
 {
     /**
@@ -19,7 +19,7 @@ class ProfesionalController extends Controller
      */
     public function create()
     {   
-        $centres;
+        //$centres;
         return view("profesional.formulario_alta_profesional");
     }
 
