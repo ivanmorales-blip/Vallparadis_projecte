@@ -10,8 +10,19 @@ class CenterController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
+   {
+        //Obtenemos todos los centros de la base de datos y se los pasamos a la vista listar
+        $centers = Center::get();
+        echo "llego";
+        
+        return view(
+            //Nombre de la vista que vamos a cargar
+            "centers.listar",
+            [
+                //Se le pasa como parámetro el listado de centros
+                "centers" => $centers
+            ]
+        );
     }
 
     /**
@@ -29,10 +40,11 @@ class CenterController extends Controller
     {
         Center::create([
             'nom' => $request->input('nom'),
-            'adreça' => $request->input('adresa'),
+            'adreça' => $request->input('adreça'),
             'telefon' => $request->input('telefon'),
             'email' => $request->input('mail'),
         ]);
+        return redirect()->route('menu');
     }
 
     /**
@@ -46,17 +58,31 @@ class CenterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Center $center)
     {
-        //
+        return view(
+            "center.formularioEditar",
+            (
+                "center" -> $center
+            )
+        );
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Center $center)
     {
-        //
+        {
+        //Obtiene todos los campos del formulario.
+        // Laravel usará solo los que estén permitidos en $fillable del modelo.
+
+
+        $center->update($request->all());
+
+        return redirect()->route('menu');
+        }
     }
 
     /**

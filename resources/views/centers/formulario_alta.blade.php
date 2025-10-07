@@ -19,7 +19,7 @@
     <!-- Adreça -->
     <div>
         <label for="adresa">Adreça</label>
-        <textarea id="adresa" name="adresa" rows="2"></textarea>
+        <textarea id="adreça" name="adreça" rows="2"></textarea>
     </div>
 
 
