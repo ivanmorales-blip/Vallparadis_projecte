@@ -11,7 +11,7 @@ class ProfesionalController extends Controller
      */
     public function index()
     {
-        //
+        return view("profesional.formulario_alta");
     }
 
     /**
