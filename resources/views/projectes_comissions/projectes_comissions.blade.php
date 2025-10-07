@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/activitats" method="POST">
+    <form action="{{ route('insertProjectes_comissions') }}"method="POST">
     @csrf
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

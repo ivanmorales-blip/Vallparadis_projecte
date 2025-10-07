@@ -19,7 +19,8 @@ class Projectes_comissionsController extends Controller
      */
     public function create()
     {
-        //
+        //$centres;
+        return view("Projectes_comissions.formulario_alta_Projectes_comissions");
     }
 
     /**
