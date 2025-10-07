@@ -8,14 +8,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/altaCenter',[CenterController::class,"create"]);
-Route::post('/insertCenter',[CenterController::class,"store"])
-    ->name("insertCenter");
-
-Route::get('/altaProfesional',[ProfesionalController::class,"create"]);
-Route::post('/insertProfesional',[ProfesionalController::class,"store"])
-    ->name("insertProfesional");
-
-Route::get('/altaProjectes_comissions',[Projectes_comissionsController::class,"create"]);
-Route::post('/insertProjectes_comissions',[Projectes_comissionsController::class,"store"])
-    ->name("insertProjectes_comissions");
+Route::resource('centers', CenterController::class);
+Route::resource('profesional', ProfesionalController::class);
+Route::resource('projectes_comissions', Projectes_comissionsController::class);

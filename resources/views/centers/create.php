@@ -7,7 +7,7 @@
 </head>
 <body>
     aqui va la vista
-<form action="{{route('insertCenter')}}" method="POST">
+<form action="{{route('centers')}}" method="POST">
     <!-- Nom -->
     @csrf
     <div>
