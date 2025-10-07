@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CenterController;
+use App\Http\Controllers\ProfesionalController;
+use App\Http\Controllers\Projectes_comissionsController;
 Route::get('/', function () {
     return view('welcome');
 });

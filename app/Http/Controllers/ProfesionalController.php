@@ -20,7 +20,7 @@ class ProfesionalController extends Controller
     public function create()
     {   
         $centres;
-        return view("profesional.formulario_alta_profesional");
+        return view("profesional.formulario_alta");
     }
 
     /**
