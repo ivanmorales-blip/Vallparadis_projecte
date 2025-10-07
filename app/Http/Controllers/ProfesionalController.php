@@ -28,13 +28,14 @@ class ProfesionalController extends Controller
      */
     public function store(Request $request)
     {
-        enter::create([
+        Profesional::create([
             'nom' => $request->input('nom'),
-            'cognoms' => $request->input('cognoms'),
+            'cognom' => $request->input('cognom'),
             'telefon' => $request->input('telefon'),
-            'email' => $request->input('correu'),
+            'email' => $request->input('email'),
             'adreça' => $request->input('adreça'),
             'estat' => $request->input('estat'),
+            'id_center' => $request->input('id_center')
         ]);
     }
 

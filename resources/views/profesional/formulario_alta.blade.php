@@ -31,8 +31,8 @@
 
         <!-- Correu -->
         <div>
-            <label for="correu">Correu electrònic *</label>
-            <input id="correu" name="correu" type="email" required>
+            <label for="email">Correu electrònic *</label>
+            <input id="email" name="email" type="text" required>
         </div>
 
         <!-- Adreça -->
@@ -49,6 +49,12 @@
                 <option value="actiu">Actiu</option>
                 <option value="inactiu">Inactiu</option>
             </select>
+        </div>
+
+        <!-- Center -->
+        <div>
+            <label for="id_center">Center</label>
+            <input id="id_center" name="id_center" type="text">
         </div>
 
         <!-- Botons -->

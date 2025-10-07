@@ -18,9 +18,9 @@ return new class extends Migration
             $table-> string('nom', 255);
             $table-> string('cognom', 255);
             $table->integer('telefon');
-            $table-> string('correu', 255);
-            $table-> string('adreça', 255);
             $table-> string('email', 255);
+            $table-> string('adreça', 255);
+            $table-> string('estat', 255);
             $table->timestamps();
         });
     }
