@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Profesional;
+use App\Models\Center;
+
 class ProfesionalController extends Controller
 {
     /**
@@ -19,8 +21,8 @@ class ProfesionalController extends Controller
      */
     public function create()
     {   
-        $centres;
-        return view("profesional.formulario_alta");
+        $centres = Center::all();
+        return view("profesional.formulario_alta", compact('centres'));
     }
 
     /**

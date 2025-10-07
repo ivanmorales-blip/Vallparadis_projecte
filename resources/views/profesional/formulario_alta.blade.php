@@ -52,9 +52,14 @@
         </div>
 
         <!-- Center -->
-        <div>
-            <label for="id_center">Center</label>
-            <input id="id_center" name="id_center" type="text">
+       <div>
+            <label for="id_center">Centre *</label>
+            <select name="id_center" id="id_center" required>
+                <option value="">-- Selecciona un centre --</option>
+                @foreach ($centres as $centre)
+                    <option value="{{ $centre->id }}">{{ $centre->nom }}</option>
+                @endforeach
+            </select>
         </div>
 
         <!-- Botons -->
