@@ -19,7 +19,7 @@ class CenterController extends Controller
      */
     public function create()
     {
-        return view("centers");
+        return view("centers.formulario_alta");
     }
 
     /**

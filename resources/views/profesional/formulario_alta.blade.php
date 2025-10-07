@@ -8,7 +8,7 @@
 <body>
     <h1>Formulari del Center</h1>
 
-    <form action="{{route('profesional')}}" method="POST">
+    <form action="{{route('profesional.store')}}" method="POST">
         @csrf
 
         <!-- Nom -->
