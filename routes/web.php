@@ -12,10 +12,10 @@ Route::get('/altaCenter',[CenterController::class,"create"]);
 Route::post('/insertCenter',[CenterController::class,"store"])
     ->name("insertCenter");
 
-Route::get('/altaProfesional',[CenterController::class,"create"]);
-Route::post('/insertProfesional',[CenterController::class,"store"])
+Route::get('/altaProfesional',[ProfesionalController::class,"create"]);
+Route::post('/insertProfesional',[ProfesionalController::class,"store"])
     ->name("insertProfesional");
 
-Route::get('/altaProjectes_comissions',[CenterController::class,"create"]);
-Route::post('/insertProjectes_comissions',[CenterController::class,"store"])
+Route::get('/altaProjectes_comissions',[Projectes_comissionsController::class,"create"]);
+Route::post('/insertProjectes_comissions',[Projectes_comissionsController::class,"store"])
     ->name("insertProjectes_comissions");
