@@ -48,7 +48,7 @@ class ProfesionalController extends Controller
             'telefon' => $request->input('telefon'),
             'email' => $request->input('email'),
             'adreça' => $request->input('adreça'),
-            'estat' => $request->input('estat'),
+            'actiu' => $request->input('actiu'),
             'id_center' => $request->input('id_center')
         ]);
     }

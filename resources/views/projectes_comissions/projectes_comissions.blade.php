@@ -25,10 +25,20 @@
       <input type="date" id="data_inici" name="data_inici" required>
     </div>
 
-    <div>
+    <!--<div>
       <label for="profesional_id">ID Professional:</label>
       <input type="number" id="profesional_id" name="profesional_id" required>
     </div>
+ Center -->
+       <div>
+            <label for="profesional_id">Profesional *</label>
+            <select name="profesional_id" id="profesional_id" required>
+                <option value="">-- Selecciona un profesional --</option>
+                @foreach ($professionals as $profesional)
+                    <option value="{{ $profesional->id }}">{{ $profesional->nom }}</option>
+                @endforeach
+            </select>
+        </div>
 
     <div>
       <label for="descripcio">Descripció:</label>
@@ -40,12 +50,24 @@
       <textarea id="observacions" name="observacions"></textarea>
     </div>
 
-    <div>
+    <!-- <div>
       <label for="centre_id">ID Centre:</label>
       <input type="number" id="centre_id" name="centre_id" required>
     </div>
+    -->
+    
+    <div>
+            <label for="center_id">Centre *</label>
+            <select name="center_id" id="center_id" required>
+                <option value="">-- Selecciona un centre --</option>
+                @foreach ($centres as $center)
+                    <option value="{{ $center->id }}">{{ $center->nom }}</option>
+                @endforeach
+            </select>
+        </div>
 
     <button type="submit">Guardar</button>
+    <h3><a href="{{route('menu')}}"> Volver a menú</a></h3>
   </form>
 </body>
 </html>

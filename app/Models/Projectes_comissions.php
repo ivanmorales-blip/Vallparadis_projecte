@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Projectes_comissions extends Model
 {
-    protected $fillable = ['nom','tipus','profesional_id','descripcio','observacio','centre_id'];
+
+    protected $table = 'projectes_comissions';
+    protected $fillable = ['nom','tipus','data_inici','profesional_id','descripcio','observacions','centre_id'];
 }

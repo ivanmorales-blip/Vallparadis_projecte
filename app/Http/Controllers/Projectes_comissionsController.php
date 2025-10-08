@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Profesional;
+use App\Models\Center;
 use App\Models\Projectes_comissions;
+
 class Projectes_comissionsController extends Controller
 {
     /**
@@ -11,7 +14,11 @@ class Projectes_comissionsController extends Controller
      */
     public function index()
     {
-        //
+        $projectes = Projectes_comissions::all();
+
+        return view('projectes_comissions.lista', compact ('projectes'));
+
+
     }
 
     /**
@@ -19,25 +26,38 @@ class Projectes_comissionsController extends Controller
      */
     public function create()
     {
-        //$centres;
-        return view("projectes_comissions.projectes_comissions");
+        $centres = Center::all(); 
+        $professionals = Profesional::all();
+        
+    return view('projectes_comissions.projectes_comissions', compact('centres', 'professionals'));
+
+
+    
     }
 
     /**
      * Store a newly created resource in storage.
      */
+   
     public function store(Request $request)
-    {
-        Projectes_comissions::create([
-            'nom' => $request->input('nom'),
-            'tipus' => $request->input('tipus'),
-            'data_inici' => $request->input('data_inici'),
-            'profesional_id' => $request->input('profesional_id'),
-            'descripcio' => $request->input('descripcio'),
-            'observacions' => $request->input('observacions'),
-            'centre_id' => $request->input('centre_id'),
-        ]);
-    }
+{
+    $validated = $request->validate([
+        'nom' => 'required|string|max:255',
+        'tipus' => 'required|string|max:255',
+        'data_inici' => 'required|date',
+        'profesional_id' => 'required|integer',
+        'descripcio' => 'required|string',
+        'observacions' => 'nullable|string',
+        'centre_id' => 'required|integer',
+    ]);
+
+    Projectes_comissions::create($validated);
+
+    // Redirige a la lista de proyectos/comisiones
+    return redirect()->route('projectes_comissions.index')
+                     ->with('success', 'Projecte creat correctament.');
+}
+    
 
     /**
      * Display the specified resource.
@@ -50,24 +70,31 @@ class Projectes_comissionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Projectes_comissions $projecte)
     {
-        //
+        $profesional = Profesional::all();
+        $centre = Center::all();
+        return view('projectes_comissions.formulario_editar', compact('projecte', 'profesionals', 'centres'));
     }
+    
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Projectes_comissions $projecte)
     {
-        //
-    }
+        $projecte->update($request->all());
+
+        return redirect()->route('projectes_comissions.lista');
+        }
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        
     }
 }
