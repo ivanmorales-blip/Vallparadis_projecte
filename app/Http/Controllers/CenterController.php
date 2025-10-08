@@ -13,7 +13,6 @@ class CenterController extends Controller
    {
         //Obtenemos todos los centros de la base de datos y se los pasamos a la vista listar
         $centers = Center::get();
-        echo "llego";
         
         return view(
             //Nombre de la vista que vamos a cargar
@@ -94,6 +93,15 @@ class CenterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $center = Center::findOrFail($id);
+        $center->activo = false;
+        $center->save();
+        return redirect()->route('centers.index');
+    }
+    public function active (Center $center)
+    {
+        $center->activo = true;
+        $center->save();
+        return redirect()->route('centers.index');
     }
 }

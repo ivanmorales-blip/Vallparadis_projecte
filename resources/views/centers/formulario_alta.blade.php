@@ -6,7 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    aqui va la vista
 <form action="{{route('centers.store')}}" method="POST">
     <!-- Nom -->
     @csrf
