@@ -91,9 +91,8 @@ class CenterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Center $center)
     {
-        $center = Center::findOrFail($id);
         $center->activo = false;
         $center->save();
         return redirect()->route('centers.index');
