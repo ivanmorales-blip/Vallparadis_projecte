@@ -61,10 +61,14 @@ class CenterController extends Controller
     public function edit(Center $center)
     {
         return view(
-            "center.formularioEditar",
-            (
-                "center" -> $center
-            )
+            "centers.formulario_editar",
+            [
+                'center' => $center,
+                'nom' => $center->nom,
+                'adreça' => $center->adreça,
+                'telefon' => $center->telefon,
+                'email' => $center->email,
+            ]
         );
 
     }
