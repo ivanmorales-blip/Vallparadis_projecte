@@ -46,8 +46,8 @@
             <label for="estat">Estat *</label>
             <select id="estat" name="estat" required>
                 <option value="">-- Selecciona un estat --</option>
-                <option value="actiu">Actiu</option>
-                <option value="inactiu">Inactiu</option>
+                <option value="true">Actiu</option>
+                <option value="false">Inactiu</option>
             </select>
         </div>
 

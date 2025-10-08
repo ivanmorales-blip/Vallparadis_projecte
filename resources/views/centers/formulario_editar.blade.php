@@ -13,6 +13,8 @@
         @method('PUT')
         Nom: <input type="text" name="nom" value='{{$center->nom}}'><br>
         Direcció: <input type="text" name="adreça" value='{{$center->adreça}}'><br>
+        Telefono: <input type="text" name="Telefon" value='{{$center->telefon}}'><br>
+        Mail: <input type="text" name="mail" value='{{$center->mail}}'><br>
         <input type="submit" value="Aceptar">
     </form>
 </body>

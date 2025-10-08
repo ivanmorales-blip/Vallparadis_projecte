@@ -72,16 +72,32 @@ class ProfesionalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Profesional $profesional)
     {
-        //
+        {
+        //Obtiene todos los campos del formulario.
+        // Laravel usará solo los que estén permitidos en $fillable del modelo.
+
+
+        $profesional->update($request->all());
+
+        return redirect()->route('menu');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Profesional $profesional)
     {
-        //
+        $profesional->estat = false;
+        $profesional->save();
+        return redirect()->route('profesional.index');
+    }
+    public function active (Profesional $profesional)
+    {
+        $profesional->estat = true;
+        $profesional->save();
+        return redirect()->route('profesional.index');
     }
 }

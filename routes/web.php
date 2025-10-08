@@ -15,7 +15,13 @@ Route::resource('centers', CenterController::class);
 Route::delete('/centers/{center}', [CenterController::class, 'destroy'])->name('centers.destroy');
 // Activar
 Route::patch('/centers/{center}/active', [CenterController::class, 'active'])->name('centers.active');
+
 //profesional
 Route::resource('profesional', ProfesionalController::class);
+// Desactivar
+Route::delete('/profesional/{profesional}', [ProfesionalController::class, 'destroy'])->name('profesional.destroy');
+// Activar
+Route::patch('/profesional/{profesional}/active', [ProfesionalController::class, 'active'])->name('profesional.active');
+
 //projectes_comissions
 Route::resource('projectes_comissions', Projectes_comissionsController::class);

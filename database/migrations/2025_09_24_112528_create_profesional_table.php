@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('telefon');
             $table-> string('email', 255);
             $table-> string('adreça', 255);
-            $table-> string('estat', 255);
+            $table->boolean('activo')->default(true);
             $table->timestamps();
         });
     }
