@@ -56,7 +56,7 @@
             <label for="id_center">Centre *</label>
             <select name="id_center" id="id_center" required>
                 <option value="">-- Selecciona un centre --</option>
-                @foreach ($centres as $centre)
+                @foreach ($centre as $centre)
                     <option value="{{ $centre->id }}">{{ $centre->nom }}</option>
                 @endforeach
             </select>

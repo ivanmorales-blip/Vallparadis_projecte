@@ -13,7 +13,13 @@ class ProfesionalController extends Controller
      */
     public function index()
     {
-        return view("profesional.formulario_alta");
+         $profesional = Profesional::get();
+        return view("profesional.listar", 
+            
+            [
+                "profesional" => $profesional
+            ]
+        );
     }
 
     /**
@@ -21,8 +27,14 @@ class ProfesionalController extends Controller
      */
     public function create()
     {   
-        $centres = Center::all();
-        return view("profesional.formulario_alta", compact('centres'));
+        $centre = Center::get();
+        return view(
+            "profesional.formulario_alta", 
+            
+            [
+                "centre" => $centre
+            ]
+        );
     }
 
     /**
