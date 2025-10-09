@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    @vite('resources/css/app.css')
 </head>
+    <h1 class="text-3xl font-bold underline">Hellow World</h1>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <h1><a href="{{route('centers.index')}}">Listar centros</a></h1>
     <h1><a href="{{route('centers.create')}}"> Alta centro</a></h1>
