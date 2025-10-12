@@ -64,8 +64,9 @@ class ProfesionalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(profesional $profesional)
     {
+        $centre = Center::get();
                 return view(
             "profesional.formulario_editar",
             [
@@ -76,6 +77,7 @@ class ProfesionalController extends Controller
                 'email' => $profesional->email,
                 'adreça' => $profesional->adreça,
                 'id_center' => $profesional->id_center
+                'centre' => $centre
             ]
         );
     }
