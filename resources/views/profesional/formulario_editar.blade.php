@@ -12,7 +12,7 @@
         @csrf
         @method('PUT')
         Nom: <input type="text" name="nom" value='{{$profesional->nom}}'><br>
-        Direcció: <input type="text" name="cognom" value='{{$profesional->cognom}}'><br>
+        Cognom: <input type="text" name="cognom" value='{{$profesional->cognom}}'><br>
         Telefon: <input type="text" name="telefon" value='{{$profesional->telefon}}'><br>
         Email: <input type="text" name="email" value='{{$profesional->email}}'><br>
         Adreça: <input type="text" name="cognom" value='{{$profesional->cognom}}'><br>
