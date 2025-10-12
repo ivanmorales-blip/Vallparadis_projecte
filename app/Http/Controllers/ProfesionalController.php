@@ -66,7 +66,18 @@ class ProfesionalController extends Controller
      */
     public function edit(string $id)
     {
-        //
+                return view(
+            "profesional.formulario_editar",
+            [
+                'profesional' => $profesional,
+                'nom' => $profesional->nom,
+                'cognom' => $profesional->cognom,
+                'telefon' => $profesional->telefon,
+                'email' => $profesional->email,
+                'adreça' => $profesional->adreça,
+                'centre' => $profesional->centre
+            ]
+        );
     }
 
     /**
