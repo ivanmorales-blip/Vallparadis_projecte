@@ -16,7 +16,13 @@
         Telefon: <input type="text" name="telefon" value='{{$profesional->telefon}}'><br>
         Email: <input type="text" name="email" value='{{$profesional->email}}'><br>
         Adreça: <input type="text" name="cognom" value='{{$profesional->cognom}}'><br>
-        Centre: <input type="text" name="telefon" value='{{$profesional->telefon}}'><br>
+        <select name="id_center" id="id_center" required>
+                <option value="">Centre</option>
+                @foreach ($centre as $centre)
+                    <option value="{{ $centre->id }}">{{ $centre->nom }}</option>
+                @endforeach
+            </select>
+        <br>
         <input type="submit" value="Aceptar">
     </form>
 </body>
