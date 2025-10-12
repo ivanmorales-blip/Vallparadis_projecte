@@ -75,7 +75,7 @@ class ProfesionalController extends Controller
                 'telefon' => $profesional->telefon,
                 'email' => $profesional->email,
                 'adreça' => $profesional->adreça,
-                'centre' => $profesional->centre
+                'id_center' => $profesional->id_center
             ]
         );
     }
