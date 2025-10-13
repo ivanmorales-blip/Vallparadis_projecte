@@ -62,6 +62,44 @@
             </select>
         </div>
 
+        <div>
+            <label for="taquilla">Taquilla *</label>
+            <input id="taquilla" name="taquilla" type="text" required>
+        </div>
+
+        <!-- Shirt Size -->
+    <div>
+        <label for="talla_samarreta">Talla Samarreta:</label>
+        <select name="talla_samarreta" id="talla_samarreta" required>
+            <option value="">-- Selecciona --</option>
+            @foreach (['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'] as $size)
+                <option value="{{ $size }}">{{ $size }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <!-- Pants Size -->
+    <div>
+        <label for="talla_pantalons">Talla Pantalons:</label>
+        <select name="talla_pantalons" id="talla_pantalons" required>
+            <option value="">-- Selecciona --</option>
+            @for ($i = 36; $i <= 56; $i += 2)
+                <option value="{{ $i }}">{{ $i }}</option>
+            @endfor
+        </select>
+    </div>
+
+    <!-- Shoe Size -->
+    <div>
+        <label for="talla_sabates">Talla Sabates:</label>
+        <select name="talla_sabates" id="talla_sabates" required>
+            <option value="">-- Selecciona --</option>
+            @for ($i = 35; $i <= 47; $i++)
+                <option value="{{ $i }}">{{ $i }}</option>
+            @endfor
+        </select>
+    </div>
+
         <!-- Botons -->
         <div>
             <button type="submit">Enviar</button>
