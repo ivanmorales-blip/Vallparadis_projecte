@@ -14,7 +14,5 @@
     <h1><a href="{{route('profesional.create')}}"> Alta Profesionals</a></h1>
     <h1><a href="{{route('projectes_comissions.index')}}">Listar Projectes i comissions</a></h1>
     <h1><a href="{{route('projectes_comissions.create')}}"> Alta  Projectes i comissions</a></h1>
-
-  </div>
 </body>
 </html>
