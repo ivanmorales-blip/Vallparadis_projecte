@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Route;
 
 // Ruta principal
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 // Dashboard (solo usuarios autenticados y verificados)
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+*/
 
 // Rutas que requieren autenticación
 Route::middleware('auth')->group(function () {
@@ -29,6 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/menu', function () {
         return view('menu');
     })->name('menu');
+
+    // login
+    //Route::get('/login', function () {
+      //  return view('login');
+    //})->name('login');
 
     // Centers
     Route::resource('centers', CenterController::class);
