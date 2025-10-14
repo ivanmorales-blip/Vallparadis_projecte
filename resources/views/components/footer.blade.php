@@ -7,9 +7,14 @@
   </div>
 
   <!-- Logout button -->
-  <button 
-    class="bg-[#F97800] text-white px-4 py-2 rounded hover:bg-[#cc6e00] transition"
-  >
-    Tancar sessió
-  </button>
+  <form method="POST" action="{{ route('logout') }}" class="inline">
+    @csrf
+    <button
+        type="submit"
+        class="bg-[#F97800] text-white px-4 py-2 rounded hover:bg-[#cc6e00] transition"
+        onclick="return confirm('Are you sure you want to log out?')"
+    >
+        Tancar sessió
+    </button>
+</form>
 </footer>
