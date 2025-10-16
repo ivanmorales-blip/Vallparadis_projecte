@@ -43,7 +43,7 @@
                         <button type="submit">Activar</button>
                     </form>
                 @endif
-                
+                 
             </tr>
             @endforeach
         </table>

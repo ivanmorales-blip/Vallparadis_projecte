@@ -30,6 +30,7 @@
                             @method('DELETE')
                             <button type="submit">Desactivar</button>
                         </form>
+
                     @else
                         <form action="{{ route('projectes_comissions.active', $projecte) }}" method="POST" style="display:inline">
                             @csrf

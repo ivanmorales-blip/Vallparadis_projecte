@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('observacions');
             $table->unsignedBigInteger('centre_id');
             $table->foreign('centre_id')->references('id')->on('center')->onDelete('cascade');
+            $table->boolean('estat')->default(true);
             $table->timestamps();
         });
     }

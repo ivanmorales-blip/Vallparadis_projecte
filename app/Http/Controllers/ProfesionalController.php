@@ -46,7 +46,7 @@ class ProfesionalController extends Controller
             'nom' => $request->input('nom'),
             'cognom' => $request->input('cognom'),
             'telefon' => $request->input('telefon'),
-            'email' => $request->input('email'),
+            'email' => $request->input('email'), 
             'adreça' => $request->input('adreça'),
             'estat' => $request->input('estat'),
             'id_center' => $request->input('id_center'),
