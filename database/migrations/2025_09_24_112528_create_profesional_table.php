@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('id_center')->references('id')->on('center')->onDelete('cascade');
             $table->string('nom', 255);
             $table->string('cognom', 255);
-            $table->integer('telefon');
+            $table->string('telefon', 20);
             $table->string('email', 255);
             $table->string('taquilla', 255);
             $table->string('adreça', 255);
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('talla_pantalons', 255);
             $table->string('talla_sabates', 255);
             $table->datetime('data_renovacio');
-            $table->boolean('activo')->default(true);
+            $table->boolean('estat')->default(true);
             $table->timestamps();
         });
     }

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulari Center</title>
+    <title>Formulari Profesional</title>
 </head>
 <body>
-    <h1>Formulari del Center</h1>
+    <h1>Formulari del Profesional</h1>
 
     <form action="{{route('profesional.store')}}" method="POST">
         @csrf
@@ -46,8 +46,8 @@
             <label for="estat">Estat *</label>
             <select id="estat" name="estat" required>
                 <option value="">-- Selecciona un estat --</option>
-                <option value="true">Actiu</option>
-                <option value="false">Inactiu</option>
+                <option value="1">Actiu</option>
+                <option value="0">Inactiu</option>
             </select>
         </div>
 
@@ -62,6 +62,7 @@
             </select>
         </div>
 
+        <!-- taquilla -->
         <div>
             <label for="taquilla">Taquilla *</label>
             <input id="taquilla" name="taquilla" type="text" required>

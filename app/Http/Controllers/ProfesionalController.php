@@ -42,15 +42,22 @@ class ProfesionalController extends Controller
      */
     public function store(Request $request)
     {
-        Profesional::create([
+        Profesional::create([ 
             'nom' => $request->input('nom'),
             'cognom' => $request->input('cognom'),
             'telefon' => $request->input('telefon'),
             'email' => $request->input('email'),
             'adreça' => $request->input('adreça'),
-            'actiu' => $request->input('actiu'),
-            'id_center' => $request->input('id_center')
+            'estat' => $request->input('estat'),
+            'id_center' => $request->input('id_center'),
+            'taquilla' => $request->input('taquilla'),
+            'talla_samarreta' => $request->input('talla_samarreta'),
+            'talla_pantalons' => $request->input('talla_pantalons'),
+            'talla_sabates' => $request->input('talla_sabates'),
+            'data_renovacio' => now(),
         ]);
+        return redirect()->route('menu');
+
     }
 
     /**
@@ -75,9 +82,14 @@ class ProfesionalController extends Controller
                 'cognom' => $profesional->cognom,
                 'telefon' => $profesional->telefon,
                 'email' => $profesional->email,
+                'taquilla' => $profesional->taquilla,
                 'adreça' => $profesional->adreça,
                 'id_center' => $profesional->id_center,
                 'centre' => $centre,
+                'talla_samarreta'=> $profesional->talla_samarreta,
+                'talla_pantalons'=> $profesional->talla_pantalons,
+                'talla_sabates'=> $profesional->talla_sabates,
+
             ]
         );
     }

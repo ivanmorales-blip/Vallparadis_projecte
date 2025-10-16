@@ -15,16 +15,26 @@
        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="min-h-screen flex flex-col font-sans antialiased">
+        {{--Barra navigacio--}}
+        
 
-        {{-- Header --}}
+
+        {{-- Header --}}        
         @include('components.header')
 
-        <main class="flex-grow">
+
+
+        <div class="flex flex-1 min-h-0"> 
+            @include('components.sidebar')
+        <main class="flex-1 overflow-auto p-6 bg-gray-50 min-h-0">
             @yield('contingut')
         </main>
+        </div>
 
         {{-- Peu de pagina --}}
+         <footer class="h-16 bg-gray-100 shadow-inner flex items-center justify-between w-full">
         @include('components.footer')
+    </footer>
 
     </body>
 </html>
