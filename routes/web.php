@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
 
     // Projectes Comissions
     Route::resource('projectes_comissions', Projectes_comissionsController::class);
+    Route::patch('projectes_comissions/{projecte}/toggle', [Projectes_comissionsController::class, 'toggle'])
+     ->name('projectes_comissions.toggle');
+
 
 });
 
