@@ -71,11 +71,12 @@ class Projectes_comissionsController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Projectes_comissions $projecte)
-    {
-        $profesional = Profesional::all();
-        $centre = Center::all();
-        return view('projectes_comissions.formulario_editar', compact('projecte', 'profesionals', 'centres'));
-    }
+{
+    $professionals = Profesional::all();
+    $centres = Center::all();
+    return view('projectes_comissions.formulario_editar', compact('projecte', 'professionals', 'centres'));
+}
+
     
     
 
@@ -83,18 +84,45 @@ class Projectes_comissionsController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Projectes_comissions $projecte)
-    {
-        $projecte->update($request->all());
+{
+    $validated = $request->validate([
+        'nom' => 'required|string|max:255',
+        'tipus' => 'required|string|max:255',
+        'data_inici' => 'required|date',
+        'profesional_id' => 'required|integer',
+        'descripcio' => 'required|string',
+        'observacions' => 'nullable|string',
+        'centre_id' => 'required|integer',
+    ]);
 
-        return redirect()->route('projectes_comissions.lista');
-        }
+    $projecte->update($validated);
+
+    return redirect()->route('projectes_comissions.index')
+                     ->with('success', 'Projecte actualitzat correctament.');
+}
+
     
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        
-    }
+    // Desactivar un proyecto (marca como inactivo)
+public function destroy(Projectes_comissions $projecte)
+{
+    $projecte->estat = false;
+    $projecte->save();
+
+    return redirect()->route('projectes_comissions.index')
+                     ->with('success', 'Projecte desactivat correctament.');
+}
+
+// Activar un proyecto
+public function active(Projectes_comissions $projecte)
+{
+    $projecte->estat = true;
+    $projecte->save();
+
+    return redirect()->route('projectes_comissions.index')
+                     ->with('success', 'Projecte activat correctament.');
+}
 }
