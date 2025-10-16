@@ -13,10 +13,10 @@ Route::get('/', function () {
 });
 
 // Dashboard (solo usuarios autenticados y verificados)
-/*Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-*/
+Route::get('/menu', function () {
+    return view('menu');
+})->middleware(['auth', 'verified'])->name('menu');
+
 
 // Rutas que requieren autenticación
 Route::middleware('auth')->group(function () {
@@ -31,10 +31,6 @@ Route::middleware('auth')->group(function () {
         return view('menu');
     })->name('menu');
 
-    // login
-    //Route::get('/login', function () {
-      //  return view('login');
-    //})->name('login');
 
     // Centers
     Route::resource('centers', CenterController::class);
