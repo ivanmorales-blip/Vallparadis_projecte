@@ -14,12 +14,12 @@
         <!-- Scripts -->
        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="min-h-screen flex flex-col font-sans antialiased">
 
         {{-- Header --}}
         @include('components.header')
 
-        <main class="p-6">
+        <main class="flex-grow">
             @yield('contingut')
         </main>
 
