@@ -23,16 +23,25 @@
                 <td>{{ $projecte->estat ? 'Actiu' : 'Inactiu' }}</td>
                 <td>
                     <a href="{{ route('projectes_comissions.edit', $projecte) }}">Editar</a>
-                    <form action="{{ route('projectes_comissions.toggle', $projecte) }}" method="POST" style="display:inline">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit">{{ $projecte->estat ? 'Desactivar' : 'Activar' }}</button>
-                    </form>
+
+                    @if($projecte->estat)
+                        <form action="{{ route('projectes_comissions.destroy', $projecte) }}" method="POST" style="display:inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Desactivar</button>
+                        </form>
+                    @else
+                        <form action="{{ route('projectes_comissions.active', $projecte) }}" method="POST" style="display:inline">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit">Activar</button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         @endforeach
     </tbody>
 </table>
-            <h3><a href="{{route('menu')}}"> Volver a menú</a></h3>
+<h3><a href="{{ route('menu') }}">Volver a menú</a></h3>
 </body>
 </html>

@@ -106,13 +106,23 @@ class Projectes_comissionsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function toggle(Projectes_comissions $projecte)
+    // Desactivar un proyecto (marca como inactivo)
+public function destroy(Projectes_comissions $projecte)
 {
-    $projecte->estat = !$projecte->estat;
+    $projecte->estat = false;
     $projecte->save();
 
     return redirect()->route('projectes_comissions.index')
-                     ->with('success', 'Estat canviat correctament.');
+                     ->with('success', 'Projecte desactivat correctament.');
 }
 
+// Activar un proyecto
+public function active(Projectes_comissions $projecte)
+{
+    $projecte->estat = true;
+    $projecte->save();
+
+    return redirect()->route('projectes_comissions.index')
+                     ->with('success', 'Projecte activat correctament.');
+}
 }
