@@ -126,21 +126,27 @@ class Projectes_comissionsController extends Controller
 public function destroy($id)
 {
     $projecte = Projectes_comissions::findOrFail($id);
-
     $projecte->estat = false;
     $projecte->save();
 
-    return redirect()->route('projectes_comissions.index')
-                     ->with('success', 'Projecte desactivat correctament.');
+    if (request()->expectsJson()) {
+        return response()->json(['success' => true]);
+    }
+
+    return redirect()->route('projectes_comissions.index');
 }
 
-
-// Activar un proyecto
-public function active(Projectes_comissions $projecte)
+public function active($id)
 {
+    $projecte = Projectes_comissions::findOrFail($id);
     $projecte->estat = true;
     $projecte->save();
-    return redirect()->route('projectes_comissions.index')
-                     ->with('success', 'Projecte activat correctament.');
+
+    if (request()->expectsJson()) {
+        return response()->json(['success' => true]);
+    }
+
+    return redirect()->route('projectes_comissions.index');
 }
+
 }
