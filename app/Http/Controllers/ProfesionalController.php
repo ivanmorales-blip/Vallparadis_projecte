@@ -114,15 +114,33 @@ class ProfesionalController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Profesional $profesional)
-    {
-        $profesional->estat = false;
-        $profesional->save();
-        return redirect()->route('profesional.index');
+{
+    $profesional->estat = false;
+    $profesional->save();
+
+    if (request()->ajax()) {
+        return response()->json([
+            'success' => true,
+            'estat' => $profesional->estat
+        ]);
     }
-    public function active (Profesional $profesional)
-    {
-        $profesional->estat = true;
-        $profesional->save();
-        return redirect()->route('profesional.index');
+
+    return redirect()->route('profesional.index');
+}
+
+public function active(Profesional $profesional)
+{
+    $profesional->estat = true;
+    $profesional->save();
+
+    if (request()->ajax()) {
+        return response()->json([
+            'success' => true,
+            'estat' => $profesional->estat
+        ]);
     }
+
+    return redirect()->route('profesional.index');
+}
+
 }
