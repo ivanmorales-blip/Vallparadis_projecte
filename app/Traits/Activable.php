@@ -12,35 +12,40 @@ trait Activable
      * @param  string|null  $redirectRoute
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function toggleActive($model, bool $state, string $redirectRoute = null)
+public function toggleActive($model, bool $state, string $redirectRoute = null)
 {
-    // Set the properties
-    if (property_exists($model, 'activo')) {
-        $model->activo = $state;
+    $attributesToUpdate = [];
+
+    // Check if attribute keys exist in the model's attributes (database columns)
+    if (array_key_exists('activo', $model->getAttributes())) {
+        $attributesToUpdate['activo'] = (int) $state;
     }
 
-    if (property_exists($model, 'estat')) {
-        $model->estat = $state;
+    if (array_key_exists('estat', $model->getAttributes())) {
+        $attributesToUpdate['estat'] = (int) $state;
     }
+
+    if (empty($attributesToUpdate)) {
+        \Log::warning('Model does not have "activo" or "estat" attributes.', ['model' => get_class($model)]);
+    } else {
+        $model->forceFill($attributesToUpdate);
+    }
+
+    \Log::info('Model dirty attributes before save:', $model->getDirty());
 
     try {
         $saved = $model->save();
 
-        // Log the result for debugging
         \Log::info('Saving model result:', ['saved' => $saved, 'model' => $model->toArray()]);
 
         if (!$saved) {
             throw new \Exception('Failed to save the model.');
         }
     } catch (\Exception $e) {
-        // Log the error message
         \Log::error('Error saving model in toggleActive: ' . $e->getMessage());
-
-        // Optionally rethrow or handle the exception depending on your app
         throw $e;
     }
 
-    // Handle AJAX request
     if (request()->ajax()) {
         return response()->json([
             'success' => true,
@@ -50,7 +55,6 @@ trait Activable
         ]);
     }
 
-    // Redirect to a given route or infer automatically
     if ($redirectRoute) {
         return redirect()->route($redirectRoute);
     }
@@ -58,5 +62,6 @@ trait Activable
     $modelName = strtolower(class_basename($model));
     return redirect()->route($modelName . 's.index');
 }
+
 
 }
