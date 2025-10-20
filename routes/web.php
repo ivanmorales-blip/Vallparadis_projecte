@@ -46,13 +46,12 @@ Route::middleware('auth')->group(function () {
     // Activar
     Route::patch('/profesional/{profesional}/active', [ProfesionalController::class, 'active'])->name('profesional.active');
 
-    // Projectes Comissions
-    Route::resource('projectes_comissions', Projectes_comissionsController::class);
+// Projectes Comissions
+Route::resource('projectes_comissions', Projectes_comissionsController::class);
 
-    Route::resource('projectes_comissions', Projectes_comissionsController::class);
-    Route::patch('projectes_comissions/{projecte}/active', [Projectes_comissionsController::class, 'active'])
+// AJAX activate route
+Route::patch('projectes_comissions/{projecte}/active', [Projectes_comissionsController::class, 'active'])
      ->name('projectes_comissions.active');
-    
 
 });
 

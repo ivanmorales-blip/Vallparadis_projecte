@@ -2,7 +2,9 @@
 
 @section('contingut')
 <div class="p-8 bg-gray-50 min-h-screen">
-    <h1 class="text-3xl font-bold mb-6 text-orange-500 text-center">Llistat de Projectes i Comissions</h1>
+    <h1 class="text-3xl font-bold mb-6 text-orange-500 text-center">
+        Llistat de Projectes i Comissions
+    </h1>
 
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white shadow-lg rounded-xl border border-gray-200">
@@ -29,8 +31,7 @@
                         <td class="px-6 py-4 text-gray-700">{{ $projecte->centre->nom ?? '' }}</td>
 
                         <td class="px-6 py-4">
-                            <span class="estado px-2 py-1 rounded-full font-semibold text-sm {{ $projecte->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}"
-                                  data-estat="{{ $projecte->estat ? 1 : 0 }}">
+                            <span class="estado px-2 py-1 rounded-full font-semibold text-sm {{ $projecte->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
                                 {{ $projecte->estat ? 'Actiu' : 'Inactiu' }}
                             </span>
                         </td>
@@ -72,12 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const projecteId = row.dataset.id;
             const estadoCell = row.querySelector('.estado');
 
-            // Read current state from data attribute
-            const isActive = estadoCell.dataset.estat == 1;
-
-            const url = isActive 
-                ? `/projectes_comissions/${projecteId}`           // DELETE = deactivate
-                : `/projectes_comissions/${projecteId}/active`;  // PATCH = activate
+            const isActive = estadoCell.textContent.trim() === 'Actiu';
+            const url = isActive
+                ? `{{ url('projectes_comissions') }}/${projecteId}`           // DELETE / deactivate
+                : `{{ url('projectes_comissions') }}/${projecteId}/active`;  // PATCH / activate
             const method = isActive ? 'DELETE' : 'PATCH';
 
             try {
@@ -90,40 +89,38 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                if (!response.ok) throw new Error('Request failed');
+                if (response.ok) {
+                    if (isActive) {
+                        estadoCell.textContent = 'Inactiu';
+                        estadoCell.classList.replace('bg-green-200', 'bg-red-200');
+                        estadoCell.classList.replace('text-green-800', 'text-red-800');
 
-                // Toggle UI
-                if (isActive) {
-                    estadoCell.textContent = 'Inactiu';
-                    estadoCell.classList.remove('bg-green-200','text-green-800');
-                    estadoCell.classList.add('bg-red-200','text-red-800');
-                    estadoCell.dataset.estat = 0;
+                        this.querySelector('svg').classList.replace('text-red-400','text-green-400');
+                        this.querySelector('svg').classList.replace('hover:text-red-500','hover:text-green-500');
+                        this.title = 'Activar';
+                        this.querySelector('path').setAttribute('d','M5 13l4 4L19 7');
+                    } else {
+                        estadoCell.textContent = 'Actiu';
+                        estadoCell.classList.replace('bg-red-200','bg-green-200');
+                        estadoCell.classList.replace('text-red-800','text-green-800');
 
-                    this.querySelector('svg').classList.remove('text-red-400','hover:text-red-500');
-                    this.querySelector('svg').classList.add('text-green-400','hover:text-green-500');
-                    this.title = 'Activar';
-                    this.querySelector('path').setAttribute('d','M5 13l4 4L19 7');
+                        this.querySelector('svg').classList.replace('text-green-400','text-red-400');
+                        this.querySelector('svg').classList.replace('hover:text-green-500','hover:text-red-500');
+                        this.title = 'Desactivar';
+                        this.querySelector('path').setAttribute('d','M6 18L18 6M6 6l12 12');
+                    }
                 } else {
-                    estadoCell.textContent = 'Actiu';
-                    estadoCell.classList.remove('bg-red-200','text-red-800');
-                    estadoCell.classList.add('bg-green-200','text-green-800');
-                    estadoCell.dataset.estat = 1;
-
-                    this.querySelector('svg').classList.remove('text-green-400','hover:text-green-500');
-                    this.querySelector('svg').classList.add('text-red-400','hover:text-red-500');
-                    this.title = 'Desactivar';
-                    this.querySelector('path').setAttribute('d','M6 18L18 6M6 6l12 12');
+                    console.error('Error en la petición AJAX');
                 }
-
             } catch (err) {
                 console.error(err);
-                alert('Error al actualitzar l\'estat del projecte.');
             }
         });
     });
 });
 </script>
 @endsection
+
  
 <!--<script>
 document.addEventListener('DOMContentLoaded', function () {
