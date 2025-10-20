@@ -128,15 +128,19 @@ class Projectes_comissionsController extends Controller
 
     use Activable;
 
-    public function active(Projectes_comissions $projecte)
-    {
-        return $this->toggleActive($projecte, true, 'projectes_comissions.index');
-    }
+  public function active(Projectes_comissions $projectes_comissions)
+{
+    return $this->toggleActive($projectes_comissions, true, 'projectes_comissions.index');
+}
 
-    public function destroy(Projectes_comissions $projecte)
-    {
-        return $this->toggleActive($projecte, false, 'projectes_comissions.index');
-    }
+
+
+
+    public function destroy(Projectes_comissions $projectes_comission)
+{
+    return $this->toggleActive($projectes_comission, false, 'projectes_comissions.index');
+}
+
 
 
 }
