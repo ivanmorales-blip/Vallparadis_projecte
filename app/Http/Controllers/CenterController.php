@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Center;
+use App\Traits\Activable;
 class CenterController extends Controller
 {
     /**
@@ -91,16 +92,53 @@ class CenterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    
+    use Activable;
+
+    public function active(Center $center)
+    {
+        return $this->toggleActive($center, true, 'centers.index');
+    }
+
     public function destroy(Center $center)
     {
-        $center->activo = false;
-        $center->save();
-        return redirect()->route('centers.index');
+        return $this->toggleActive($center, false, 'centers.index');
     }
-    public function active (Center $center)
-    {
-        $center->activo = true;
-        $center->save();
-        return redirect()->route('centers.index');
-    }
+
+
+
+
+    /** (Esto esta guardado en caso de emergencia, el reemplazo es una funcion en otro archivo llamado traits) 
+     *public function destroy(Center $center)
+*{
+*    $center->activo = false;
+*    $center->save();
+*
+*    if(request()->ajax()){
+*        return response()->json([
+*            'success' => true,
+*            'activo' => $center->activo,
+*            'center_id' => $center->id
+*        ]);
+*    }
+
+*    return redirect()->route('centers.index');
+*}
+
+*public function active(Center $center)
+*{
+*    $center->activo = true;
+*    $center->save();
+
+*    if(request()->ajax()){
+*        return response()->json([
+*            'success' => true,
+*            'activo' => $center->activo,
+*            'center_id' => $center->id
+*        ]);
+*    }
+
+*    return redirect()->route('centers.index');
+*}*/
+
 }

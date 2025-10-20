@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Profesional;
 use App\Models\Center;
+use App\Traits\Activable;
 
 class ProfesionalController extends Controller
 {
@@ -110,25 +111,41 @@ class ProfesionalController extends Controller
         }
     }
 
+    use Activable;
+
+    public function active(Profesional $profesional)
+    {
+        return $this->toggleActive($profesional, true, 'profesional.index');
+    }
+
+    public function destroy(Profesional $profesional)
+    {
+        return $this->toggleActive($profesional, false, 'profesional.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Profesional $profesional)
-{
-    $profesional->estat = false;
-    $profesional->save();
+    /*public function destroy(Profesional $profesional)
+    {
+        $profesional->estat = false;
+        $profesional->save();
 
-    if (request()->ajax()) {
-        return response()->json([
-            'success' => true,
-            'estat' => $profesional->estat
-        ]);
+        return response()->json(['estat' => $profesional->estat]);
     }
 
-    return redirect()->route('profesional.index');
-}
+    /*public function active(Profesional $profesional)
+    {
+        $profesional->estat = true;
+        $profesional->save();
 
-public function active(Profesional $profesional)
+        return response()->json(['estat' => $profesional->estat]);
+    }
+
+    return redirect()->route('profesional.index');*/
+
+
+/*public function active(Profesional $profesional)
 {
     $profesional->estat = true;
     $profesional->save();
@@ -141,6 +158,6 @@ public function active(Profesional $profesional)
     }
 
     return redirect()->route('profesional.index');
-}
+}*/
 
 }

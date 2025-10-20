@@ -1,111 +1,124 @@
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulari Profesional</title>
-</head>
-<body>
-    <h1>Formulari del Profesional</h1>
+@extends('layouts.template')
 
-    <form action="{{route('profesional.store')}}" method="POST">
+@section('contingut')
+<div class="p-8 bg-gray-50 min-h-screen">
+    <h1 class="text-3xl font-bold mb-6 text-orange-500">Formulari Professional</h1>
+
+    <form action="{{ route('profesional.store') }}" method="POST" class="bg-white rounded-xl shadow-lg p-8 space-y-6">
         @csrf
 
         <!-- Nom -->
         <div>
-            <label for="nom">Nom *</label>
-            <input id="nom" name="nom" type="text" required>
+            <label for="nom" class="block text-gray-700 font-semibold mb-1">Nom *</label>
+            <input id="nom" name="nom" type="text" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
         </div>
 
         <!-- Cognom -->
         <div>
-            <label for="cognom">Cognom *</label>
-            <input id="cognom" name="cognom" type="text" required>
+            <label for="cognom" class="block text-gray-700 font-semibold mb-1">Cognom *</label>
+            <input id="cognom" name="cognom" type="text" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
         </div>
 
         <!-- Telèfon -->
         <div>
-            <label for="telefon">Telèfon *</label>
-            <input id="telefon" name="telefon" type="tel" required>
+            <label for="telefon" class="block text-gray-700 font-semibold mb-1">Telèfon *</label>
+            <input id="telefon" name="telefon" type="tel" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
         </div>
 
-        <!-- Correu -->
+        <!-- Correu electrònic -->
         <div>
-            <label for="email">Correu electrònic *</label>
-            <input id="email" name="email" type="text" required>
+            <label for="email" class="block text-gray-700 font-semibold mb-1">Correu electrònic *</label>
+            <input id="email" name="email" type="email" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
         </div>
 
         <!-- Adreça -->
         <div>
-            <label for="adreça">Adreça</label>
-            <textarea id="adreça" name="adreça" rows="2"></textarea>
+            <label for="adreça" class="block text-gray-700 font-semibold mb-1">Adreça</label>
+            <textarea id="adreça" name="adreça" rows="2"
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none"></textarea>
         </div>
 
         <!-- Estat -->
         <div>
-            <label for="estat">Estat *</label>
-            <select id="estat" name="estat" required>
+            <label for="estat" class="block text-gray-700 font-semibold mb-1">Estat *</label>
+            <select id="estat" name="estat" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
                 <option value="">-- Selecciona un estat --</option>
                 <option value="1">Actiu</option>
                 <option value="0">Inactiu</option>
             </select>
         </div>
 
-        <!-- Center -->
-       <div>
-            <label for="id_center">Centre *</label>
-            <select name="id_center" id="id_center" required>
+        <!-- Centre -->
+        <div>
+            <label for="id_center" class="block text-gray-700 font-semibold mb-1">Centre *</label>
+            <select id="id_center" name="id_center" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
                 <option value="">-- Selecciona un centre --</option>
-                @foreach ($centre as $centre)
-                    <option value="{{ $centre->id }}">{{ $centre->nom }}</option>
+                @foreach ($centre as $c)
+                    <option value="{{ $c->id }}">{{ $c->nom }}</option>
                 @endforeach
             </select>
         </div>
 
-        <!-- taquilla -->
+        <!-- Taquilla -->
         <div>
-            <label for="taquilla">Taquilla *</label>
-            <input id="taquilla" name="taquilla" type="text" required>
+            <label for="taquilla" class="block text-gray-700 font-semibold mb-1">Taquilla *</label>
+            <input id="taquilla" name="taquilla" type="text" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
         </div>
 
-        <!-- Shirt Size -->
-    <div>
-        <label for="talla_samarreta">Talla Samarreta:</label>
-        <select name="talla_samarreta" id="talla_samarreta" required>
-            <option value="">-- Selecciona --</option>
-            @foreach (['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'] as $size)
-                <option value="{{ $size }}">{{ $size }}</option>
-            @endforeach
-        </select>
-    </div>
+        <!-- Talla Samarreta -->
+        <div>
+            <label for="talla_samarreta" class="block text-gray-700 font-semibold mb-1">Talla Samarreta *</label>
+            <select id="talla_samarreta" name="talla_samarreta" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
+                <option value="">-- Selecciona --</option>
+                @foreach (['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'] as $size)
+                    <option value="{{ $size }}">{{ $size }}</option>
+                @endforeach
+            </select>
+        </div>
 
-    <!-- Pants Size -->
-    <div>
-        <label for="talla_pantalons">Talla Pantalons:</label>
-        <select name="talla_pantalons" id="talla_pantalons" required>
-            <option value="">-- Selecciona --</option>
-            @for ($i = 36; $i <= 56; $i += 2)
-                <option value="{{ $i }}">{{ $i }}</option>
-            @endfor
-        </select>
-    </div>
+        <!-- Talla Pantalons -->
+        <div>
+            <label for="talla_pantalons" class="block text-gray-700 font-semibold mb-1">Talla Pantalons *</label>
+            <select id="talla_pantalons" name="talla_pantalons" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
+                <option value="">-- Selecciona --</option>
+                @for ($i = 36; $i <= 56; $i += 2)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+            </select>
+        </div>
 
-    <!-- Shoe Size -->
-    <div>
-        <label for="talla_sabates">Talla Sabates:</label>
-        <select name="talla_sabates" id="talla_sabates" required>
-            <option value="">-- Selecciona --</option>
-            @for ($i = 35; $i <= 47; $i++)
-                <option value="{{ $i }}">{{ $i }}</option>
-            @endfor
-        </select>
-    </div>
+        <!-- Talla Sabates -->
+        <div>
+            <label for="talla_sabates" class="block text-gray-700 font-semibold mb-1">Talla Sabates *</label>
+            <select id="talla_sabates" name="talla_sabates" required
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
+                <option value="">-- Selecciona --</option>
+                @for ($i = 35; $i <= 47; $i++)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+            </select>
+        </div>
 
         <!-- Botons -->
-        <div>
-            <button type="submit">Enviar</button>
-            <button type="reset">Netejar</button>
+        <div class="flex space-x-4 mt-4">
+            <button type="submit"
+                class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-md transition">
+                Enviar
+            </button>
+            <button type="reset"
+                class="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold rounded-xl shadow-md transition">
+                Netejar
+            </button>
         </div>
     </form>
-</body>
-</html>
+</div>
+@endsection

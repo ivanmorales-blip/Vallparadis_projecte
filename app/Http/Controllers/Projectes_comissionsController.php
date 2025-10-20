@@ -7,6 +7,7 @@ use App\Models\Profesional;
 use App\Models\Center;
 use App\Models\Projectes_comissions;
 use Illuminate\Support\Facades\DB;
+use App\Traits\Activable;
 
 
 class Projectes_comissionsController extends Controller
@@ -42,7 +43,7 @@ class Projectes_comissionsController extends Controller
      */
    
     public function store(Request $request)
-{   dd($request->all());
+{   
     // Validate inputs (including centre_id)
     $validated = $request->validate([
         'nom' => 'required|string|max:255',
@@ -68,7 +69,8 @@ class Projectes_comissionsController extends Controller
     ]);
 
     // Redirect or return response
-    return redirect()->route('projectes_comissions.index')->with('success', 'Project inserted successfully.');
+    return redirect()->route('menu');
+
 }
 
     
@@ -123,30 +125,18 @@ class Projectes_comissionsController extends Controller
      * Remove the specified resource from storage.
      */
     // Desactivar un proyecto (marca como inactivo)
-public function destroy($id)
-{
-    $projecte = Projectes_comissions::findOrFail($id);
-    $projecte->estat = false;
-    $projecte->save();
 
-    if (request()->expectsJson()) {
-        return response()->json(['success' => true]);
+    use Activable;
+
+    public function active(Projectes_comissions $projecte)
+    {
+        return $this->toggleActive($projecte, true, 'projectes_comissions.index');
     }
 
-    return redirect()->route('projectes_comissions.index');
-}
-
-public function active($id)
-{
-    $projecte = Projectes_comissions::findOrFail($id);
-    $projecte->estat = true;
-    $projecte->save();
-
-    if (request()->expectsJson()) {
-        return response()->json(['success' => true]);
+    public function destroy(Projectes_comissions $projecte)
+    {
+        return $this->toggleActive($projecte, false, 'projectes_comissions.index');
     }
 
-    return redirect()->route('projectes_comissions.index');
-}
 
 }
