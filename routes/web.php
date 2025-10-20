@@ -49,6 +49,10 @@ Route::middleware('auth')->group(function () {
     // Projectes Comissions
     Route::resource('projectes_comissions', Projectes_comissionsController::class);
 
+    Route::patch('projectes_comissions/{projectes_comissions}/active', [Projectes_comissionsController::class, 'active'])->name('projectes_comissions.active');
+
+    Route::delete('projectes_comissions/{projectes_comissions}', [Projectes_comissionsController::class, 'destroy'])->name('projectes_comissions.destroy');
+
     // AJAX activate route
     Route::get('projectes_comissions/{projectes_comissions}/active', [Projectes_comissionsController::class, 'active']);
 
