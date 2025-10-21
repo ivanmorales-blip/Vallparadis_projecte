@@ -53,9 +53,18 @@
         </table>
     </div>
 
-    <div class="mt-6">
-        <a href="{{ route('menu') }}" class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">Volver a menú</a>
-    </div>
+    <div class="mt-6 space-x-4">
+    <a href="{{ route('export.taquilla') }}" class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">
+        Exportar Taquilla Excel
+    </a>
+    <a href="{{ route('export.uniform') }}" class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">
+        Exportar Uniform Excel
+    </a>
+    <a href="{{ route('menu') }}" class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">
+        Volver a menú
+    </a>
+</div>
+
 </div>
 
 <script>

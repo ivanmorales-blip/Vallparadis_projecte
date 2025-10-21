@@ -5,6 +5,7 @@ use App\Http\Controllers\Projectes_comissionsController;
 use App\Http\Controllers\ProjectesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfesionalController;
+use App\Http\Controllers\ExportController;
 use Illuminate\Support\Facades\Route;
 
 // Ruta principal
@@ -55,6 +56,10 @@ Route::middleware('auth')->group(function () {
 
     // AJAX activate route
     Route::get('projectes_comissions/{projectes_comissions}/active', [Projectes_comissionsController::class, 'active']);
+
+    Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
+    Route::get('/export/uniform', [ExportController::class, 'exportUniform'])->name('export.uniform');
+
 
 
 });

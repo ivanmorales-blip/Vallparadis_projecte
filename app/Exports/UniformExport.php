@@ -6,7 +6,7 @@ use App\Models\Profesional;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class TaquillaExport implements FromCollection, WithHeadings
+class UniformExport implements FromCollection, WithHeadings
 {
         
     public function collection()
