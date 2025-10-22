@@ -5,6 +5,7 @@ use App\Http\Controllers\Projectes_comissionsController;
 use App\Http\Controllers\ProjectesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfesionalController;
+use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\ExportController;
 use Illuminate\Support\Facades\Route;
 
