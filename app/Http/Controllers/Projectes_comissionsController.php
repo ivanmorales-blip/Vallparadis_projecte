@@ -17,9 +17,8 @@ class Projectes_comissionsController extends Controller
      */
     public function index()
     {
-        $projectes = Projectes_comissions::all();
-
-        return view('projectes_comissions.lista', compact ('projectes'));
+        $projectes = Projectes_comissions::get();
+        return view('projectes_comissions.lista', ["projectes"=>$projectes]);
 
 
     }
@@ -29,13 +28,9 @@ class Projectes_comissionsController extends Controller
      */
     public function create()
     {
-        $centres = Center::all(); 
-        $professionals = Profesional::all();
-        
-    return view('projectes_comissions.projectes_comissions', compact('centres', 'professionals'));
-
-
-    
+        $centres = Center::get(); 
+        $professionals = Profesional::get();
+        return view('projectes_comissions.projectes_comissions', ["centres"=>$centres, "professionals"=>$professionals]);    
     }
 
     /**

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tracking', function (Blueprint $table) {
             $table->id();
             $table-> string('tipus', 255);
-            $table-> string('profesional_registrat', 255);
             $table-> date('data', 255);
             $table-> string('tema', 255);
             $table-> text('comentari', 255);
@@ -22,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_profesional_registrador');
             $table->foreign('id_profesional')->references('id')->on('profesional')->onDelete('cascade');
             $table->foreign('id_profesional_registrador')->references('id')->on('profesional')->onDelete('cascade');
+            $table->boolean('estat')->default(true);
             $table->timestamps();
         });
     }

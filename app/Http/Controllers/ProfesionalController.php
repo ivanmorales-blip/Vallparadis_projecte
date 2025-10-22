@@ -14,7 +14,7 @@ class ProfesionalController extends Controller
      */
     public function index()
     {
-         $profesional = Profesional::get();
+        $profesional = Profesional::get();
         return view("profesional.listar", 
             
             [
@@ -122,42 +122,5 @@ class ProfesionalController extends Controller
     {
         return $this->toggleActive($profesional, false, 'profesional.index');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    /*public function destroy(Profesional $profesional)
-    {
-        $profesional->estat = false;
-        $profesional->save();
-
-        return response()->json(['estat' => $profesional->estat]);
-    }
-
-    /*public function active(Profesional $profesional)
-    {
-        $profesional->estat = true;
-        $profesional->save();
-
-        return response()->json(['estat' => $profesional->estat]);
-    }
-
-    return redirect()->route('profesional.index');*/
-
-
-/*public function active(Profesional $profesional)
-{
-    $profesional->estat = true;
-    $profesional->save();
-
-    if (request()->ajax()) {
-        return response()->json([
-            'success' => true,
-            'estat' => $profesional->estat
-        ]);
-    }
-
-    return redirect()->route('profesional.index');
-}*/
 
 }
