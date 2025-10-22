@@ -15,10 +15,7 @@
        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="min-h-screen flex flex-col font-sans antialiased">
-        {{--Barra navigacio--}}
         
-
-
         {{-- Header --}}        
         @include('components.header')
 
@@ -34,7 +31,7 @@
         {{-- Peu de pagina --}}
          <footer class="h-16 bg-gray-100 shadow-inner flex items-center justify-between w-full">
         @include('components.footer')
-    </footer>
+         </footer>
 
     </body>
 </html>
