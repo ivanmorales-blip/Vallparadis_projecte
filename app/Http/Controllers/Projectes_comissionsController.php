@@ -17,8 +17,14 @@ class Projectes_comissionsController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $projectes = Projectes_comissions::get();
         return view('projectes_comissions.lista', ["projectes"=>$projectes]);
+=======
+        $projectes = Projectes_comissions::all();
+
+        return view('projectes_comissions.lista', compact('projectes'));
+>>>>>>> 7f95c33 (Evaluatio Sprint3)
 
 
     }
@@ -73,7 +79,7 @@ class Projectes_comissionsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Projectes_comissions $projectes_comission)
     {
         //
     }
