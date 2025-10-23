@@ -3,7 +3,7 @@
 @section('contingut')
 <div class="p-8 bg-gray-50 min-h-screen">
     <h1 class="text-3xl font-bold mb-6 text-orange-500 text-center">
-        Llistat de Projectes i Comissions
+        Llistat d'Evaluacions
     </h1>
 
     <div class="overflow-x-auto">
@@ -11,43 +11,45 @@
             <thead class="bg-orange-100">
                 <tr>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">#</th>
-                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Nom</th>
-                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Tipus</th>
-                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Data Inici</th>
-                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Professional</th>
-                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Centre</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Data</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Sumatori</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Observacions</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Arxiu</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Profesional</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Profesional Avaluador</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Estat</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Accions</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
-                @foreach($projectes as $projecte)
-                    <tr id="row-{{ $projecte->id }}" data-id="{{ $projecte->id }}" class="hover:bg-orange-50 transition duration-200">
-                        <td class="px-6 py-4 text-gray-600 font-medium">{{ $projecte->id }}</td>
-                        <td class="px-6 py-4 text-gray-800">{{ $projecte->nom }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $projecte->tipus }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $projecte->data_inici }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $projecte->profesional->nom ?? '' }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $projecte->centre->nom ?? '' }}</td>
+                @foreach($evaluations as $evaluation)
+                    <tr id="row-{{ $evaluation->id }}" data-id="{{ $evaluation->id }}" class="hover:bg-orange-50 transition duration-200">
+                        <td class="px-6 py-4 text-gray-600 font-medium">{{ $evaluation->id }}</td>
+                        <td class="px-6 py-4 text-gray-800">{{ $evaluation->data }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ $evaluation->sumatori }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ $evaluation->observacions }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ $evaluation->arxiu}}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ $evaluation->profesional->nom ?? '' }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ $evaluation->profesionalAvaluador->nom ?? '' }}</td>
 
                         <td class="px-6 py-4">
-                            <span class="estado px-2 py-1 rounded-full font-semibold text-sm {{ $projecte->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
-                                {{ $projecte->estat ? 'Actiu' : 'Inactiu' }}
+                            <span class="estado px-2 py-1 rounded-full font-semibold text-sm {{ $evaluation->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
+                                {{ $evaluation->estat ? 'Actiu' : 'Inactiu' }}
                             </span>
                         </td>
 
                         <td class="px-6 py-4 flex space-x-3">
                             <!-- Editar -->
-                            <a href="{{ route('projectes_comissions.show', $projecte) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
+                            <a href="{{ route('evaluation.edit', $evaluation) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-5m-4-4l5-5m-5 5L9 7"/>
                                 </svg>
                             </a>
 
                             <!-- Activar / Desactivar AJAX -->
-                            <button class="activar-desactivar text-sm transition" title="{{ $projecte->estat ? 'Desactivar' : 'Activar' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 {{ $projecte->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $projecte->estat ? 'M6 18L18 6M6 6l12 12' : 'M5 13l4 4L19 7' }}"/>
+                            <button class="activar-desactivar text-sm transition" title="{{ $evaluation->estat ? 'Desactivar' : 'Activar' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 {{ $evaluation->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $evaluation->estat ? 'M6 18L18 6M6 6l12 12' : 'M5 13l4 4L19 7' }}"/>
                                 </svg>
                             </button>
                         </td>
@@ -70,13 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.activar-desactivar').forEach(button => {
         button.addEventListener('click', async function() {
             const row = this.closest('tr');
-            const projecteId = row.dataset.id;
+            const evaluationId = row.dataset.id;
             const estadoCell = row.querySelector('.estado');
 
             const isActive = estadoCell.textContent.trim() === 'Actiu';
             const url = isActive
-                ? `{{ url('projectes_comissions') }}/${projecteId}`           // DELETE / deactivate
-                : `{{ url('projectes_comissions') }}/${projecteId}/active`;  // PATCH / activate
+                ? `{{ url('evaluation') }}/${evaluationId}`           // DELETE / deactivate
+                : `{{ url('evaluation') }}/${evaluationId}/active`;  // PATCH / activate
             const method = isActive ? 'DELETE' : 'PATCH';
 
             try {
@@ -120,5 +122,3 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 @endsection
-
- 

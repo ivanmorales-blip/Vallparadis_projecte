@@ -7,7 +7,7 @@
             Afegir Projecte o Comissió
         </h1>
 
-        <form action="{{ route('projectes_comissions.store') }}" method="POST" class="space-y-5">
+        <form action="{{route('projectes_comissions.store') }}" method="POST" class="space-y-5">
             @csrf
 
             <!-- Nom -->

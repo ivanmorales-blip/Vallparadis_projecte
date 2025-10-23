@@ -8,5 +8,7 @@
     <a href="{{ route('profesional.create') }}" class="text-gray-700 hover:text-orange-500">Alta Professionals</a>
     <a href="{{ route('projectes_comissions.index') }}" class="text-gray-700 hover:text-orange-500">Listar Projectes</a>
     <a href="{{ route('projectes_comissions.create') }}" class="text-gray-700 hover:text-orange-500">Alta Projectes</a>
+    <a href="{{ route('evaluation.index') }}" class="text-gray-700 hover:text-orange-500">Listar Evaluacions</a>
+    <a href="{{ route('evaluation.create') }}" class="text-gray-700 hover:text-orange-500">Alta Evaluacions</a>
   </nav>
 </aside>
