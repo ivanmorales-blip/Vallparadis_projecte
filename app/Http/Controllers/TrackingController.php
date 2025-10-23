@@ -67,14 +67,14 @@ class TrackingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(tracking $tracking)
+    public function edit(Tracking $tracking)
     {
         $profesional = Profesional::get();
                 return view(
             "tracking.formulario_editar",
             [
-
-
+                "profesional"=>$profesional,
+                "tracking"=>$tracking
             ]
         );
     }

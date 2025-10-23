@@ -17,7 +17,7 @@
         <!-- data -->
         <div>
             <label for="data" class="block text-gray-700 font-semibold mb-1">Data *</label>
-            <input id="data" name="data" type="text" required
+            <input id="data" name="data" type="date" required
                 class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
         </div>
 
@@ -31,33 +31,34 @@
         <!-- Comentari -->
         <div>
             <label for="comentari" class="block text-gray-700 font-semibold mb-1">Comentari *</label>
-            <input id="comentari" name="comentari" type="text" required
-                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
+            <textarea id="comentari" name="comentari" rows="3" required
+            class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"></textarea>
         </div>
 
-        <!-- Profesional -->
+        <!-- Professional -->
         <div>
-                <label for="profesional_id" class="block text-sm font-medium text-gray-700 mb-1">Professional *</label>
-                <select id="profesional_id" name="profesional_id" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un professional --</option>
-                    @foreach ($profesional as $prof)
-                        <option value="{{ $prof->id }}">{{ $prof->nom }} {{ $prof->cognom }}</option>
-                    @endforeach
-                </select>
+            <label for="id_profesional" class="block text-sm font-medium text-gray-700 mb-1">Professional *</label>
+            <select id="id_profesional" name="id_profesional" required
+                class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                <option value="">-- Selecciona un professional --</option>
+                @foreach ($profesional as $prof)
+                    <option value="{{ $prof->id }}">{{ $prof->nom }} {{ $prof->cognom }}</option>
+                @endforeach
+            </select>
         </div>
 
         <!-- Registrador -->
         <div>
-                <label for="profesional_id" class="block text-sm font-medium text-gray-700 mb-1">Registrador *</label>
-                <select id="profesional_id" name="profesional_id" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un professional --</option>
-                    @foreach ($profesional as $prof)
-                        <option value="{{ $prof->id }}">{{ $prof->nom }} {{ $prof->cognom }}</option>
-                    @endforeach
-                </select>
+            <label for="id_profesional_registrador" class="block text-sm font-medium text-gray-700 mb-1">Registrador *</label>
+            <select id="id_profesional_registrador" name="id_profesional_registrador" required
+                class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                <option value="">-- Selecciona un professional --</option>
+                @foreach ($profesional as $prof)
+                    <option value="{{ $prof->id }}">{{ $prof->nom }} {{ $prof->cognom }}</option>
+                @endforeach
+            </select>
         </div>
+
 
         <!-- Estat -->
         <div>

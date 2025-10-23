@@ -23,11 +23,12 @@
                 @foreach ($tracking as $index => $tracking)
                 <tr data-id="{{ $tracking->id }}" class="hover:bg-orange-50 transition duration-200">
                     <td class="px-6 py-4 text-gray-600 font-medium">{{ $index + 1 }}</td>
-                    <td class="px-6 py-4 text-gray-800 font-semibold">{{ $tracking->nom }}</td>
-                    <td class="px-6 py-4 text-gray-700">{{ $tracking->cognom }}</td>
-                    <td class="px-6 py-4 text-gray-700">{{ $tracking->telefon }}</td>
-                    <td class="px-6 py-4 text-gray-700">{{ $tracking->email }}</td>
-                    <td class="px-6 py-4 text-gray-700">{{ $tracking->adreça }}</td>
+                    <td class="px-6 py-4 text-gray-800 font-semibold">{{ $tracking->tipus }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ $tracking->data }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ $tracking->tema }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ $tracking->comentari }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ $tracking->id_profesional }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ $tracking->id_profesional_registrador }}</td>
                     <td class="px-6 py-4">
                         <span class="estado px-2 py-1 rounded-full {{ $tracking->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}" id="status-{{ $tracking->id }}">
                             {{ $tracking->estat ? 'Actiu' : 'Inactiu' }}
