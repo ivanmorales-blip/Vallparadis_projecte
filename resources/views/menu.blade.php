@@ -38,6 +38,16 @@
     <a href="{{ route('evaluation.index') }}" class="text-[#F97800] hover:underline mb-2">Listar Evaluacions</a>
     <a href="{{ route('evaluation.create') }}" class="text-[#F97800] hover:underline">Alta Evaluacions</a>
   </div>
+
+  <!-- Trainings Card -->
+  <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 flex flex-col">
+    <h2 class="text-2xl text-gray-700 font-bold mb-4 border-b border-gray-300 pb-2">Trainings</h2>
+    <a href="{{ route('trainings.index') }}" class="text-[#F97800] hover:underline mb-2">Listar Trainings</a>
+    <a href="{{ route('trainings.create') }}" class="text-[#F97800] hover:underline">Alta Trainings</a>
+  </div>
+
 </div>
+
+
 
 @endsection

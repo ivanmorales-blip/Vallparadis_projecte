@@ -18,6 +18,11 @@ return new class extends Migration
             $table-> date('data_fi', 255);
             $table-> string('hores', 255);
             $table-> text('objectiu', 255);
+            $table-> text('descripcio', 255);
+            $table-> string('formador', 255);
+            $table->unsignedBigInteger('id_center')->nullable();
+            $table->foreign('id_center')->references('id')->on('center')->onDelete('set null');
+            $table->boolean('estat')->default(true);
             $table->timestamps();
         });
     }

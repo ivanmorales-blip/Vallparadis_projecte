@@ -13,6 +13,15 @@ class Profesional extends Model
     protected $casts = [
     'data_renovacio' => 'datetime',
 ];
+    public function trainings()
+    {
+        return $this->belongsToMany(
+            Training::class,
+            'professional_training',
+            'id_profesional',   // columna local (professional)
+            'id_training'       // columna del modelo relacionado (training)
+        );
+    }
 
 
     /*public function uniform(): HasMany{

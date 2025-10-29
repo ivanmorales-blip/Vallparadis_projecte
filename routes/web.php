@@ -6,6 +6,7 @@ use App\Http\Controllers\ProjectesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfesionalController;
 use App\Http\Controllers\TrackingController;
+use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ExportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EvaluationController;
@@ -70,15 +71,27 @@ Route::middleware('auth')->group(function () {
     Route::delete('/tracking/{tracking}', [TrackingController::class, 'destroy'])->name('tracking.destroy');
     // Activar
     Route::patch('/tracking/{tracking}/active', [TrackingController::class, 'active'])->name('tracking.active');
+    
     // Evaluation
     Route::resource('evaluation', EvaluationController::class);
 
     Route::patch('evaluation/{evaluation}/active', [EvaluationController::class, 'active'])->name('evaluation.active');
 
     Route::delete('evaluation/{evaluation}', [EvaluationController::class, 'destroy'])->name('evaluation.destroy');
+    
+    // Trainings
+    Route::resource('trainings', TrainingController::class);
+
+    // Activar / desactivar
+    Route::delete('/trainings/{training}', [TrainingController::class, 'destroy'])->name('trainings.destroy');
+    Route::patch('/trainings/{training}/active', [TrainingController::class, 'active'])->name('trainings.active');
+
+
+
 
     Route::get('/dashboard', function() {
     return redirect()->route('menu'); // O cualquier página que quieras
+
 })->name('dashboard');
 
 
