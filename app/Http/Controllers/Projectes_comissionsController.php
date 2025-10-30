@@ -19,6 +19,8 @@ class Projectes_comissionsController extends Controller
     {
         $projectes = Projectes_comissions::get();
         return view('projectes_comissions.lista', ["projectes"=>$projectes]);
+
+
     }
 
     /**

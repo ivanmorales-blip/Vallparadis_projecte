@@ -67,7 +67,6 @@ class EvaluationController extends Controller
 }
 
 
-
     /**
      * Display the specified resource.
      */
