@@ -7,13 +7,18 @@ use App\Models\Center;
 use App\Models\Profesional;
 use Illuminate\Http\Request;
 use App\Traits\Activable;
+use Illuminate\Support\Facades\Storage;
 
 class TrainingController extends Controller
 {
     use Activable;
 
+    /**
+     * Mostra el llistat de cursos.
+     */
     public function index()
     {
+        // Incloem relació amb centres per evitar N+1
         $trainings = Training::with('center')->get();
 
         return view('training.lista', [
@@ -21,10 +26,12 @@ class TrainingController extends Controller
         ]);
     }
 
+    /**
+     * Mostra el formulari per crear un nou curs.
+     */
     public function create()
     {
         $centers = Center::all();
-        
         $professionals = Profesional::all();
 
         return view('training.alta_formulari', [
@@ -33,6 +40,9 @@ class TrainingController extends Controller
         ]);
     }
 
+    /**
+     * Desa un nou curs a la base de dades.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -52,23 +62,24 @@ class TrainingController extends Controller
 
         $training = Training::create($validated);
 
-        // Guardar relación con profesionales
+        // 🔗 Guardar relación con profesionales
         if (!empty($validated['professionals'])) {
             $training->professionals()->sync($validated['professionals']);
         }
 
-        // Guardar archivo adjunto
+        // 📄 Guardar archivo adjunto
         if ($request->hasFile('document')) {
-            $file = $request->file('document');
-            $path = $file->store('documents', 'public');
-            $training->document = $path;
-            $training->save();
+            $path = $request->file('document')->store('documents', 'public');
+            $training->update(['document' => $path]);
         }
 
         return redirect()->route('trainings.index')
                          ->with('success', 'Curs creat correctament.');
     }
 
+    /**
+     * Mostra el formulari per editar un curs existent.
+     */
     public function edit(Training $training)
     {
         $centers = Center::all();
@@ -81,6 +92,9 @@ class TrainingController extends Controller
         ]);
     }
 
+    /**
+     * Actualitza un curs existent.
+     */
     public function update(Request $request, Training $training)
     {
         $validated = $request->validate([
@@ -93,7 +107,16 @@ class TrainingController extends Controller
             'formador' => ['required', 'string', 'max:255'],
             'id_center' => ['nullable', 'exists:center,id'],
             'estat' => ['required', 'boolean'],
+            'document' => ['nullable', 'file', 'mimes:pdf,doc,docx'],
         ]);
+
+        // 📄 Si se sube un nuevo documento, reemplazamos el anterior
+        if ($request->hasFile('document')) {
+            if ($training->document && Storage::disk('public')->exists($training->document)) {
+                Storage::disk('public')->delete($training->document);
+            }
+            $validated['document'] = $request->file('document')->store('documents', 'public');
+        }
 
         $training->update($validated);
 
@@ -101,13 +124,47 @@ class TrainingController extends Controller
                          ->with('success', 'Curs actualitzat correctament.');
     }
 
+    /**
+     * Activa un curs (AJAX o normal).
+     */
     public function active(Training $training)
     {
         return $this->toggleActive($training, true, 'trainings.index');
     }
 
+    /**
+     * Desactiva un curs (AJAX o normal).
+     */
     public function destroy(Training $training)
     {
         return $this->toggleActive($training, false, 'trainings.index');
+    }
+
+    /**
+     * NUEVA FUNCIÓN: mostrar los detalles de un curso.
+     * (para poder hacer clic desde el listado y ver más información)
+     */
+    public function show(Training $training)
+    {
+        return view('training.mostrar', compact('training'));
+    }
+    public function addProfessionals(Training $training)
+    {
+    $assignedProfessionals = $training->professionals;
+    $availableProfessionals = \App\Models\Profesional::whereNotIn('id', $assignedProfessionals->pluck('id'))->get();
+
+    return view('training.afegir_professionals', compact('training', 'assignedProfessionals', 'availableProfessionals'));
+    }
+
+    public function updateProfessionals(Request $request, Training $training)
+    {
+        $request->validate([
+            'professionals' => 'array',
+            'professionals.*' => 'exists:profesional,id',
+        ]);
+
+        $training->professionals()->sync($request->professionals ?? []);
+
+        return response()->json(['success' => true]);
     }
 }

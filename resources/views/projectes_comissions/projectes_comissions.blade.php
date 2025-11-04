@@ -7,7 +7,7 @@
             Afegir Projecte o Comissió
         </h1>
 
-        <form action="{{route('projectes_comissions.store') }}" method="POST" class="space-y-5">
+        <form action="{{ route('projectes_comissions.store') }}" method="POST" class="space-y-5">
             @csrf
 
             <!-- Nom -->
@@ -20,8 +20,12 @@
             <!-- Tipus -->
             <div>
                 <label for="tipus" class="block text-sm font-medium text-gray-700 mb-1">Tipus *</label>
-                <input type="text" id="tipus" name="tipus" required
+                <select id="tipus" name="tipus" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    <option value="">-- Selecciona un tipus --</option>
+                    <option value="Projecte">Projecte</option>
+                    <option value="Comissió">Comissió</option>
+                </select>
             </div>
 
             <!-- Data inici -->

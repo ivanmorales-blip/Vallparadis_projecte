@@ -86,6 +86,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/trainings/{training}', [TrainingController::class, 'destroy'])->name('trainings.destroy');
     Route::patch('/trainings/{training}/active', [TrainingController::class, 'active'])->name('trainings.active');
 
+    Route::get('/trainings/{training}', [TrainingController::class, 'show'])->name('trainings.show');
+
+    // Drag & drop professionals    
+    Route::get('/trainings/{training}/professionals', [TrainingController::class, 'addProfessionals'])
+    ->name('trainings.addProfessionals');
+    Route::post('/trainings/{training}/professionals/update', [TrainingController::class, 'updateProfessionals'])
+    ->name('trainings.updateProfessionals');
 
 
 
