@@ -4,7 +4,7 @@
 <div class="p-8 bg-gray-50 min-h-screen">
     <h1 class="text-3xl font-bold mb-6 text-orange-500">Editar Seguiment</h1>
 
-    <form action="{{ route('tracking.update') }}" method="POST" class="bg-white rounded-xl shadow-lg p-8 space-y-6">
+    <form action="{{ route('tracking.update, $tracking->id') }}" method="POST" class="bg-white rounded-xl shadow-lg p-8 space-y-6">
         @csrf
         @method('PUT')
 
