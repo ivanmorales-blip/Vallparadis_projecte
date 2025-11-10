@@ -11,17 +11,16 @@ class Evaluation extends Model
     protected $table = 'evaluation';
 
     protected $fillable = [
-        'data',
-        'sumatori',
-        'observacions',
-        'arxiu',
-        'id_profesional',
-        'id_profesional_avaluador',
-        'estat',
-        'created_at',
-        'updated_at',
-        
-    ];
+    'data',
+    'sumatori',
+    'observacions',
+    'arxiu',
+    'id_profesional',
+    'id_profesional_avaluador',
+    'estat',
+    'q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9',
+    'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19',
+];
 
 
     public function profesional()
