@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TaquillaExport; 
-use App\Exports\UniformExport;   
+use App\Exports\UniformExport;  
+use App\Exports\CursosProfesionalsExport; 
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
@@ -19,5 +20,10 @@ class ExportController extends Controller
     public function exportUniform()
     {
         return Excel::download(new UniformExport, 'uniforms.xlsx');
+    }
+
+    public function exportCursos()
+    {
+        return Excel::download(new CursosProfesionalsExport, 'cursos.xlsx');
     }
 }

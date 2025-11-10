@@ -67,6 +67,9 @@
     </div>
 
     <div class="mt-6">
+        <a href="{{ route('export.cursos') }}" class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">
+        Exportar Cursos Excel
+        </a>
         <a href="{{ route('menu') }}" 
            class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">
            Volver a menú

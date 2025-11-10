@@ -4,7 +4,7 @@
 <div class="p-8 bg-gray-50 min-h-screen">
     <h1 class="text-3xl font-bold mb-6 text-orange-500">Editar Seguiment</h1>
 
-    <form action="{{ route('tracking.update, $tracking->id') }}" method="POST" class="bg-white rounded-xl shadow-lg p-8 space-y-6">
+    <form action="{{ route('tracking.update', $tracking->id) }}" method="POST" class="bg-white rounded-xl shadow-lg p-8 space-y-6">
         @csrf
         @method('PUT')
 
@@ -43,7 +43,7 @@
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un professional --</option>
                     @foreach ($profesional as $prof)
-                        <option value="{{ $prof->id }}" {{ $projectes_comission->profesional_id == $prof->id ? 'selected' : '' }}>
+                        <option value="{{ $prof->id }}" {{ $tracking->profesional_id == $prof->id ? 'selected' : '' }}>
                             {{ $prof->nom }} {{ $prof->cognom }}
                         </option>
                     @endforeach
@@ -57,7 +57,7 @@
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un professional --</option>
                     @foreach ($profesional as $prof)
-                    <option value="{{ $prof->id }}" {{ $projectes_comission->profesional_id == $prof->id ? 'selected' : '' }}>
+                    <option value="{{ $prof->id }}" {{ $tracking->profesional_id == $prof->id ? 'selected' : '' }}>
                             {{ $prof->nom }} {{ $prof->cognom }}
                     </option>
                     @endforeach

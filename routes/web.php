@@ -61,9 +61,10 @@ Route::middleware('auth')->group(function () {
     // AJAX activate route
     Route::get('projectes_comissions/{projectes_comissions}/active', [Projectes_comissionsController::class, 'active']);
 
-    // Activació taquilles
+    // Activació exports
     Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
     Route::get('/export/uniform', [ExportController::class, 'exportUniform'])->name('export.uniform');
+    Route::get('/export/cursos', [ExportController::class, 'exportCursos'])->name('export.cursos');
 
     // Seguiment
     Route::resource('tracking', TrackingController::class);
