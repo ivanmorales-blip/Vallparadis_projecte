@@ -1,41 +1,35 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Evaluation;
 
-use Illuminate\Http\Request;
+use App\Models\Evaluation;
 use App\Models\Profesional;
 use App\Models\Center;
-use App\Models\Projectes_comissions;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Traits\Activable;
 
 class EvaluationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-  public function index()
+    public function index()
     {
         $evaluations = Evaluation::with(['profesional', 'profesionalAvaluador'])->get();
-        return view('evaluation.listarevaluation', compact('evaluations'));
+        return view('evaluation.listarevaluation', [
+            'evaluations' => $evaluations
+        ]);
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $centres = Center::all(); 
+        $centres = Center::all();
         $professionals = Profesional::all();
-        
-        return view('evaluation.evaluation', compact('centres', 'professionals'));
+
+        return view('evaluation.evaluation', [
+            'centres' => $centres,
+            'professionals' => $professionals
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
 {
     $request->validate([
@@ -47,46 +41,45 @@ class EvaluationController extends Controller
         'id_profesional_avaluador' => 'nullable|exists:profesional,id',
     ]);
 
-    $rutaArchivo = null;
-    if ($request->hasFile('arxiu')) {
-        $rutaArchivo = $request->file('arxiu')->store('evaluations', 'public');
+    $rutaArchivo = $request->hasFile('arxiu') 
+        ? $request->file('arxiu')->store('evaluations', 'public') 
+        : null;
+
+    $evaluation = new Evaluation();
+    $evaluation->data = $request->input('data');
+    $evaluation->sumatori = $request->input('sumatori');
+    $evaluation->observacions = $request->input('observacions');
+    $evaluation->arxiu = $rutaArchivo;
+    $evaluation->id_profesional = $request->input('id_profesional');
+    $evaluation->id_profesional_avaluador = $request->input('id_profesional_avaluador');
+
+    // Store all question answers
+    for ($i = 0; $i < 20; $i++) {
+        $evaluation->{'q'.$i} = $request->input('q'.$i);
     }
 
-    
-    Evaluation::create([
-        'data' => $request->data,
-        'sumatori' => $request->sumatori,
-        'observacions' => $request->observacions,
-        'arxiu' => $rutaArchivo,
-        'id_profesional' => $request->id_profesional,
-        'id_profesional_avaluador' => $request->id_profesional_avaluador,
-        
-    ]);
+    $evaluation->save();
 
-    return redirect()->route('evaluation.index')->with('success', 'Avaluació guardada correctament.');
+    return redirect()->route('evaluation.index')
+        ->with('success', 'Avaluació guardada correctament.');
 }
 
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Evaluation $evaluation)
     {
         $professionals = Profesional::all();
-        return view('evaluation.formulario_editar', compact('evaluation', 'professionals'));
+
+        return view('evaluation.formulario_editar', [
+            'evaluation' => $evaluation,
+            'professionals' => $professionals
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Evaluation $evaluation)
     {
         $validated = $request->validate([
@@ -98,40 +91,27 @@ class EvaluationController extends Controller
             'id_profesional_avaluador' => 'required|exists:profesional,id',
         ]);
 
-
         if ($request->hasFile('arxiu')) {
             $validated['arxiu'] = $request->file('arxiu')->store('evaluations', 'public');
         } else {
             unset($validated['arxiu']);
         }
 
-        
         $evaluation->update($validated);
+
         return redirect()->route('evaluation.index')
-                         ->with ('success', 'Evaluació actualitzada correctament.');
-
-        
+            ->with('success', 'Avaluació actualitzada correctament.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    //public function destroy(string $id)
-    //{
-        //
-    //}
 
     use Activable;
 
-    public function active (Evaluation $evaluation)
+    public function active(Evaluation $evaluation)
     {
         return $this->toggleActive($evaluation, true, 'evaluations.index');
     }
 
-    public function destroy (Evaluation $evaluation)
+    public function destroy(Evaluation $evaluation)
     {
         return $this->toggleActive($evaluation, false, 'evaluations.index');
     }
-
-
 }

@@ -15,6 +15,7 @@
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Sumatori</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Observacions</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Arxiu</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Sumatori</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Profesional</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Profesional Avaluador</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Estat</th>
@@ -26,9 +27,10 @@
                     <tr id="row-{{ $evaluation->id }}" data-id="{{ $evaluation->id }}" class="hover:bg-orange-50 transition duration-200">
                         <td class="px-6 py-4 text-gray-600 font-medium">{{ $evaluation->id }}</td>
                         <td class="px-6 py-4 text-gray-800">{{ $evaluation->data }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $evaluation->sumatori }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ number_format($evaluation->sumatori, 1) }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $evaluation->observacions }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $evaluation->arxiu}}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ $evaluation->sumatori}}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $evaluation->profesional->nom ?? '' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $evaluation->profesionalAvaluador->nom ?? '' }}</td>
 
