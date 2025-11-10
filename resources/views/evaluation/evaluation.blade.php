@@ -38,7 +38,7 @@
 
         <!-- Sumatori (automàtic) -->
     <div>
-        <label for="sumatori" class="block text-sm font-medium text-gray-700 mb-1">Sumatori (automàtic) *</label>
+        <label for="sumatori" class="block text-sm font-medium text-gray-700 mb-1">Sumatori</label>
         <input type="number" id="sumatori" name="sumatori" readonly required
             class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-100 text-gray-600"
             value="{{ old('sumatori') }}">
