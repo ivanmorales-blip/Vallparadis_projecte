@@ -53,15 +53,20 @@ class EvaluationController extends Controller
     }
 
     
-    Evaluation::create([
-        'data' => $request->data,
-        'sumatori' => $request->sumatori,
-        'observacions' => $request->observacions,
-        'arxiu' => $rutaArchivo,
-        'id_profesional' => $request->id_profesional,
-        'id_profesional_avaluador' => $request->id_profesional_avaluador,
-        
-    ]);
+    $evaluation = new Evaluation();
+    $evaluation->data = $request->data;
+    $evaluation->sumatori = $request->sumatori;
+    $evaluation->observacions = $request->observacions;
+    $evaluation->arxiu = $rutaArchivo;
+    $evaluation->id_profesional = $request->id_profesional;
+    $evaluation->id_profesional_avaluador = $request->id_profesional_avaluador;
+
+    // Guardar las respuestas de las 20 preguntas
+    for ($i = 1; $i <= 20; $i++) {
+        $evaluation->{'pregunta'.$i} = $request->{'pregunta'.$i} ?? null;
+    }
+
+    $evaluation->save();
 
     return redirect()->route('evaluation.index')->with('success', 'Avaluació guardada correctament.');
 }
@@ -105,13 +110,16 @@ class EvaluationController extends Controller
             unset($validated['arxiu']);
         }
 
-        
-        $evaluation->update($validated);
-        return redirect()->route('evaluation.index')
-                         ->with ('success', 'Evaluació actualitzada correctament.');
-
-        
+       // Actualizar las respuestas de las 20 preguntas
+    for ($i = 1; $i <= 20; $i++) {
+        $validated['pregunta'.$i] = $request->{'pregunta'.$i} ?? null;
     }
+
+    $evaluation->update($validated);
+
+    return redirect()->route('evaluation.index')
+                     ->with('success', 'Evaluació actualitzada correctament.');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -123,15 +131,17 @@ class EvaluationController extends Controller
 
     use Activable;
 
-    public function active (Evaluation $evaluation)
-    {
-        return $this->toggleActive($evaluation, true, 'evaluations.index');
-    }
+    public function active(Evaluation $evaluation)
+{
+    $this->toggleActive($evaluation, true);
+    return response()->json(['success' => true]);
+}
 
-    public function destroy (Evaluation $evaluation)
-    {
-        return $this->toggleActive($evaluation, false, 'evaluations.index');
-    }
+public function destroy(Evaluation $evaluation)
+{
+    $this->toggleActive($evaluation, false);
+    return response()->json(['success' => true]);
+}
 
 
 }

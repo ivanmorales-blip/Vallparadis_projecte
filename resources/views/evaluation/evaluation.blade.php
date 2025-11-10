@@ -42,7 +42,6 @@
         <input type="number" id="sumatori" name="sumatori" readonly required
             class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-100 text-gray-600"
             value="{{ old('sumatori') }}">
-        <p class="text-xs text-gray-500 mt-1">El valor es calcula automàticament segons les respostes.</p>
     </div>
 
         <!-- Observacions -->
@@ -56,8 +55,7 @@
         <div>
             <label for="arxiu" class="block text-sm font-medium text-gray-700 mb-1">Arxiu</label>
             <input type="file" id="arxiu" name="arxiu"
-                class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
-                value="{{ old('arxiu') }}">
+                class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
         </div>
 
         <!-- Professional -->
@@ -67,7 +65,7 @@
                 class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                 <option value="">Selecciona un professional</option>
                 @foreach($professionals as $prof)
-                    <option value="{{ $prof->id }}" {{ old('profesional_id') == $prof->id ? 'selected' : '' }}>
+                    <option value="{{ $prof->id }}" {{ old('id_profesional') == $prof->id ? 'selected' : '' }}>
                         {{ $prof->nom }}
                     </option>
                 @endforeach
@@ -81,7 +79,7 @@
                 class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                 <option value="">Selecciona un professional avaluador</option>
                 @foreach($professionals as $prof)
-                    <option value="{{ $prof->id }}" {{ old('profesional_avaluador_id') == $prof->id ? 'selected' : '' }}>
+                    <option value="{{ $prof->id }}" {{ old('id_profesional_avaluador') == $prof->id ? 'selected' : '' }}>
                         {{ $prof->nom }}
                     </option>
                 @endforeach
@@ -142,17 +140,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const sumInput = document.getElementById("sumatori");
 
     QUESTIONS.forEach((q, i) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td class="px-3 py-2">${q}</td>
-            ${[1,2,3,4].map(v => `
-                <td class='text-center'>
-                    <input type='radio' name='q${i}' value='${v}' class='scale-110 accent-orange-500'>
-                </td>
-            `).join('')}
-        `;
-        tbody.appendChild(tr);
-    });
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+        <td class="px-3 py-2">${q}</td>
+        ${[1,2,3,4].map(v => `
+            <td class='text-center'>
+                <input type='radio' name='pregunta${i + 1}' value='${v}' class='scale-110 accent-orange-500'>
+            </td>
+        `).join('')}
+    `;
+    tbody.appendChild(tr);
+});
+
 
     // Recalcular automáticamente el promedio
     document.querySelectorAll("input[type=radio]").forEach(radio => {
