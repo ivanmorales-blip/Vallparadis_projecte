@@ -12,5 +12,7 @@
     <a href="{{ route('tracking.create') }}" class="text-gray-700 hover:text-orange-500">Alta Seguiments</a>
     <a href="{{ route('evaluation.index') }}" class="text-gray-700 hover:text-orange-500">Listar Evaluacions</a>
     <a href="{{ route('evaluation.create') }}" class="text-gray-700 hover:text-orange-500">Alta Evaluacions</a>
+    <a href="{{ route('trainings.create') }}" class="text-gray-700 hover:text-orange-500">Alta Cursos</a>
+    <a href="{{ route('trainings.index') }}" class="text-gray-700 hover:text-orange-500">Listar Cursos</a>
   </nav>
 </aside>

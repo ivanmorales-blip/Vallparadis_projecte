@@ -17,6 +17,7 @@ return new class extends Migration
         $table->decimal('sumatori', 5, 2);
         $table->string('observacions')->nullable();
         $table->text('arxiu')->nullable();
+        $table->boolean('estat')->default(true);
         $table->unsignedBigInteger('id_profesional');
         $table->unsignedBigInteger('id_profesional_avaluador')->nullable();
         $table->foreign('id_profesional')->references('id')->on('profesional')->onDelete('cascade');

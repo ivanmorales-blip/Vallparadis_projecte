@@ -53,9 +53,7 @@ Route::middleware('auth')->group(function () {
 
     // Projectes Comissions
     Route::resource('projectes_comissions', Projectes_comissionsController::class);
-
     Route::patch('projectes_comissions/{projectes_comissions}/active', [Projectes_comissionsController::class, 'active'])->name('projectes_comissions.active');
-
     Route::delete('projectes_comissions/{projectes_comissions}', [Projectes_comissionsController::class, 'destroy'])->name('projectes_comissions.destroy');
     //mostrar
     Route::get('/projectes_comissions/{id}', [ProjecteComissioController::class, 'show'])->name('projectes_comissions.show');
@@ -77,9 +75,7 @@ Route::middleware('auth')->group(function () {
     
     // Evaluation
     Route::resource('evaluation', EvaluationController::class);
-
     Route::patch('evaluation/{evaluation}/active', [EvaluationController::class, 'active'])->name('evaluation.active');
-
     Route::delete('evaluation/{evaluation}', [EvaluationController::class, 'destroy'])->name('evaluation.destroy');
     
     // Trainings
@@ -88,7 +84,6 @@ Route::middleware('auth')->group(function () {
     // Activar / desactivar
     Route::delete('/trainings/{training}', [TrainingController::class, 'destroy'])->name('trainings.destroy');
     Route::patch('/trainings/{training}/active', [TrainingController::class, 'active'])->name('trainings.active');
-
     Route::get('/trainings/{training}', [TrainingController::class, 'show'])->name('trainings.show');
 
     // Drag & drop professionals    
@@ -97,13 +92,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/trainings/{training}/professionals/update', [TrainingController::class, 'updateProfessionals'])
     ->name('trainings.updateProfessionals');
 
-
-
     Route::get('/dashboard', function() {
     return redirect()->route('menu'); // O cualquier página que quieras
 
 })->name('dashboard');
-
 
 });
 

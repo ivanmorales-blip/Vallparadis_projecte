@@ -46,9 +46,14 @@
             </div>
 
             <div>
-                <label for="formador" class="block text-sm font-medium text-gray-700 mb-1">Formador *</label>
-                <input type="text" id="formador" name="formador" required
-                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
+                <label for="profesional_id" class="block text-sm font-medium text-gray-700 mb-1">Formador *</label>
+                <select id="profesional_id" name="profesional_id" required
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    <option value="">-- Selecciona un professional --</option>
+                    @foreach ($professionals as $prof)
+                        <option value="{{ $prof->id }}">{{ $prof->nom }} {{ $prof->cognom }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div>
