@@ -144,10 +144,17 @@
         </form>
     </div>
 </div>
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const sumInput = document.getElementById("sumatori");
+
+    // Escuchar cambios en todos los radios
+    document.querySelectorAll("input[type=radio]").forEach(radio => {
+        radio.addEventListener("change", calcSumatori);
+    });
+
+    // Calcular al inicio (por si hay respuestas ya guardadas)
+    calcSumatori();
 
     function calcSumatori() {
         const radios = document.querySelectorAll("input[type=radio]:checked");
@@ -156,13 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const avg = radios.length ? (total / radios.length) : 0;
         sumInput.value = avg.toFixed(2);
     }
-
-    document.querySelectorAll("input[type=radio]").forEach(radio => {
-        radio.addEventListener("change", calcSumatori);
-    });
-
-    // Calculate on page load to show existing values
-    calcSumatori();
 });
 </script>
 @endsection
