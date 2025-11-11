@@ -42,16 +42,16 @@
 
                          <td class="px-6 py-4 flex space-x-3">
                                 <!-- Editar -->
-                                <a href="{{ route('centers.edit', $center) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
+                                <a href="{{ route('evaluation.edit', $evaluation) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
                                     <svg class="h-6 w-6" aria-label="Editar">
                                     <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
                                     </svg>
                                 </a>
                                 
                                 <!-- Activar / Desactivar AJAX -->
-                                <button class="activar-desactivar text-sm transition" title="{{ $center->activo ? 'Desactivar' : 'Activar' }}">
-                                    <svg class="h-6 w-6 {{ $center->activo ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" aria-label="{{ $center->activo ? 'Desactivar' : 'Activar' }}">
-                                    <use href="{{ asset('icons/sprite.svg#' . ($center->activo ? 'icon-x' : 'icon-check')) }}"></use>
+                                <button class="activar-desactivar text-sm transition" title="{{ $evaluation->activo ? 'Desactivar' : 'Activar' }}">
+                                    <svg class="h-6 w-6 {{ $evaluation->activo ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" aria-label="{{ $evaluation->activo ? 'Desactivar' : 'Activar' }}">
+                                    <use href="{{ asset('icons/sprite.svg#' . ($evaluation->activo ? 'icon-x' : 'icon-check')) }}"></use>
                                     </svg>
                                 </button>
                             </td>
@@ -94,25 +94,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
-                    if (isActive) {
-                        estadoCell.textContent = 'Inactiu';
-                        estadoCell.classList.replace('bg-green-200', 'bg-red-200');
-                        estadoCell.classList.replace('text-green-800', 'text-red-800');
+                if (activo) {
+                    // Deactivating → switch to check icon
+                    estadoCell.textContent = 'Inactivo';
+                    estadoCell.classList.remove('bg-green-100', 'text-green-700');
+                    estadoCell.classList.add('bg-red-100', 'text-red-700');
 
-                        this.querySelector('svg').classList.replace('text-red-400','text-green-400');
-                        this.querySelector('svg').classList.replace('hover:text-red-500','hover:text-green-500');
-                        this.title = 'Activar';
-                        this.querySelector('path').setAttribute('d','M5 13l4 4L19 7');
-                    } else {
-                        estadoCell.textContent = 'Actiu';
-                        estadoCell.classList.replace('bg-red-200','bg-green-200');
-                        estadoCell.classList.replace('text-red-800','text-green-800');
+                    const svg = this.querySelector('svg');
+                    const useEl = svg.querySelector('use');
+                    svg.classList.remove('text-red-400', 'hover:text-red-500');
+                    svg.classList.add('text-green-400', 'hover:text-green-500');
+                    this.title = 'Activar';
 
-                        this.querySelector('svg').classList.replace('text-green-400','text-red-400');
-                        this.querySelector('svg').classList.replace('hover:text-green-500','hover:text-red-500');
-                        this.title = 'Desactivar';
-                        this.querySelector('path').setAttribute('d','M6 18L18 6M6 6l12 12');
-                    }
+                    // Update icon reference
+                    useEl.setAttribute('href', '{{ asset('icons/sprite.svg#icon-check') }}');
+                    useEl.setAttribute('xlink:href', '{{ asset('icons/sprite.svg#icon-check') }}');
+                } else {
+                    // Activating → switch to X icon
+                    estadoCell.textContent = 'Activo';
+                    estadoCell.classList.remove('bg-red-100', 'text-red-700');
+                    estadoCell.classList.add('bg-green-100', 'text-green-700');
+
+                    const svg = this.querySelector('svg');
+                    const useEl = svg.querySelector('use');
+                    svg.classList.remove('text-green-400', 'hover:text-green-500');
+                    svg.classList.add('text-red-400', 'hover:text-red-500');
+                    this.title = 'Desactivar';
+
+                    // Update icon reference
+                    useEl.setAttribute('href', '{{ asset('icons/sprite.svg#icon-x') }}');
+                    useEl.setAttribute('xlink:href', '{{ asset('icons/sprite.svg#icon-x') }}');
+                }
+
                 } else {
                     console.error('Error en la petición AJAX');
                 }

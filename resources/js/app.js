@@ -1,4 +1,5 @@
 import './bootstrap';
+import './toggleStatus';
 
 import Alpine from 'alpinejs';
 

@@ -34,16 +34,16 @@
                     </td>
                      <td class="px-6 py-4 flex space-x-3">
                         <!-- Editar -->
-                        <a href="{{ route('centers.edit', $center) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
+                        <a href="{{ route('profesional.edit', $profesional) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
                             <svg class="h-6 w-6" aria-label="Editar">
                             <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
                             </svg>
                         </a>
                         
                         <!-- Activar / Desactivar AJAX -->
-                        <button class="activar-desactivar text-sm transition" title="{{ $center->activo ? 'Desactivar' : 'Activar' }}">
-                            <svg class="h-6 w-6 {{ $center->activo ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" aria-label="{{ $center->activo ? 'Desactivar' : 'Activar' }}">
-                            <use href="{{ asset('icons/sprite.svg#' . ($center->activo ? 'icon-x' : 'icon-check')) }}"></use>
+                        <button class="activar-desactivar text-sm transition" title="{{ $profesional->activo ? 'Desactivar' : 'Activar' }}">
+                            <svg class="h-6 w-6 {{ $profesional->activo ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" aria-label="{{ $profesional->activo ? 'Desactivar' : 'Activar' }}">
+                            <use href="{{ asset('icons/sprite.svg#' . ($profesional->activo ? 'icon-x' : 'icon-check')) }}"></use>
                             </svg>
                         </button>
                     </td>
@@ -67,61 +67,4 @@
 
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.activar-desactivar').forEach(button => {
-        button.addEventListener('click', async function() {
-            const row = this.closest('tr');
-            const profesionalId = row.dataset.id;
-            const estadoCell = row.querySelector('.estado');
-
-            // Determine current status based on 'estat'
-            const isActive = estadoCell.textContent.trim() === 'Actiu';
-            const url = isActive 
-                ? `/profesional/${profesionalId}`           // deactivate
-                : `/profesional/${profesionalId}/active`;  // activate
-            const method = isActive ? 'DELETE' : 'PATCH';
-
-            try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    if (isActive) {
-                        // Update the UI to show Inactive
-                        estadoCell.textContent = 'Inactiu';
-                        estadoCell.classList.remove('bg-green-200', 'text-green-800');
-                        estadoCell.classList.add('bg-red-200', 'text-red-800');
-
-                        this.querySelector('svg').classList.remove('text-red-400','hover:text-red-500');
-                        this.querySelector('svg').classList.add('text-green-400','hover:text-green-500');
-                        this.title = 'Activar';
-                        this.querySelector('path').setAttribute('d', 'M5 13l4 4L19 7');
-                    } else {
-                        // Update the UI to show Active
-                        estadoCell.textContent = 'Actiu';
-                        estadoCell.classList.remove('bg-red-200','text-red-800');
-                        estadoCell.classList.add('bg-green-200','text-green-800');
-
-                        this.querySelector('svg').classList.remove('text-green-400','hover:text-green-500');
-                        this.querySelector('svg').classList.add('text-red-400','hover:text-red-500');
-                        this.title = 'Desactivar';
-                        this.querySelector('path').setAttribute('d', 'M6 18L18 6M6 6l12 12');
-                    }
-                } else {
-                    console.error('Error en la petición');
-                }
-            } catch (err) {
-                console.error(err);
-            }
-        });
-    });
-});
-</script>
 @endsection

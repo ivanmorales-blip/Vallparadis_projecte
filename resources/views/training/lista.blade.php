@@ -20,7 +20,7 @@
             </thead>
             <tbody id="cursos-table" class="divide-y divide-gray-200">
                 @foreach ($trainings as $index => $training)
-                <tr id="training-{{ $training->id }}" 
+                <tr data-id="{{ $training->id }}" 
                     class="hover:bg-orange-50 transition cursor-pointer"
                     onclick="window.location='{{ route('trainings.show', $training->id) }}'">
 
@@ -37,19 +37,19 @@
                         </span>
                     </td>
                     
-                     <td class="px-6 py-4 flex space-x-3">
+                     <td class="px-6 py-4 flex space-x-3"
                          onclick="event.stopPropagation()"> <!-- evita que el click del tr afecte a los botones -->
                         <!-- Editar -->
-                        <a href="{{ route('centers.edit', $center) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
+                        <a href="{{ route('trainings.edit', $training) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
                             <svg class="h-6 w-6" aria-label="Editar">
                             <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
                             </svg>
                         </a>
                         
                         <!-- Activar / Desactivar AJAX -->
-                        <button class="activar-desactivar text-sm transition" title="{{ $center->activo ? 'Desactivar' : 'Activar' }}">
-                            <svg class="h-6 w-6 {{ $center->activo ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" aria-label="{{ $center->activo ? 'Desactivar' : 'Activar' }}">
-                            <use href="{{ asset('icons/sprite.svg#' . ($center->activo ? 'icon-x' : 'icon-check')) }}"></use>
+                        <button class="activar-desactivar text-sm transition" title="{{ $training->activo ? 'Desactivar' : 'Activar' }}">
+                            <svg class="h-6 w-6 {{ $training->activo ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" aria-label="{{ $training->activo ? 'Desactivar' : 'Activar' }}">
+                            <use href="{{ asset('icons/sprite.svg#' . ($training->activo ? 'icon-x' : 'icon-check')) }}"></use>
                             </svg>
                         </button>
                     </td>
@@ -71,51 +71,4 @@
     </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.activar-desactivar').forEach(button => {
-        button.addEventListener('click', async function() {
-            const trainingId = this.dataset.id;
-            const row = this.closest('tr');
-            const estadoCell = row.querySelector('.estado');
-            const activo = estadoCell.textContent.trim() === 'Actiu';
-            const url = activo ? `/trainings/${trainingId}` : `/trainings/${trainingId}/active`;
-            const method = activo ? 'DELETE' : 'PATCH';
-
-            try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    if (activo) {
-                        estadoCell.textContent = 'Inactiu';
-                        estadoCell.classList.replace('bg-green-200', 'bg-red-200');
-                        estadoCell.classList.replace('text-green-800', 'text-red-800');
-                        this.querySelector('svg').classList.replace('text-red-400', 'text-green-400');
-                        this.querySelector('svg').classList.replace('hover:text-red-500', 'hover:text-green-500');
-                        this.querySelector('path').setAttribute('d', 'M5 13l4 4L19 7');
-                        this.title = 'Activar';
-                    } else {
-                        estadoCell.textContent = 'Actiu';
-                        estadoCell.classList.replace('bg-red-200', 'bg-green-200');
-                        estadoCell.classList.replace('text-red-800', 'text-green-800');
-                        this.querySelector('svg').classList.replace('text-green-400', 'text-red-400');
-                        this.querySelector('svg').classList.replace('hover:text-green-500', 'hover:text-red-500');
-                        this.querySelector('path').setAttribute('d', 'M6 18L18 6M6 6l12 12');
-                        this.title = 'Desactivar';
-                    }
-                }
-            } catch (err) {
-                console.error('Error:', err);
-            }
-        });
-    });
-});
-</script>
 @endsection
