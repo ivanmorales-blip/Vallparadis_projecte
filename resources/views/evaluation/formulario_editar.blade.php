@@ -141,4 +141,26 @@
         </form>
     </div>
 </div>
+<!-- SCRIPT per calcular el sumatori -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const sumInput = document.getElementById("sumatori");
+
+    // Escuchar cambios en todos los radios
+    document.querySelectorAll("input[type=radio]").forEach(radio => {
+        radio.addEventListener("change", calcSumatori);
+    });
+
+    // Calcular al inicio (por si hay respuestas ya guardadas)
+    calcSumatori();
+
+    function calcSumatori() {
+        const radios = document.querySelectorAll("input[type=radio]:checked");
+        let total = 0;
+        radios.forEach(r => total += parseInt(r.value));
+        const avg = radios.length ? (total / radios.length) : 0;
+        sumInput.value = avg.toFixed(2);
+    }
+});
+</script>
 @endsection

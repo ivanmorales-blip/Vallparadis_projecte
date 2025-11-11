@@ -38,38 +38,63 @@ class EvaluationController extends Controller
      */
     public function store(Request $request)
 {
-    $request->validate([
+    
+    $validated = $request->validate([
         'data' => 'required|date',
         'sumatori' => 'required|numeric',
         'observacions' => 'nullable|string',
-        'arxiu' => 'nullable|file',
+        'arxiu' => 'nullable|file', 
         'id_profesional' => 'required|exists:profesional,id',
-        'id_profesional_avaluador' => 'nullable|exists:profesional,id',
+        'id_profesional_avaluador' => 'required|exists:profesional,id',
+        'pregunta1' => 'nullable|integer',
+        'pregunta2' => 'nullable|integer',
+        'pregunta3' => 'nullable|integer',
+        'pregunta4' => 'nullable|integer',
+        'pregunta5' => 'nullable|integer',
+        'pregunta6' => 'nullable|integer',
+        'pregunta7' => 'nullable|integer',
+        'pregunta8' => 'nullable|integer',
+        'pregunta9' => 'nullable|integer',
+        'pregunta10' => 'nullable|integer',
+        'pregunta11' => 'nullable|integer',
+        'pregunta12' => 'nullable|integer',
+        'pregunta13' => 'nullable|integer',
+        'pregunta14' => 'nullable|integer',
+        'pregunta15' => 'nullable|integer',
+        'pregunta16' => 'nullable|integer',
+        'pregunta17' => 'nullable|integer',
+        'pregunta18' => 'nullable|integer',
+        'pregunta19' => 'nullable|integer',
+        'pregunta20' => 'nullable|integer',
     ]);
 
-    $rutaArchivo = null;
+    $evaluation = new \App\Models\Evaluation();
+
+    
+    $evaluation->data = $validated['data'];
+    $evaluation->sumatori = $validated['sumatori'];
+    $evaluation->observacions = $validated['observacions'] ?? null;
+    $evaluation->id_profesional = $validated['id_profesional'];
+    $evaluation->id_profesional_avaluador = $validated['id_profesional_avaluador'];
+
     if ($request->hasFile('arxiu')) {
-        $rutaArchivo = $request->file('arxiu')->store('evaluations', 'public');
+        $evaluation->arxiu = $request->file('arxiu')->store('evaluations'); 
+    } else {
+        $evaluation->arxiu = null; 
     }
 
     
-    $evaluation = new Evaluation();
-    $evaluation->data = $request->data;
-    $evaluation->sumatori = $request->sumatori;
-    $evaluation->observacions = $request->observacions;
-    $evaluation->arxiu = $rutaArchivo;
-    $evaluation->id_profesional = $request->id_profesional;
-    $evaluation->id_profesional_avaluador = $request->id_profesional_avaluador;
-
-    // Guardar las respuestas de las 20 preguntas
     for ($i = 1; $i <= 20; $i++) {
         $evaluation->{'pregunta'.$i} = $request->{'pregunta'.$i} ?? null;
     }
 
+    
     $evaluation->save();
 
-    return redirect()->route('evaluation.index')->with('success', 'Avaluació guardada correctament.');
+    return redirect()->route('evaluation.index')
+                     ->with('success', 'Avaluació guardada correctament.');
 }
+
 
 
     /**
