@@ -34,20 +34,22 @@
                             {{ $tracking->estat ? 'Actiu' : 'Inactiu' }}
                         </span>
                     </td>
-                     <td class="px-6 py-4 flex space-x-3">
-                        <!-- Editar -->
+                    <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
                         <a href="{{ route('tracking.edit', $tracking) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
                             <svg class="h-6 w-6" aria-label="Editar">
-                            <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
+                                <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
                             </svg>
                         </a>
-                        
-                        <!-- Activar / Desactivar AJAX -->
-                        <button class="activar-desactivar text-sm transition" title="{{ $tracking->activo ? 'Desactivar' : 'Activar' }}">
-                            <svg class="h-6 w-6 {{ $tracking->activo ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" aria-label="{{ $tracking->activo ? 'Desactivar' : 'Activar' }}">
-                            <use href="{{ asset('icons/sprite.svg#' . ($tracking->activo ? 'icon-x' : 'icon-check')) }}"></use>
+
+                        <button class="activar-desactivar text-sm transition"
+                            title="{{ $tracking->estat ? 'Desactivar' : 'Activar' }}">
+                            <svg class="h-6 w-6 {{ $tracking->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
+                                aria-label="{{ $tracking->estat ? 'Desactivar' : 'Activar' }}">
+                                <use href="{{ asset('icons/sprite.svg#' . ($tracking->estat ? 'icon-x' : 'icon-check')) }}"></use>
                             </svg>
                         </button>
+                    </td>
+
                     </td>
                 </tr>
                 @endforeach

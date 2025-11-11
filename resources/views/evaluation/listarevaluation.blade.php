@@ -40,21 +40,22 @@
                             </span>
                         </td>
 
-                         <td class="px-6 py-4 flex space-x-3">
-                                <!-- Editar -->
-                                <a href="{{ route('evaluation.edit', $evaluation) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
-                                    <svg class="h-6 w-6" aria-label="Editar">
+                        <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
+                            <a href="{{ route('evaluation.edit', $evaluation) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
+                                <svg class="h-6 w-6" aria-label="Editar">
                                     <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
-                                    </svg>
-                                </a>
-                                
-                                <!-- Activar / Desactivar AJAX -->
-                                <button class="activar-desactivar text-sm transition" title="{{ $evaluation->activo ? 'Desactivar' : 'Activar' }}">
-                                    <svg class="h-6 w-6 {{ $evaluation->activo ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}" aria-label="{{ $evaluation->activo ? 'Desactivar' : 'Activar' }}">
-                                    <use href="{{ asset('icons/sprite.svg#' . ($evaluation->activo ? 'icon-x' : 'icon-check')) }}"></use>
-                                    </svg>
-                                </button>
-                            </td>
+                                </svg>
+                            </a>
+
+                            <button class="activar-desactivar text-sm transition"
+                                title="{{ $evaluation->estat ? 'Desactivar' : 'Activar' }}">
+                                <svg class="h-6 w-6 {{ $evaluation->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
+                                    aria-label="{{ $evaluation->estat ? 'Desactivar' : 'Activar' }}">
+                                    <use href="{{ asset('icons/sprite.svg#' . ($evaluation->estat ? 'icon-x' : 'icon-check')) }}"></use>
+                                </svg>
+                            </button>
+                        </td>
+
                     </tr>
                 @endforeach
             </tbody>
@@ -68,72 +69,4 @@
     </div>
 </div>
 
-{{-- AJAX --}}
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.activar-desactivar').forEach(button => {
-        button.addEventListener('click', async function() {
-            const row = this.closest('tr');
-            const evaluationId = row.dataset.id;
-            const estadoCell = row.querySelector('.estado');
-
-            const isActive = estadoCell.textContent.trim() === 'Actiu';
-            const url = isActive
-                ? `{{ url('evaluation') }}/${evaluationId}`           // DELETE / deactivate
-                : `{{ url('evaluation') }}/${evaluationId}/active`;  // PATCH / activate
-            const method = isActive ? 'DELETE' : 'PATCH';
-
-            try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                if (activo) {
-                    // Deactivating → switch to check icon
-                    estadoCell.textContent = 'Inactivo';
-                    estadoCell.classList.remove('bg-green-100', 'text-green-700');
-                    estadoCell.classList.add('bg-red-100', 'text-red-700');
-
-                    const svg = this.querySelector('svg');
-                    const useEl = svg.querySelector('use');
-                    svg.classList.remove('text-red-400', 'hover:text-red-500');
-                    svg.classList.add('text-green-400', 'hover:text-green-500');
-                    this.title = 'Activar';
-
-                    // Update icon reference
-                    useEl.setAttribute('href', '{{ asset('icons/sprite.svg#icon-check') }}');
-                    useEl.setAttribute('xlink:href', '{{ asset('icons/sprite.svg#icon-check') }}');
-                } else {
-                    // Activating → switch to X icon
-                    estadoCell.textContent = 'Activo';
-                    estadoCell.classList.remove('bg-red-100', 'text-red-700');
-                    estadoCell.classList.add('bg-green-100', 'text-green-700');
-
-                    const svg = this.querySelector('svg');
-                    const useEl = svg.querySelector('use');
-                    svg.classList.remove('text-green-400', 'hover:text-green-500');
-                    svg.classList.add('text-red-400', 'hover:text-red-500');
-                    this.title = 'Desactivar';
-
-                    // Update icon reference
-                    useEl.setAttribute('href', '{{ asset('icons/sprite.svg#icon-x') }}');
-                    useEl.setAttribute('xlink:href', '{{ asset('icons/sprite.svg#icon-x') }}');
-                }
-
-                } else {
-                    console.error('Error en la petición AJAX');
-                }
-            } catch (err) {
-                console.error(err);
-            }
-        });
-    });
-});
-</script>
 @endsection
