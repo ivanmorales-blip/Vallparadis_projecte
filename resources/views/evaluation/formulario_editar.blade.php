@@ -81,11 +81,9 @@
 
             <!-- Sumatori -->
             <div>
-                <label for="sumatori" class="block text-sm font-medium text-gray-700 mb-1">Sumatori</label>
-                <input type="number" id="sumatori" name="sumatori" readonly required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-100 text-gray-600"
-                    value="{{ old('sumatori', $evaluation->sumatori) }}">
-                <p class="text-xs text-gray-500 mt-1">El valor es calcula automàticament segons les respostes.</p>
+                <label for="sumatori" class="block text-sm font-medium text-gray-700 mb-1">Sumatori *</label>
+                <input type="number" step="any" id="sumatori" name="sumatori" required value="{{ $evaluation->sumatori }}"
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
             </div>
 
             <!-- Observacions -->

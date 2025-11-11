@@ -41,21 +41,23 @@ class EvaluationController extends Controller
         'id_profesional_avaluador' => 'nullable|exists:profesional,id',
     ]);
 
-    $rutaArchivo = $request->hasFile('arxiu') 
-        ? $request->file('arxiu')->store('evaluations', 'public') 
-        : null;
+    $rutaArchivo = null;
+    if ($request->hasFile('arxiu')) {
+        $rutaArchivo = $request->file('arxiu')->store('evaluations', 'public');
+    }
 
+    
     $evaluation = new Evaluation();
-    $evaluation->data = $request->input('data');
-    $evaluation->sumatori = $request->input('sumatori');
-    $evaluation->observacions = $request->input('observacions');
+    $evaluation->data = $request->data;
+    $evaluation->sumatori = $request->sumatori;
+    $evaluation->observacions = $request->observacions;
     $evaluation->arxiu = $rutaArchivo;
-    $evaluation->id_profesional = $request->input('id_profesional');
-    $evaluation->id_profesional_avaluador = $request->input('id_profesional_avaluador');
+    $evaluation->id_profesional = $request->id_profesional;
+    $evaluation->id_profesional_avaluador = $request->id_profesional_avaluador;
 
-    // Store all question answers
-    for ($i = 0; $i < 20; $i++) {
-        $evaluation->{'q'.$i} = $request->input('q'.$i);
+    // Guardar las respuestas de las 20 preguntas
+    for ($i = 1; $i <= 20; $i++) {
+        $evaluation->{'pregunta'.$i} = $request->{'pregunta'.$i} ?? null;
     }
 
     $evaluation->save();
@@ -97,21 +99,33 @@ class EvaluationController extends Controller
             unset($validated['arxiu']);
         }
 
+        
         $evaluation->update($validated);
-
         return redirect()->route('evaluation.index')
-            ->with('success', 'Avaluació actualitzada correctament.');
+                         ->with ('success', 'Evaluació actualitzada correctament.');
+
+        
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    //public function destroy(string $id)
+    //{
+        //
+    //}
 
     use Activable;
 
-    public function active(Evaluation $evaluation)
+    public function active (Evaluation $evaluation)
     {
         return $this->toggleActive($evaluation, true, 'evaluations.index');
     }
 
-    public function destroy(Evaluation $evaluation)
+    public function destroy (Evaluation $evaluation)
     {
         return $this->toggleActive($evaluation, false, 'evaluations.index');
     }
+
+
 }
