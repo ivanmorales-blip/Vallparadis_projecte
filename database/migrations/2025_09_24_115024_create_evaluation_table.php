@@ -25,6 +25,7 @@ return new class extends Migration
         for ($i = 0; $i < 20; $i++) {
             $table->decimal('q'.$i, 5, 2)->nullable();
         }
+        $table->boolean('activo')->default(1);
 
         $table->timestamps();
     });

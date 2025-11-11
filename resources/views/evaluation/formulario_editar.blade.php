@@ -13,12 +13,12 @@
 
             <!-- Data -->
             <div>
-                <label for="data" class="block text-sm font-medium text-gray-700 mb-1">Data *</label>
+                <label for="data" class="block text-sm font-medium text-gray-700 mb-1">Data </label>
                 <input type="date" id="data" name="data" required value="{{ $evaluation->data }}"
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
             </div>
 
-            <!-- Questions -->
+            <!-- Cuestionario -->
             <div class="border rounded-xl overflow-hidden">
                 <table class="w-full text-sm text-left text-gray-700">
                     <thead class="bg-gray-100 text-center font-semibold">
@@ -58,30 +58,29 @@
 
                         @foreach ($questions as $index => $text)
                             @php
-                            $field = 'pregunta' . ($index + 1);
-                            $selected = old($field, $evaluation->$field);
+                                $field = 'pregunta' . ($index + 1);
+                                $selected = $evaluation->$field ?? null;
                             @endphp
-                        <tr class="border-t">
-                            <td class="px-3 py-2">{{ $text }}</td>
-                            @for ($i = 1; $i <= 4; $i++)
-                            <td class="text-center">
-                             <input type="radio" 
-                                    name="{{ $field }}" 
-                                    value="{{ $i }}" 
-                                    class="scale-110 accent-orange-500"
-                                    {{ $selected == $i ? 'checked' : '' }}>
-                            </td>
-                            @endfor
-                        </tr>
+                            <tr class="border-t">
+                                <td class="px-3 py-2">{{ $text }}</td>
+                                @for ($i = 1; $i <= 4; $i++)
+                                    <td class="text-center">
+                                        <input type="radio" 
+                                            name="pregunta{{ $index + 1 }}" 
+                                            value="{{ $i }}" 
+                                            class="scale-110 accent-orange-500"
+                                            {{ $selected == $i ? 'checked' : '' }}>
+                                    </td>
+                                @endfor
+                            </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
 
             <!-- Sumatori -->
             <div>
-                <label for="sumatori" class="block text-sm font-medium text-gray-700 mb-1">Sumatori *</label>
+                <label for="sumatori" class="block text-sm font-medium text-gray-700 mb-1">Sumatori </label>
                 <input type="number" step="any" id="sumatori" name="sumatori" required value="{{ $evaluation->sumatori }}"
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
             </div>
@@ -90,47 +89,45 @@
             <div>
                 <label for="observacions" class="block text-sm font-medium text-gray-700 mb-1">Observacions</label>
                 <textarea id="observacions" name="observacions" rows="3"
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('observacions', $evaluation->observacions) }}</textarea>
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ $evaluation->observacions }}</textarea>
             </div>
 
             <!-- Arxiu -->
             <div>
                 <label for="arxiu" class="block text-sm font-medium text-gray-700 mb-1">Arxiu</label>
                 <input type="file" id="arxiu" name="arxiu"
-                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                @if($evaluation->arxiu)
-                    <p class="text-xs text-gray-500 mt-1">Arxiu actual: <a href="{{ asset('storage/'.$evaluation->arxiu) }}" target="_blank" class="text-blue-500 underline">Veure</a></p>
-                @endif
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
             </div>
 
-            <!-- Professionals -->
+            <!-- Professional -->
             <div>
-                <label for="id_profesional" class="block text-sm font-medium text-gray-700 mb-1">Professional *</label>
+                <label for="id_profesional" class="block text-sm font-medium text-gray-700 mb-1">Professional </label>
                 <select id="id_profesional" name="id_profesional" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un professional --</option>
                     @foreach ($professionals as $prof)
-                        <option value="{{ $prof->id }}" {{ old('id_profesional', $evaluation->id_profesional) == $prof->id ? 'selected' : '' }}>
+                        <option value="{{ $prof->id }}" {{ $evaluation->id_profesional == $prof->id ? 'selected' : '' }}>
                             {{ $prof->nom }} {{ $prof->cognom }}
                         </option>
                     @endforeach
                 </select>
             </div>
 
+            <!-- Professional Avaluador -->
             <div>
                 <label for="id_profesional_avaluador" class="block text-sm font-medium text-gray-700 mb-1">Professional Avaluador *</label>
                 <select id="id_profesional_avaluador" name="id_profesional_avaluador" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un professional avaluador --</option>
                     @foreach ($professionals as $prof)
-                        <option value="{{ $prof->id }}" {{ old('id_profesional_avaluador', $evaluation->id_profesional_avaluador) == $prof->id ? 'selected' : '' }}>
+                        <option value="{{ $prof->id }}" {{ $evaluation->id_profesional_avaluador == $prof->id ? 'selected' : '' }}>
                             {{ $prof->nom }} {{ $prof->cognom }}
                         </option>
                     @endforeach
                 </select>
             </div>
 
-            <!-- Buttons -->
+            <!-- Botons -->
             <div class="flex justify-between items-center pt-4">
                 <a href="{{ route('menu') }}"
                    class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl transition shadow">
@@ -144,6 +141,7 @@
         </form>
     </div>
 </div>
+<!-- SCRIPT per calcular el sumatori -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const sumInput = document.getElementById("sumatori");
