@@ -22,36 +22,40 @@
             </thead>
             <tbody class="divide-y divide-gray-200">
                 @foreach($projectes as $projecte)
-                    <tr id="row-{{ $projecte->id }}" data-id="{{ $projecte->id }}" class="hover:bg-orange-50 transition duration-200">
+                    <tr id="row-{{ $projecte->id }}" data-id="{{ $projecte->id }}" 
+                        class="hover:bg-orange-50 transition duration-200 cursor-pointer"
+                        onclick="window.location='{{ route('projectes_comissions.show', $projecte->id) }}'">
+
                         <td class="px-6 py-4 text-gray-600 font-medium">{{ $projecte->id }}</td>
                         <td class="px-6 py-4 text-gray-800">{{ $projecte->nom }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $projecte->tipus }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $projecte->data_inici }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $projecte->profesional->nom ?? '' }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($projecte->data_inici)->format('d/m/Y') }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ $projecte->profesional->nom ?? '' }} {{ $projecte->profesional->cognom ?? '' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $projecte->centre->nom ?? '' }}</td>
 
                         <td class="px-6 py-4">
-                            <span class="estado px-2 py-1 rounded-full font-semibold text-sm {{ $projecte->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
+                            <span class="estado px-3 py-1 rounded-full font-semibold text-sm {{ $projecte->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
                                 {{ $projecte->estat ? 'Actiu' : 'Inactiu' }}
                             </span>
                         </td>
 
                         <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
+                            <!-- Editar -->
                             <a href="{{ route('projectes_comissions.edit', $projecte) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
                                 <svg class="h-6 w-6" aria-label="Editar">
                                     <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
                                 </svg>
                             </a>
 
+                            <!-- Activar/Desactivar -->
                             <button class="activar-desactivar text-sm transition"
-                                title="{{ $projecte->estat ? 'Desactivar' : 'Activar' }}">
+                                    title="{{ $projecte->estat ? 'Desactivar' : 'Activar' }}">
                                 <svg class="h-6 w-6 {{ $projecte->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
-                                    aria-label="{{ $projecte->estat ? 'Desactivar' : 'Activar' }}">
+                                     aria-label="{{ $projecte->estat ? 'Desactivar' : 'Activar' }}">
                                     <use href="{{ asset('icons/sprite.svg#' . ($projecte->estat ? 'icon-x' : 'icon-check')) }}"></use>
                                 </svg>
                             </button>
                         </td>
-
                     </tr>
                 @endforeach
             </tbody>
@@ -64,7 +68,4 @@
         </a>
     </div>
 </div>
-
 @endsection
-
- 

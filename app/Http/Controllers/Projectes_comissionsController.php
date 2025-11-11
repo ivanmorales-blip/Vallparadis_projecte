@@ -75,7 +75,10 @@ class Projectes_comissionsController extends Controller
      */
     public function show(Projectes_comissions $projectes_comission)
     {
-        //
+        // Cargamos las relaciones professional y centre
+        $projecte = $projectes_comission->load(['profesional', 'center']);
+
+        return view('projectes_comissions.show', compact('projecte'));
     }
 
     /**

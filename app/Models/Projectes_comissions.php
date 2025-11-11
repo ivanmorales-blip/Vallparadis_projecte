@@ -12,10 +12,10 @@ class Projectes_comissions extends Model
         'nom',
         'tipus',
         'data_inici',
-        'profesional_id',
+        'id_profesional',
         'descripcio',
         'observacions',
-        'centre_id',
+        'id_center',
         'estat', 
     ];
 
@@ -24,7 +24,7 @@ class Projectes_comissions extends Model
         return $this->belongsTo(Profesional::class);
     }
 
-    public function centre()
+    public function center()
     {
         return $this->belongsTo(Center::class);
     }

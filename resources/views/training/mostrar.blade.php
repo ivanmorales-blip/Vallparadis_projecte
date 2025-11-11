@@ -2,12 +2,22 @@
 
 @section('contingut')
 <div class="min-h-screen bg-gray-50 p-8">
-    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8 border border-gray-200 relative">
         
-        <!-- Título -->
-        <h1 class="text-3xl font-bold text-orange-500 mb-6">
-            {{ $training->nom_curs }}
-        </h1>
+        <!-- Título con estado arriba a la derecha -->
+        <div class="flex justify-between items-start mb-6">
+            <h1 class="text-3xl font-bold text-orange-500">
+                {{ $training->nom_curs }}
+            </h1>
+
+            <div class="ml-4">
+                @if ($training->estat)
+                    <span class="bg-green-200 text-green-800 px-4 py-2 rounded-full font-semibold text-sm shadow">Actiu</span>
+                @else
+                    <span class="bg-red-200 text-red-800 px-4 py-2 rounded-full font-semibold text-sm shadow">Inactiu</span>
+                @endif
+            </div>
+        </div>
 
         <!-- Datos principales -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
@@ -31,15 +41,6 @@
 
                 <p class="font-semibold">👤 Formador:</p>
                 <p class="mb-3">{{ $training->formador }}</p>
-
-                <p class="font-semibold">🟢 Estat:</p>
-                <p>
-                    @if ($training->estat)
-                        <span class="bg-green-200 text-green-800 px-3 py-1 rounded-full font-semibold text-sm">Actiu</span>
-                    @else
-                        <span class="bg-red-200 text-red-800 px-3 py-1 rounded-full font-semibold text-sm">Inactiu</span>
-                    @endif
-                </p>
             </div>
         </div>
 
