@@ -7,6 +7,17 @@
             Afegir Projecte o Comissió
         </h1>
 
+        <!-- Mostrar errores -->
+        @if($errors->any())
+            <div class="bg-red-100 p-4 mb-4 rounded">
+                <ul class="list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('projectes_comissions.store') }}" method="POST" class="space-y-5">
             @csrf
 
@@ -14,17 +25,18 @@
             <div>
                 <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Nom *</label>
                 <input type="text" id="nom" name="nom" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                       value="{{ old('nom') }}"
+                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
             </div>
 
             <!-- Tipus -->
             <div>
                 <label for="tipus" class="block text-sm font-medium text-gray-700 mb-1">Tipus *</label>
                 <select id="tipus" name="tipus" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un tipus --</option>
-                    <option value="Projecte">Projecte</option>
-                    <option value="Comissió">Comissió</option>
+                    <option value="projecte" {{ old('tipus')=='projecte'?'selected':'' }}>Projecte</option>
+                    <option value="comissio" {{ old('tipus')=='comissio'?'selected':'' }}>Comissió</option>
                 </select>
             </div>
 
@@ -32,17 +44,20 @@
             <div>
                 <label for="data_inici" class="block text-sm font-medium text-gray-700 mb-1">Data inici *</label>
                 <input type="date" id="data_inici" name="data_inici" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                       value="{{ old('data_inici') }}"
+                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
             </div>
 
             <!-- Professional -->
             <div>
                 <label for="profesional_id" class="block text-sm font-medium text-gray-700 mb-1">Professional *</label>
                 <select id="profesional_id" name="profesional_id" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un professional --</option>
                     @foreach ($professionals as $prof)
-                        <option value="{{ $prof->id }}">{{ $prof->nom }} {{ $prof->cognom }}</option>
+                        <option value="{{ $prof->id }}" {{ old('profesional_id')==$prof->id?'selected':'' }}>
+                            {{ $prof->nom }} {{ $prof->cognom }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -51,27 +66,32 @@
             <div>
                 <label for="descripcio" class="block text-sm font-medium text-gray-700 mb-1">Descripció *</label>
                 <textarea id="descripcio" name="descripcio" rows="3" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"></textarea>
+                          class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('descripcio') }}</textarea>
             </div>
 
             <!-- Observacions -->
             <div>
                 <label for="observacions" class="block text-sm font-medium text-gray-700 mb-1">Observacions</label>
                 <textarea id="observacions" name="observacions" rows="3"
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"></textarea>
+                          class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('observacions') }}</textarea>
             </div>
 
             <!-- Centre -->
             <div>
                 <label for="centre_id" class="block text-sm font-medium text-gray-700 mb-1">Centre *</label>
                 <select id="centre_id" name="centre_id" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un centre --</option>
                     @foreach ($centres as $centre)
-                        <option value="{{ $centre->id }}">{{ $centre->nom }}</option>
+                        <option value="{{ $centre->id }}" {{ old('centre_id')==$centre->id?'selected':'' }}>
+                            {{ $centre->nom }}
+                        </option>
                     @endforeach
                 </select>
             </div>
+
+            <!-- Estat ocult per defecte actiu -->
+            <input type="hidden" name="estat" value="1">
 
             <!-- Botons -->
             <div class="flex justify-between items-center pt-4">

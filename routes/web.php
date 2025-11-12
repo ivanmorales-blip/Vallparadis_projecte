@@ -48,17 +48,17 @@ Route::middleware('auth')->group(function () {
 
     // Projectes Comissions
     Route::resource('projectes_comissions', Projectes_comissionsController::class);
+
     Route::patch('projectes_comissions/{projectes_comissions}/active', [Projectes_comissionsController::class, 'active'])->name('projectes_comissions.active');
+
     Route::delete('projectes_comissions/{projectes_comissions}', [Projectes_comissionsController::class, 'destroy'])->name('projectes_comissions.destroy');
-    Route::get('/projectes_comissions/{id}', [Projectes_comissionsController::class, 'show'])->name('projectes_comissions.show');
 
     // AJAX activate route
     Route::get('projectes_comissions/{projectes_comissions}/active', [Projectes_comissionsController::class, 'active']);
 
-    // Activació exports
+    // Activació taquilles
     Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
     Route::get('/export/uniform', [ExportController::class, 'exportUniform'])->name('export.uniform');
-    Route::get('/export/cursos', [ExportController::class, 'exportCursos'])->name('export.cursos');
 
     // Seguiment
     Route::resource('tracking', TrackingController::class)->except(['destroy']);
@@ -69,7 +69,9 @@ Route::middleware('auth')->group(function () {
     
     // Evaluation
     Route::resource('evaluation', EvaluationController::class);
+
     Route::patch('evaluation/{evaluation}/active', [EvaluationController::class, 'active'])->name('evaluation.active');
+
     Route::delete('evaluation/{evaluation}', [EvaluationController::class, 'destroy'])->name('evaluation.destroy');
     Route::resource('evaluation', EvaluationController::class)->except(['destroy']);
     Route::get('/evaluation/create', [EvaluationController::class, 'create'])->name('evaluation.create');
@@ -79,15 +81,21 @@ Route::middleware('auth')->group(function () {
     Route::resource('trainings', TrainingController::class);
     Route::delete('/trainings/{training}', [TrainingController::class, 'destroy'])->name('trainings.destroy');
     Route::patch('/trainings/{training}/active', [TrainingController::class, 'active'])->name('trainings.active');
-    Route::get('/trainings/{training}', [TrainingController::class, 'show'])->name('trainings.show');
 
-    // Drag & drop professionals    
-    Route::get('/trainings/{training}/professionals', [TrainingController::class, 'addProfessionals'])->name('trainings.addProfessionals');
-    Route::post('/trainings/{training}/professionals/update', [TrainingController::class, 'updateProfessionals'])->name('trainings.updateProfessionals');
+
+
+Route::resource('evaluation', EvaluationController::class);
+Route::get('/evaluation/{evaluation}/download', [EvaluationController::class, 'download'])->name('evaluation.download');
+Route::get('/evaluation/{evaluation}/download', [App\Http\Controllers\EvaluationController::class, 'download'])
+    ->name('evaluation.download');
+
 
     Route::get('/dashboard', function() {
-        return redirect()->route('menu');
-    })->name('dashboard');
+    return redirect()->route('menu'); // O cualquier página que quieras
+
+})->name('dashboard');
+
+
 });
 
 require __DIR__.'/auth.php';

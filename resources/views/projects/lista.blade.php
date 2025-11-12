@@ -6,8 +6,8 @@
         Llistat de Projectes i Comissions
     </h1>
 
-
-        <!-- Tabla de Comissions -->
+    <div class="grid md:grid-cols-2 gap-8">
+        <!-- Tabla de Projectes -->
         <div>
             <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Projectes</h2>
             <div class="overflow-x-auto">
@@ -24,36 +24,36 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        @foreach($projectes->where('tipus', 'comissio') as $comissio)
-                            <tr id="row-{{ $comissio->id }}" class="hover:bg-orange-50 transition duration-200 cursor-pointer"
-                                onclick="window.location='{{ route('projectes_comissions.show', $comissio->id) }}'">
-                                <td class="px-6 py-4 text-gray-600 font-medium">{{ $comissio->id }}</td>
-                                <td class="px-6 py-4 text-gray-800">{{ $comissio->nom }}</td>
-                                <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($comissio->data_inici)->format('d/m/Y') }}</td>
-                                <td class="px-6 py-4 text-gray-700">{{ $comissio->profesional->nom ?? '' }} {{ $comissio->profesional->cognom ?? '' }}</td>
-                                <!--<td class="px-6 py-4 text-gray-700">{{ $comissio->centre->nom ?? '' }}</td>-->
+                        @foreach($projectes->where('tipus', 'projecte') as $projecte)
+                            <tr id="row-{{ $projecte->id }}" class="hover:bg-orange-50 transition duration-200 cursor-pointer"
+                                onclick="window.location='{{ route('projectes_comissions.show', $projecte->id) }}'">
+                                <td class="px-6 py-4 text-gray-600 font-medium">{{ $projecte->id }}</td>
+                                <td class="px-6 py-4 text-gray-800">{{ $projecte->nom }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($projecte->data_inici)->format('d/m/Y') }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ $projecte->profesional->nom ?? '' }} {{ $projecte->profesional->cognom ?? '' }}</td>
+                                <!--<td class="px-6 py-4 text-gray-700">{{ $projecte->centre->nom ?? '' }}</td>-->
                                 <td class="px-6 py-4">
-                                    <span class="estado px-3 py-1 rounded-full font-semibold text-sm {{ $comissio->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
-                                        {{ $comissio->estat ? 'Actiu' : 'Inactiu' }}
+                                    <span class="estado px-3 py-1 rounded-full font-semibold text-sm {{ $projecte->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
+                                        {{ $projecte->estat ? 'Actiu' : 'Inactiu' }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
                                     <!-- Editar -->
-                                    <a href="{{ route('projectes_comissions.edit', $comissio) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
+                                    <a href="{{ route('projectes_comissions.edit', $projecte) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
                                         <svg class="h-6 w-6" aria-label="Editar">
                                             <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
                                         </svg>
                                     </a>
 
                                     <!-- Activar / Desactivar -->
-                                    <form action="{{ route('projectes_comissions.active', $comissio) }}" method="POST">
+                                    <form action="{{ route('projectes_comissions.active', $projecte) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" class="activar-desactivar text-sm transition"
-                                                title="{{ $comissio->estat ? 'Desactivar' : 'Activar' }}">
-                                            <svg class="h-6 w-6 {{ $comissio->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
-                                                 aria-label="{{ $comissio->estat ? 'Desactivar' : 'Activar' }}">
-                                                <use href="{{ asset('icons/sprite.svg#' . ($comissio->estat ? 'icon-x' : 'icon-check')) }}"></use>
+                                                title="{{ $projecte->estat ? 'Desactivar' : 'Activar' }}">
+                                            <svg class="h-6 w-6 {{ $projecte->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
+                                                 aria-label="{{ $projecte->estat ? 'Desactivar' : 'Activar' }}">
+                                                <use href="{{ asset('icons/sprite.svg#' . ($projecte->estat ? 'icon-x' : 'icon-check')) }}"></use>
                                             </svg>
                                         </button>
                                     </form>
@@ -64,9 +64,7 @@
                 </table>
             </div>
         </div>
-    </div>
-
-    <div class="mt-6 text-center">
+<div class="mt-6 text-center">
         <a href="{{ route('menu') }}" class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">
             Tornar al menú
         </a>
