@@ -88,9 +88,9 @@
                         class="flex-1 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow transition">
                     Enviar
                 </button>
-                <button type="reset"
+                <button type="button" onclick="window.location='{{ route('menu') }}'"
                         class="flex-1 px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold rounded-2xl shadow transition">
-                    Netejar
+                    Cancelar
                 </button>
             </div>
         </form>
