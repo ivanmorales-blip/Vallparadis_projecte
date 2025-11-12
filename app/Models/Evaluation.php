@@ -31,9 +31,10 @@ class Evaluation extends Model
         return $this->belongsTo(Profesional::class, 'id_profesional');
     }
 
-    public function profesionalAvaluador()
+    public function avaluador()
     {
         return $this->belongsTo(Profesional::class, 'id_profesional_avaluador');
     }
+    
 
 }

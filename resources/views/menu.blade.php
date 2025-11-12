@@ -25,18 +25,21 @@
     <a href="{{ route('projectes_comissions.create') }}" class="text-[#F97800] hover:underline">Alta Projectes i comissions</a>
   </div>
 
-  <!-- Seguiments -->
-   <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 flex flex-col">
-    <h2 class="text-2xl text-gray-700 font-bold mb-4 border-b border-gray-300 pb-2">Seguiment de Profesionals</h2>
-    <a href="{{ route('tracking.index') }}" class="text-[#F97800] hover:underline mb-2">Listar Seguiments</a>
-    <a href="{{ route('tracking.create') }}" class="text-[#F97800] hover:underline">Alta Seguiment</a>
-  </div>
+<!-- Gestión de Seguiments y Evaluacions -->
+  <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 flex flex-col space-y-4">
+      <h2 class="text-2xl text-gray-700 font-bold mb-2 border-b border-gray-300 pb-2">Gestió de Seguiments i Evaluacions</h2>
 
-  <!-- Evaluacions Card -->
-  <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 flex flex-col">
-    <h2 class="text-2xl text-gray-700 font-bold mb-4 border-b border-gray-300 pb-2">Evaluacions</h2>
-    <a href="{{ route('evaluation.index') }}" class="text-[#F97800] hover:underline mb-2">Listar Evaluacions</a>
-    <a href="{{ route('evaluation.create') }}" class="text-[#F97800] hover:underline">Alta Evaluacions</a>
+      <!-- Alta Seguiment -->
+      <a href="{{ route('tracking.create') }}" 
+        class="text-[#F97800] hover:underline text-lg font-medium">
+          ➕ Donar d'alta Seguiment
+      </a>
+
+      <!-- Alta Avaluació -->
+      <a href="{{ route('evaluation.create') }}" 
+        class="text-[#F97800] hover:underline text-lg font-medium">
+          ➕ Donar d'alta Avaluació
+      </a>
   </div>
 
   <!-- Trainings Card -->

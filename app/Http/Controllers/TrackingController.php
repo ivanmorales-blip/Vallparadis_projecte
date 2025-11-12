@@ -26,18 +26,18 @@ class TrackingController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {   
-        $profesional = Profesional::get();
-        return view(
-            "tracking.formulario_alta", 
-            
-            [
-                "profesional" => $profesional
-            ]
-        );
-    }
+   public function create()
+    {
+        $professionals = Profesional::all();
 
+        // Obtenemos el ID del profesional desde query string
+        $selectedProfesional = request()->query('profesional', null);
+
+        return view('tracking.formulario_alta', [
+            'professionals' => $professionals,
+            'selectedProfesional' => $selectedProfesional,
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -59,12 +59,12 @@ class TrackingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+   public function show(Tracking $tracking)
     {
-        //
+        $tracking->load(['profesional', 'registrador']);
+        return view('tracking.show', compact('tracking'));
     }
-
-    /**
+        /**
      * Show the form for editing the specified resource.
      */
     public function edit(Tracking $tracking)

@@ -17,7 +17,7 @@ class EvaluationController extends Controller
      */
   public function index()
     {
-        $evaluations = Evaluation::with(['profesional', 'profesionalAvaluador'])->get();
+        $evaluations = Evaluation::with(['profesional', 'avaluador'])->get();
         return view('evaluation.listarevaluation', compact('evaluations'));
     }
 
@@ -27,11 +27,17 @@ class EvaluationController extends Controller
      */
     public function create()
     {
-        $centres = Center::all(); 
         $professionals = Profesional::all();
-        
-        return view('evaluation.evaluation', compact('centres', 'professionals'));
+
+        // Obtenemos el ID del profesional desde query string
+        $selectedProfesional = request()->query('profesional', null);
+
+        return view('evaluation.evaluation', [
+            'professionals' => $professionals,
+            'selectedProfesional' => $selectedProfesional,
+        ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -100,10 +106,12 @@ class EvaluationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Evaluation $evaluation)
     {
-        //
+        $evaluation->load(['profesional', 'avaluador']);
+        return view('evaluation.show', compact('evaluation'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

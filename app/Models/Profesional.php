@@ -22,7 +22,19 @@ class Profesional extends Model
             'id_training'       // columna del modelo relacionado (training)
         );
     }
+    public function center()
+    {
+        return $this->belongsTo(Center::class, 'id_center');
+    }
+    public function trackings()
+    {
+        return $this->hasMany(Tracking::class, 'id_profesional');
+    }
 
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class, 'id_profesional');
+    }
 
     /*public function uniform(): HasMany{
         return $this->hasMany(Uniformity::class);
