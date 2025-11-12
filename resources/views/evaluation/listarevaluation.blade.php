@@ -6,6 +6,15 @@
         Llistat d'Evaluacions
     </h1>
 
+        <!-- PROMIG GLOBAL -->
+    <div class="max-w-lg mx-auto bg-orange-100 border border-orange-300 rounded-xl p-4 mb-6 text-center shadow-sm">
+        <p class="text-lg font-semibold text-orange-800">
+            Promig global de valoracions: 
+            <span class="text-orange-600 text-xl">{{ number_format($averageSumatori, 2) }}</span>
+        </p>
+    </div>
+
+
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white shadow-lg rounded-xl border border-gray-200">
             <thead class="bg-orange-100">
@@ -29,8 +38,17 @@
                         <td class="px-6 py-4 text-gray-800">{{ $evaluation->data }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ number_format($evaluation->sumatori, 1) }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $evaluation->observacions }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $evaluation->arxiu}}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $evaluation->sumatori}}</td>
+                        <td class="px-6 py-4 text-center">
+    @if($evaluation->arxiu)
+        <a href="{{ route('evaluation.download', $evaluation) }}" 
+           class="text-orange-500 hover:text-orange-600 underline">
+            Descarregar
+        </a>
+    @else
+        <span class="text-gray-400">—</span>
+    @endif
+</td>
+
                         <td class="px-6 py-4 text-gray-700">{{ $evaluation->profesional->nom ?? '' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $evaluation->profesionalAvaluador->nom ?? '' }}</td>
 

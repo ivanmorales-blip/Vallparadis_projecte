@@ -10,16 +10,26 @@ use App\Models\Projectes_comissions;
 use Illuminate\Support\Facades\DB;
 use App\Traits\Activable;
 
+use Illuminate\Support\Facades\Storage; // asegúrate de tener este use arriba del archivo
+
+
 class EvaluationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
   public function index()
-    {
-        $evaluations = Evaluation::with(['profesional', 'avaluador'])->get();
-        return view('evaluation.listarevaluation', compact('evaluations'));
-    }
+{
+    $evaluations = Evaluation::with(['profesional', 'profesionalAvaluador'])
+        ->orderBy('data', 'desc')
+        ->get();
+
+    // Promedio global del campo sumatori
+    $averageSumatori = $evaluations->avg('sumatori');
+
+    return view('evaluation.listarevaluation', compact('evaluations', 'averageSumatori'));
+}
+
 
 
     /**
@@ -84,18 +94,19 @@ class EvaluationController extends Controller
     $evaluation->id_profesional_avaluador = $validated['id_profesional_avaluador'];
 
     if ($request->hasFile('arxiu')) {
-        $evaluation->arxiu = $request->file('arxiu')->store('evaluations'); 
-    } else {
-        $evaluation->arxiu = null; 
+        $rutaArchivo = $request->file('arxiu')->store('evaluations', 'public');
     }
 
     
-    for ($i = 1; $i <= 20; $i++) {
-        $evaluation->{'pregunta'.$i} = $request->{'pregunta'.$i} ?? null;
-    }
-
-    
-    $evaluation->save();
+    Evaluation::create([
+        'data' => $request->data,
+        'sumatori' => $request->sumatori,
+        'observacions' => $request->observacions,
+        'arxiu' => $rutaArchivo,
+        'id_profesional' => $request->id_profesional,
+        'id_profesional_avaluador' => $request->id_profesional_avaluador,
+        
+    ]);
 
     return redirect()->route('evaluation.index')
                      ->with('success', 'Avaluació guardada correctament.');
@@ -126,33 +137,28 @@ class EvaluationController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Evaluation $evaluation)
-    {
-        $validated = $request->validate([
-            'data' => 'required|date',
-            'sumatori' => 'required|numeric',
-            'observacions' => 'nullable|string',
-            'arxiu' => 'nullable|file',
-            'id_profesional' => 'required|exists:profesional,id',
-            'id_profesional_avaluador' => 'required|exists:profesional,id',
-        ]);
+{
+    $validated = $request->validate([
+        'data' => 'required|date',
+        'sumatori' => 'required|numeric',
+        'observacions' => 'nullable|string',
+        'arxiu' => 'nullable|file',
+        'id_profesional' => 'required|exists:profesional,id',
+        'id_profesional_avaluador' => 'required|exists:profesional,id',
+    ]);
 
-
-        if ($request->hasFile('arxiu')) {
-            $validated['arxiu'] = $request->file('arxiu')->store('evaluations', 'public');
-        } else {
-            unset($validated['arxiu']);
-        }
-
-       // Actualizar las respuestas de las 20 preguntas
-    for ($i = 1; $i <= 20; $i++) {
-        $validated['pregunta'.$i] = $request->{'pregunta'.$i} ?? null;
+    // 🔹 Guardar el archivo si se ha subido
+    if ($request->hasFile('arxiu')) {
+        $validated['arxiu'] = $request->file('arxiu')->store('evaluations', 'public');
     }
 
-    $evaluation->update($validated);
+        
+        $evaluation->update($validated);
+        return redirect()->route('evaluation.index')
+                         ->with ('success', 'Evaluació actualitzada correctament.');
 
-    return redirect()->route('evaluation.index')
-                     ->with('success', 'Evaluació actualitzada correctament.');
-}
+        
+    }
 
     /**
      * Remove the specified resource from storage.
