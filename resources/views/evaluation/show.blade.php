@@ -23,7 +23,7 @@
             <div class="space-y-3">
                 <div>
                     <span class="font-semibold">📅 Data:</span>
-                    <span>{{ \Carbon\Carbon::parse($evaluation->data)->format('d/m/Y') }}</span>
+                    <span>{{ $evaluation->data instanceof \Carbon\Carbon ? $evaluation->data->format('d/m/Y') : $evaluation->data }}</span>
                 </div>
                 <div>
                     <span class="font-semibold">👤 Professional:</span>
@@ -44,9 +44,6 @@
                     @if($evaluation->arxiu)
                         <a href="{{ asset('storage/' . $evaluation->arxiu) }}" target="_blank"
                            class="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow transition">
-                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
-                            </svg>
                             Obrir arxiu
                         </a>
                     @else
@@ -60,7 +57,7 @@
         <div class="mb-8">
             <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Respostes</h2>
             <div class="overflow-x-auto rounded-xl border border-gray-200">
-                <table class="min-w-full text-sm text-left text-gray-700">
+                <table class="min-w-full text-sm text-gray-700">
                     <thead class="bg-gray-100 text-center font-semibold">
                         <tr>
                             <th class="px-4 py-2 text-left">Aspecte</th>
@@ -95,14 +92,19 @@
                                 "La seva entrada i permanència en el lloc de treball es duu a terme sense retards o absències no justificades"
                             ];
                         @endphp
-                        @foreach ($questions as $index => $text)
-                            @php $field = 'pregunta' . ($index + 1); @endphp
+                        @foreach($questions as $index => $text)
+                            @php
+                                $field = 'q'.$index;
+                                $selected = $evaluation->$field ?? 0;
+                            @endphp
                             <tr class="{{ $index % 2 == 0 ? 'bg-gray-50' : 'bg-white' }}">
                                 <td class="px-4 py-2">{{ $text }}</td>
-                                @for ($i = 1; $i <= 4; $i++)
+                                @for($i=1; $i<=4; $i++)
                                     <td class="text-center">
-                                        @if($evaluation->$field == $i)
-                                            <span class="text-green-600 font-bold">✔️</span>
+                                        @if($selected == $i)
+                                            <span class="text-green-600 font-bold text-xl">✔️</span>
+                                        @else
+                                            <span class="text-gray-300">—</span>
                                         @endif
                                     </td>
                                 @endfor
@@ -120,14 +122,10 @@
         </div>
 
         <!-- Botones -->
-        <div class="flex flex-wrap justify-between gap-4">
-            <a href="{{ route('profesional.show', $evaluation->id_profesional) }}"
+        <div class="flex flex-wrap justify-start gap-4">
+            <a href="{{ route('evaluation.index') }}"
                class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl shadow transition">
                 ⬅️ Tornar
-            </a>
-            <a href="{{ route('evaluation.edit', $evaluation->id) }}"
-               class="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow transition">
-                ✏️ Editar
             </a>
         </div>
     </div>

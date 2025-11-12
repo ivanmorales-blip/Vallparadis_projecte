@@ -84,10 +84,10 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::resource('evaluation', EvaluationController::class);
-Route::get('/evaluation/{evaluation}/download', [EvaluationController::class, 'download'])->name('evaluation.download');
-Route::get('/evaluation/{evaluation}/download', [App\Http\Controllers\EvaluationController::class, 'download'])
-    ->name('evaluation.download');
+    Route::resource('evaluation', EvaluationController::class);
+    Route::get('/evaluation/{evaluation}/download', [EvaluationController::class, 'download'])->name('evaluation.download');
+    Route::get('/evaluation/{evaluation}/download', [App\Http\Controllers\EvaluationController::class, 'download'])
+        ->name('evaluation.download');
 
 
     Route::get('/dashboard', function() {
