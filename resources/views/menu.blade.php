@@ -41,13 +41,13 @@
 
       <!-- Alta Seguiment -->
       <a href="{{ route('tracking.create') }}" 
-        class="text-[#F97800] hover:underline text-lg font-medium">
+        class="text-[#F97800] hover:underline">
           ➕ Donar d'alta Seguiment
       </a>
 
       <!-- Alta Avaluació -->
       <a href="{{ route('evaluation.create') }}" 
-        class="text-[#F97800] hover:underline text-lg font-medium">
+        class="text-[#F97800] hover:underline">
           ➕ Donar d'alta Avaluació
       </a>
   </div>

@@ -9,7 +9,7 @@
 
         <form action="{{ route('projectes_comissions.update', $projectes_comission) }}" method="POST" class="space-y-5">
             @csrf
-            @method('PUT')
+            @method('PATCH')
 
             <!-- Nom -->
             <div>
@@ -21,9 +21,13 @@
             <!-- Tipus -->
             <div>
                 <label for="tipus" class="block text-sm font-medium text-gray-700 mb-1">Tipus *</label>
-                <input type="text" id="tipus" name="tipus" value="{{ $projectes_comission->tipus }}" required
+                <select id="tipus" name="tipus" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    <option value="projecte" {{ $projectes_comission->tipus == 'projecte' ? 'selected' : '' }}>Projecte</option>
+                    <option value="comissio" {{ $projectes_comission->tipus == 'comissio' ? 'selected' : '' }}>Comissió</option>
+                </select>
             </div>
+
 
             <!-- Data inici -->
             <div>
@@ -73,6 +77,17 @@
                     @endforeach
                 </select>
             </div>
+
+            <!-- Estat -->
+<div>
+    <label for="estat" class="block text-sm font-medium text-gray-700 mb-1">Actiu *</label>
+    <select id="estat" name="estat" required
+        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <option value="1" {{ $projectes_comission->estat ? 'selected' : '' }}>Sí</option>
+        <option value="0" {{ !$projectes_comission->estat ? 'selected' : '' }}>No</option>
+    </select>
+</div>
+
 
             <!-- Botons -->
             <div class="flex justify-between items-center pt-4">

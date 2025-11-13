@@ -16,7 +16,7 @@ class Projectes_comissionsController extends Controller
     use Activable, CenterFilterable;
 
     /**
-     * Redirige al listado de proyectos por defecto
+     * Display a listing of the resource.
      */
     public function index()
     {
@@ -57,7 +57,7 @@ class Projectes_comissionsController extends Controller
     }
 
     /**
-     * Formulario para crear proyecto/comisión
+     * Show the form for creating a new resource.
      */
     public function create()
     {
@@ -67,7 +67,7 @@ class Projectes_comissionsController extends Controller
     }
 
     /**
-     * Guardar proyecto/comisión
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
@@ -101,7 +101,7 @@ class Projectes_comissionsController extends Controller
     }
 
     /**
-     * Formulario para editar
+     * Show the form for editing the specified resource.
      */
     public function edit(Projectes_comissions $projectes_comission)
     {
@@ -111,7 +111,7 @@ class Projectes_comissionsController extends Controller
     }
 
     /**
-     * Actualizar proyecto/comisión
+     * Display the specified resource.
      */
     public function update(Request $request, Projectes_comissions $projectes_comission)
     {
@@ -134,7 +134,7 @@ class Projectes_comissionsController extends Controller
     }
 
     /**
-     * Activar / Desactivar proyecto/comisión
+     * 
      */
     public function active(Projectes_comissions $projectes_comission)
     {
@@ -145,7 +145,7 @@ class Projectes_comissionsController extends Controller
     }
 
     /**
-     * Eliminar proyecto/comisión
+     *
      */
     public function destroy(Projectes_comissions $projectes_comission)
     {

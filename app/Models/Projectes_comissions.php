@@ -12,10 +12,10 @@ class Projectes_comissions extends Model
         'nom',
         'tipus',
         'data_inici',
-        'profesional_id',  // coincide con tu tabla
+        'profesional_id',  
         'descripcio',
         'observacions',
-        'centre_id',       // coincide con tu tabla
+        'centre_id',       
         'estat', 
     ];
 
@@ -28,6 +28,6 @@ class Projectes_comissions extends Model
     // Relación con Centre
     public function centre()
     {
-        return $this->belongsTo(Center::class, 'centre_id'); // nombre de columna correcto
+        return $this->belongsTo(Center::class, 'centre_id'); 
     }
 }
