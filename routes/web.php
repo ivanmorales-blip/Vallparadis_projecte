@@ -42,30 +42,40 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profesional/{profesional}', [ProfesionalController::class, 'show'])->name('profesional.show');
     Route::delete('/profesional/{profesional}', [ProfesionalController::class, 'destroy'])->name('profesional.destroy');
 
-    // Proyectos y Comisiones
-Route::resource('projectes_comissions', ProjectesComissionsController::class);
+Route::resource('projectes_comissions', Projectes_comissionsController::class);
 
+// Listados separados
+Route::get('/projectes', [Projectes_comissionsController::class, 'projectes'])
+     ->name('projectes_comissions.projectes');
 
-    /// Listado separado de proyectos y comisiones
-Route::get('/projectes', [Projectes_comissionsController::class, 'projectes'])->name('projectes_comissions.projectes');
-Route::get('/comissions', [Projectes_comissionsController::class, 'comissions'])->name('projectes_comissions.comissions');
+Route::get('/comissions', [Projectes_comissionsController::class, 'comissions'])
+     ->name('projectes_comissions.comissions');
 
-// Crear proyecto/comisión
-Route::get('projectes_comissions/create', [Projectes_comissionsController::class, 'create'])->name('projectes_comissions.create');
-Route::post('projectes_comissions', [Projectes_comissionsController::class, 'store'])->name('projectes_comissions.store');
+// Crear
+Route::get('projectes_comissions/create', [Projectes_comissionsController::class, 'create'])
+     ->name('projectes_comissions.create');
+
+Route::post('projectes_comissions', [Projectes_comissionsController::class, 'store'])
+     ->name('projectes_comissions.store');
 
 // Editar / Actualizar
-Route::get('projectes_comissions/{projectes_comission}/edit', [Projectes_comissionsController::class, 'edit'])->name('projectes_comissions.edit');
-Route::patch('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'update'])->name('projectes_comissions.update');
+Route::get('projectes_comissions/{projectes_comission}/edit', [Projectes_comissionsController::class, 'edit'])
+     ->name('projectes_comissions.edit');
+
+Route::patch('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'update'])
+     ->name('projectes_comissions.update');
 
 // Activar / Desactivar
-Route::patch('projectes_comissions/{projectes_comission}/active', [Projectes_comissionsController::class, 'active'])->name('projectes_comissions.active');
+Route::patch('projectes_comissions/{projectes_comission}/active', [Projectes_comissionsController::class, 'active'])
+     ->name('projectes_comissions.active');
 
 // Eliminar
-Route::delete('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'destroy'])->name('projectes_comissions.destroy');
+Route::delete('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'destroy'])
+     ->name('projectes_comissions.destroy');
 
 // Mostrar detalles
-Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'show'])->name('projectes_comissions.show');
+Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'show'])
+     ->name('projectes_comissions.show');
 
 
     // Seguimiento (tracking)

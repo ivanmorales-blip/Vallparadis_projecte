@@ -21,14 +21,14 @@
   <!-- Projectes -->
 <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 flex flex-col mb-4">
   <h2 class="text-2xl text-gray-700 font-bold mb-4 border-b border-gray-300 pb-2">Projectes</h2>
-  <a href="{{ route('projectes_comissions.index') }}" class="text-[#F97800] hover:underline mb-2">Listar Projectes</a>
+  <a href="{{ route('projectes_comissions.projectes') }}" class="text-[#F97800] hover:underline mb-2">Listar Projectes</a>
   <a href="{{ route('projectes_comissions.create') }}" class="text-[#F97800] hover:underline">Alta Projectes</a>
 </div>
 
 <!-- Comissions -->
 <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 flex flex-col">
   <h2 class="text-2xl text-gray-700 font-bold mb-4 border-b border-gray-300 pb-2">Comissions</h2>
-  <a href="{{ route('projectes_comissions.index') }}" class="text-[#F97800] hover:underline mb-2">Listar Comissions</a>
+  <a href="{{ route('projectes_comissions.comissions') }}" class="text-[#F97800] hover:underline mb-2">Listar Comissions</a>
   <a href="{{ route('projectes_comissions.create') }}" class="text-[#F97800] hover:underline">Alta Comissions</a>
 </div>
 

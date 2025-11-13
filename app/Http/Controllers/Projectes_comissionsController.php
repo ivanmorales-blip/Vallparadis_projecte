@@ -10,7 +10,7 @@ use App\Models\Center;
 class Projectes_comissionsController extends Controller
 {
     /**
-     * Redirige al listado de proyectos
+     * Redirige al listado de proyectos por defecto
      */
     public function index()
     {
@@ -22,7 +22,9 @@ class Projectes_comissionsController extends Controller
      */
     public function projectes()
     {
-        $projectes = Projectes_comissions::where('tipus', 'projecte')->with('profesional')->get();
+        $projectes = Projectes_comissions::where('tipus', 'projecte')
+                        ->with('profesional')
+                        ->get();
         return view('projects.projects', compact('projectes'));
     }
 
@@ -31,7 +33,9 @@ class Projectes_comissionsController extends Controller
      */
     public function comissions()
     {
-        $comissions = Projectes_comissions::where('tipus', 'comissio')->with('profesional')->get();
+        $comissions = Projectes_comissions::where('tipus', 'comissio')
+                        ->with('profesional')
+                        ->get();
         return view('projectes_comissions.comissions', compact('comissions'));
     }
 
@@ -63,8 +67,9 @@ class Projectes_comissionsController extends Controller
 
         Projectes_comissions::create($validated);
 
-        return redirect()->route($validated['tipus'] == 'projecte' ? 'projectes_comissions.projectes' : 'projectes_comissions.comissions')
-                         ->with('success', 'Projecte/Comissió creat correctament.');
+        return redirect()->route(
+            $validated['tipus'] === 'projecte' ? 'projectes_comissions.projectes' : 'projectes_comissions.comissions'
+        )->with('success', 'Projecte/Comissió creat correctament.');
     }
 
     /**
@@ -104,8 +109,9 @@ class Projectes_comissionsController extends Controller
 
         $projectes_comission->update($validated);
 
-        return redirect()->route($validated['tipus'] == 'projecte' ? 'projectes_comissions.projectes' : 'projectes_comissions.comissions')
-                         ->with('success', 'Projecte/Comissió actualitzat correctament.');
+        return redirect()->route(
+            $validated['tipus'] === 'projecte' ? 'projectes_comissions.projectes' : 'projectes_comissions.comissions'
+        )->with('success', 'Projecte/Comissió actualitzat correctament.');
     }
 
     /**
