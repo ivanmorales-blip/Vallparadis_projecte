@@ -7,6 +7,7 @@ use App\Models\Projectes_comissions;
 use App\Models\Profesional;
 use App\Models\Center;
 use App\Traits\CenterFilterable;
+use App\Traits\Activable;
 use Illuminate\Support\Facades\DB;
 
 
@@ -62,7 +63,7 @@ class Projectes_comissionsController extends Controller
     {
         $centres = Center::find($this->currentCenterId());
         $professionals = $this->professionalsInCenter()->get();
-        return view('projectes_comissions.projectes_comissions', ['professionals' => $professionals, 'centres' => $centres]);
+        return view('projectes_comissions.projectes_comissions', ['professionals' => $professionals, 'centre' => $centres]);
     }
 
     /**

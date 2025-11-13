@@ -99,6 +99,7 @@ Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsCo
     // Exportaciones
     Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
     Route::get('/export/uniform', [ExportController::class, 'exportUniform'])->name('export.uniform');
+    Route::get('/export/cursos', [ExportController::class, 'exportCursos'])->name('export.cursos');
 
 });
 
