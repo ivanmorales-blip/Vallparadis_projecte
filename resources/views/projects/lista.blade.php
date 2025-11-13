@@ -3,7 +3,7 @@
 @section('contingut')
 <div class="p-8 bg-gray-50 min-h-screen">
     <h1 class="text-3xl font-bold mb-6 text-orange-500 text-center">
-        Llistat de Projectes i Comissions
+        Llistat de Projectes
     </h1>
 
     <div class="grid md:grid-cols-2 gap-8">

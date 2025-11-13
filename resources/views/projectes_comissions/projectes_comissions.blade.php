@@ -4,7 +4,7 @@
 <div class="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
     <div class="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-8">
         <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">
-            Afegir Projecte o Comissió
+            Afegir Projecte/Comissió
         </h1>
 
         <!-- Mostrar errores -->

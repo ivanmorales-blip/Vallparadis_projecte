@@ -3,97 +3,91 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Projectes_comissions;
 use App\Models\Profesional;
 use App\Models\Center;
-use App\Models\Projectes_comissions;
-use Illuminate\Support\Facades\DB;
-use App\Traits\Activable;
 
 class Projectes_comissionsController extends Controller
 {
-    use Activable;
-
     /**
-     * Display a listing of the resource.
+     * Redirige al listado de proyectos
      */
     public function index()
     {
-        $projectes = Projectes_comissions::get();
-        return view('projectes_comissions.lista', ["projectes" => $projectes]);
+        return redirect()->route('projectes_comissions.projectes');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Listado solo de proyectos
+     */
+    public function projectes()
+    {
+        $projectes = Projectes_comissions::where('tipus', 'projecte')->with('profesional')->get();
+        return view('projects.projects', compact('projectes'));
+    }
+
+    /**
+     * Listado solo de comisiones
+     */
+    public function comissions()
+    {
+        $comissions = Projectes_comissions::where('tipus', 'comissio')->with('profesional')->get();
+        return view('projectes_comissions.comissions', compact('comissions'));
+    }
+
+    /**
+     * Formulario para crear proyecto/comisión
      */
     public function create()
     {
-        $centres = Center::get(); 
-        $professionals = Profesional::get();
-
-        return view('projectes_comissions.projectes_comissions', [
-            "centres" => $centres,
-            "professionals" => $professionals
-        ]);    
+        $professionals = Profesional::all();
+        $centres = Center::all();
+        return view('projectes_comissions.projectes_comissions', compact('professionals', 'centres'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar proyecto/comisión
      */
     public function store(Request $request)
-    {   
-        // Validar los datos con los nombres correctos de las tablas
+    {
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
             'tipus' => 'required|string|in:projecte,comissio',
             'data_inici' => 'required|date',
-            'profesional_id' => 'required|exists:profesional,id', // tabla correcta
+            'profesional_id' => 'required|exists:profesional,id',
             'descripcio' => 'required|string',
             'observacions' => 'nullable|string',
-            'centre_id' => 'required|exists:center,id', // tabla correcta
+            'centre_id' => 'required|exists:center,id',
             'estat' => 'required|boolean',
         ]);
 
-        // Insertar en la base de datos usando DB::table
-        DB::table('projectes_comissions')->insert([
-            'nom' => $validated['nom'],
-            'tipus' => $validated['tipus'],
-            'data_inici' => $validated['data_inici'],
-            'profesional_id' => $validated['profesional_id'],
-            'descripcio' => $validated['descripcio'],
-            'observacions' => $validated['observacions'] ?? null,
-            'centre_id' => $validated['centre_id'],
-            'estat' => $validated['estat'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        Projectes_comissions::create($validated);
 
-        return redirect()->route('projectes_comissions.index')
+        return redirect()->route($validated['tipus'] == 'projecte' ? 'projectes_comissions.projectes' : 'projectes_comissions.comissions')
                          ->with('success', 'Projecte/Comissió creat correctament.');
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar detalles
      */
     public function show(Projectes_comissions $projectes_comission)
     {
         $projecte = $projectes_comission->load(['profesional', 'centre']);
-
         return view('projectes_comissions.show', compact('projecte'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Formulario para editar
      */
     public function edit(Projectes_comissions $projectes_comission)
     {
-        $professionals = Profesional::get();
-        $centres = Center::get();
-
+        $professionals = Profesional::all();
+        $centres = Center::all();
         return view('projectes_comissions.formulario_editar', compact('projectes_comission', 'professionals', 'centres'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar proyecto/comisión
      */
     public function update(Request $request, Projectes_comissions $projectes_comission)
     {
@@ -101,37 +95,36 @@ class Projectes_comissionsController extends Controller
             'nom' => 'required|string|max:255',
             'tipus' => 'required|string|in:projecte,comissio',
             'data_inici' => 'required|date',
-            'profesional_id' => 'required|exists:profesional,id', // tabla correcta
+            'profesional_id' => 'required|exists:profesional,id',
             'descripcio' => 'required|string',
             'observacions' => 'nullable|string',
-            'centre_id' => 'required|exists:center,id', // tabla correcta
+            'centre_id' => 'required|exists:center,id',
             'estat' => 'required|boolean',
         ]);
 
         $projectes_comission->update($validated);
 
-        return redirect()->route('projectes_comissions.index')
+        return redirect()->route($validated['tipus'] == 'projecte' ? 'projectes_comissions.projectes' : 'projectes_comissions.comissions')
                          ->with('success', 'Projecte/Comissió actualitzat correctament.');
     }
 
     /**
-     * Activar un proyecto o comisión.
+     * Activar / Desactivar proyecto/comisión
      */
-    public function active(Projectes_comissions $projectes_comissions)
-{
-    // Solo invertimos el estado
-    $projectes_comissions->estat = !$projectes_comissions->estat;
-    $projectes_comissions->save();
+    public function active(Projectes_comissions $projectes_comission)
+    {
+        $projectes_comission->estat = !$projectes_comission->estat;
+        $projectes_comission->save();
 
-    return redirect()->route('projectes_comissions.index')
-                     ->with('success', 'Estat canviat correctament.');
-}
+        return redirect()->back()->with('success', 'Estat canviat correctament.');
+    }
 
     /**
-     * Desactivar un proyecto o comisión.
+     * Eliminar proyecto/comisión
      */
     public function destroy(Projectes_comissions $projectes_comission)
     {
-        return $this->toggleActive($projectes_comission, false, 'projectes_comissions.index');
+        $projectes_comission->delete();
+        return redirect()->back()->with('success', 'Projecte/Comissió eliminat correctament.');
     }
 }
