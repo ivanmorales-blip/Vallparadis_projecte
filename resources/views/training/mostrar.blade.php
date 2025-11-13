@@ -76,7 +76,7 @@
             <!-- Añadir profesionales -->
             <a href="{{ route('trainings.addProfessionals', $training->id) }}" 
                class="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow transition">
-                ➕ Afegir professionals
+                ➕ Gestionar professionals
             </a>
 
             <!-- Editar curso -->

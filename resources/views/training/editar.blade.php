@@ -42,10 +42,17 @@
                           class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">{{ $training->objectiu }}</textarea>
             </div>
 
-            <div>
-                <label for="formador" class="block text-sm font-medium text-gray-700 mb-1">Formador *</label>
-                <input type="text" id="formador" name="formador" value="{{ $training->formador }}" required
-                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+           <div>
+                <label for="formador" class="block text-sm font-medium text-gray-700 mb-1">Professional *</label>
+                <select id="formador" name="formador" required
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    <option value="">-- Selecciona un professional --</option>
+                    @foreach ($profesional as $prof)
+                        <option value="{{ $prof->id }}" {{ $training->formador == $prof->id ? 'selected' : '' }}>
+                            {{ $prof->nom }} {{ $prof->cognom }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div>

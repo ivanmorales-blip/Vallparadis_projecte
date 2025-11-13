@@ -78,21 +78,12 @@
 
             <!-- Centre -->
             <div>
-                <label for="centre_id" class="block text-sm font-medium text-gray-700 mb-1">Centre *</label>
-                <select id="centre_id" name="centre_id" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un centre --</option>
-                    @foreach ($centres as $centre)
-                        <option value="{{ $centre->id }}" {{ old('centre_id')==$centre->id?'selected':'' }}>
-                            {{ $centre->nom }}
-                        </option>
-                    @endforeach
-                </select>
+                <label for="id_center" class="block text-gray-700 font-semibold mb-1">Centre *</label>
+                <input type="hidden" id="id_center" name="id_center" value="{{ session('id_center') }}">
+                <input type="text" class="w-full px-4 py-2 border rounded-lg bg-gray-100 cursor-not-allowed" 
+                    value="{{ $centre->firstWhere('id', session('id_center'))->nom ?? 'No assignat' }}" disabled>
             </div>
-
-            <!-- Estat ocult per defecte actiu -->
-            <input type="hidden" name="estat" value="1">
-
+            
             <!-- Botons -->
             <div class="flex justify-between items-center pt-4">
                 <a href="{{ route('menu') }}"

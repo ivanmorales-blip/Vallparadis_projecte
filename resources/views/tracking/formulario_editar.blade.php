@@ -38,12 +38,12 @@
 
         <!-- Profesional -->
         <div>
-                <label for="profesional_id" class="block text-sm font-medium text-gray-700 mb-1">Professional *</label>
-                <select id="profesional_id" name="profesional_id" required
+                <label for="id_profesional" class="block text-sm font-medium text-gray-700 mb-1">Professional *</label>
+                <select id="id_profesional" name="id_profesional" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un professional --</option>
                     @foreach ($profesional as $prof)
-                        <option value="{{ $prof->id }}" {{ $tracking->profesional_id == $prof->id ? 'selected' : '' }}>
+                        <option value="{{ $prof->id }}" {{ $tracking->id_profesional == $prof->id ? 'selected' : '' }}>
                             {{ $prof->nom }} {{ $prof->cognom }}
                         </option>
                     @endforeach
@@ -52,12 +52,12 @@
 
         <!-- Registrador -->
         <div>
-                <label for="profesional_id" class="block text-sm font-medium text-gray-700 mb-1">Registrador *</label>
-                <select id="profesional_id" name="profesional_id" required
+                <label for="id_profesional_registrador" class="block text-sm font-medium text-gray-700 mb-1">Registrador *</label>
+                <select id="id_profesional_registrador" name="id_profesional_registrador" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un professional --</option>
                     @foreach ($profesional as $prof)
-                    <option value="{{ $prof->id }}" {{ $tracking->profesional_id == $prof->id ? 'selected' : '' }}>
+                    <option value="{{ $prof->id }}" {{ $tracking->id_profesional_registrador == $prof->id ? 'selected' : '' }}>
                             {{ $prof->nom }} {{ $prof->cognom }}
                     </option>
                     @endforeach

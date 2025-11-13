@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Projectes_comissions;
 use App\Models\Profesional;
 use App\Models\Center;
+use App\Traits\CenterFilterable;
+use Illuminate\Support\Facades\DB;
+
 
 class Projectes_comissionsController extends Controller
 {
+    use Activable, CenterFilterable;
+
     /**
      * Redirige al listado de proyectos por defecto
      */
@@ -22,10 +27,19 @@ class Projectes_comissionsController extends Controller
      */
     public function projectes()
     {
-        $projectes = Projectes_comissions::where('tipus', 'projecte')
-                        ->with('profesional')
-                        ->get();
-        return view('projects.projects', compact('projectes'));
+        $projectesTipus = Projectes_comissions::where('tipus', 'projecte')
+            ->with('profesional')
+            ->get();
+
+        $projectesCenter = $this->projectsInCenter()->get();
+
+        // Merge both collections
+        $projectes = $projectesTipus->merge($projectesCenter);
+
+        return view('projects.projects', [
+            'projectes' => $projectes
+        ]);
+
     }
 
     /**
@@ -33,10 +47,12 @@ class Projectes_comissionsController extends Controller
      */
     public function comissions()
     {
-        $comissions = Projectes_comissions::where('tipus', 'comissio')
-                        ->with('profesional')
-                        ->get();
-        return view('projectes_comissions.comissions', compact('comissions'));
+        $comissionsTipus = Projectes_comissions::where('tipus', 'comissio')->with('profesional')->get();
+        $comissionsCenter = $this->projectsInCenter()->get();
+
+        $comissions = $comissionsTipus->merge($comissionsCenter);
+        
+        return view('projectes_comissions.comissions', ['comissions' => $comissions]);
     }
 
     /**
@@ -44,9 +60,9 @@ class Projectes_comissionsController extends Controller
      */
     public function create()
     {
-        $professionals = Profesional::all();
-        $centres = Center::all();
-        return view('projectes_comissions.projectes_comissions', compact('professionals', 'centres'));
+        $centres = Center::find($this->currentCenterId());
+        $professionals = $this->professionalsInCenter()->get();
+        return view('projectes_comissions.projectes_comissions', ['professionals' => $professionals, 'centres' => $centres]);
     }
 
     /**
@@ -64,17 +80,19 @@ class Projectes_comissionsController extends Controller
             'centre_id' => 'required|exists:center,id',
             'estat' => 'required|boolean',
         ]);
+        $validated['centre_id'] = $this->currentCenterId();
 
-        Projectes_comissions::create($validated);
+        DB::table('projectes_comissions')->insert(array_merge($validated, [
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]));
 
         return redirect()->route(
             $validated['tipus'] === 'projecte' ? 'projectes_comissions.projectes' : 'projectes_comissions.comissions'
         )->with('success', 'Projecte/Comissió creat correctament.');
     }
 
-    /**
-     * Mostrar detalles
-     */
+
     public function show(Projectes_comissions $projectes_comission)
     {
         $projecte = $projectes_comission->load(['profesional', 'centre']);
@@ -86,9 +104,9 @@ class Projectes_comissionsController extends Controller
      */
     public function edit(Projectes_comissions $projectes_comission)
     {
-        $professionals = Profesional::all();
+        $professionals =  $this->professionalsInCenter()->get();
         $centres = Center::all();
-        return view('projectes_comissions.formulario_editar', compact('projectes_comission', 'professionals', 'centres'));
+        return view('projectes_comissions.formulario_editar', ['projectes_comission' => $projectes_comission, 'professionals' => $professionals, 'centres' => $centres]);
     }
 
     /**

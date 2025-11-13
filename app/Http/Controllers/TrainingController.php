@@ -4,22 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Training;
 use App\Models\Center;
-use App\Models\Profesional;
 use Illuminate\Http\Request;
 use App\Traits\Activable;
+use App\Traits\CenterFilterable;
 use Illuminate\Support\Facades\Storage;
 
 class TrainingController extends Controller
 {
-    use Activable;
+    use Activable, CenterFilterable;
 
     /**
      * Mostra el llistat de cursos.
      */
     public function index()
     {
-        // Incloem relació amb centres per evitar N+1
-        $trainings = Training::with('center')->get();
+        $centerId = $this->currentCenterId();
+        $trainings = Training::with('center')
+            ->where('id_center', $centerId)
+            ->get();
 
         return view('training.lista', [
             'trainings' => $trainings
@@ -31,8 +33,9 @@ class TrainingController extends Controller
      */
     public function create()
     {
-        $centers = Center::all();
-        $professionals = Profesional::all();
+        $centerId = $this->currentCenterId();
+        $centers = Center::where('id', $centerId)->get();
+        $professionals = $this->professionalsInCenter()->get();
 
         return view('training.alta_formulari', [
             'centers' => $centers,
@@ -52,43 +55,49 @@ class TrainingController extends Controller
             'hores' => ['required', 'numeric', 'min:1'],
             'objectiu' => ['nullable', 'string'],
             'descripcio' => ['nullable', 'string'],
-            'formador' => ['required', 'string', 'max:255'],
-            'id_center' => ['nullable', 'exists:center,id'],
+            'formador' => ['required', 'exists:profesional,id'], // main trainer
+            'id_center' => ['nullable', 'exists:center,id'], // match DB column
             'estat' => ['required', 'boolean'],
-            'professionals' => ['nullable', 'array'],
-            'professionals.*' => ['exists:profesional,id'], 
+            'professionals' => ['nullable', 'array'], // extra assigned professionals
+            'professionals.*' => [$this->professionalRule()],
             'document' => ['nullable', 'file', 'mimes:pdf,doc,docx'],
         ]);
 
-        $training = Training::create($validated);
+        // Fix column names to match your DB
+        $trainingData = $validated;
+        $trainingData['center_id'] = $validated['id_center'] ?? null; // if your DB column is center_id
 
-        // 🔗 Guardar relación con profesionales
+        $training = Training::create($trainingData);
+
+        // Sync multiple professionals (assigned)
         if (!empty($validated['professionals'])) {
             $training->professionals()->sync($validated['professionals']);
         }
 
-        // 📄 Guardar archivo adjunto
+        // Handle file upload
         if ($request->hasFile('document')) {
             $path = $request->file('document')->store('documents', 'public');
             $training->update(['document' => $path]);
         }
 
         return redirect()->route('trainings.index')
-                         ->with('success', 'Curs creat correctament.');
+                        ->with('success', 'Curs creat correctament.');
     }
+
 
     /**
      * Mostra el formulari per editar un curs existent.
      */
     public function edit(Training $training)
     {
-        $centers = Center::all();
-        $professionals = Profesional::all();
+        $centerId = $this->currentCenterId();
+        $centers = Center::where('id', $centerId)->get();
+        $professionals = $this->professionalsInCenter()->get();
 
         return view('training.editar', [
             'training' => $training,
             'centers' => $centers,
-            'professionals' => $professionals
+            'profesional' => $professionals
         ]);
     }
 
@@ -110,7 +119,6 @@ class TrainingController extends Controller
             'document' => ['nullable', 'file', 'mimes:pdf,doc,docx'],
         ]);
 
-        // 📄 Si se sube un nuevo documento, reemplazamos el anterior
         if ($request->hasFile('document')) {
             if ($training->document && Storage::disk('public')->exists($training->document)) {
                 Storage::disk('public')->delete($training->document);
@@ -125,7 +133,7 @@ class TrainingController extends Controller
     }
 
     /**
-     * Activa un curs (AJAX o normal).
+     * Activa un curs.
      */
     public function active(Training $training)
     {
@@ -133,7 +141,7 @@ class TrainingController extends Controller
     }
 
     /**
-     * Desactiva un curs (AJAX o normal).
+     * Desactiva un curs.
      */
     public function destroy(Training $training)
     {
@@ -141,26 +149,34 @@ class TrainingController extends Controller
     }
 
     /**
-     * NUEVA FUNCIÓN: mostrar los detalles de un curso.
-     * (para poder hacer clic desde el listado y ver más información)
+     * Mostrar detalles de un curso.
      */
     public function show(Training $training)
     {
-        return view('training.mostrar', compact('training'));
+        return view('training.mostrar', [
+            'training' => $training
+        ]);
     }
+
     public function addProfessionals(Training $training)
     {
-    $assignedProfessionals = $training->professionals;
-    $availableProfessionals = \App\Models\Profesional::whereNotIn('id', $assignedProfessionals->pluck('id'))->get();
+        $assignedProfessionals = $training->professionals;
+        $availableProfessionals = $this->professionalsInCenter()
+            ->whereNotIn('id', $assignedProfessionals->pluck('id'))
+            ->get();
 
-    return view('training.afegir_professionals', compact('training', 'assignedProfessionals', 'availableProfessionals'));
+        return view('training.afegir_professionals', [
+            'training' => $training,
+            'assignedProfessionals' => $assignedProfessionals,
+            'availableProfessionals' => $availableProfessionals
+        ]);
     }
 
     public function updateProfessionals(Request $request, Training $training)
     {
         $request->validate([
             'professionals' => 'array',
-            'professionals.*' => 'exists:profesional,id',
+            'professionals.*' => [$this->professionalRule()],
         ]);
 
         $training->professionals()->sync($request->professionals ?? []);

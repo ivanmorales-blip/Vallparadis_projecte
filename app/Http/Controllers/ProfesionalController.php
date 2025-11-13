@@ -6,59 +6,49 @@ use Illuminate\Http\Request;
 use App\Models\Profesional;
 use App\Models\Center;
 use App\Traits\Activable;
+use App\Traits\CenterFilterable;
 
 class ProfesionalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use Activable, CenterFilterable;
+
     public function index()
     {
-        $profesional = Profesional::get();
-        return view("profesional.listar", 
-            
-            [
-                "profesional" => $profesional
-            ]
-        );
+        $profesional = $this->professionalsInCenter()->get();
+        return view('profesional.listar', [
+            'profesional' => $profesional
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {   
-        $centre = Center::get();
-        return view(
-            "profesional.formulario_alta", 
-            
-            [
-                "centre" => $centre
-            ]
-        );
+        $centres = Center::all();
+        return view('profesional.formulario_alta', [
+            'centre' => $centres
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        Profesional::create([ 
-            'nom' => $request->input('nom'),
-            'cognom' => $request->input('cognom'),
-            'telefon' => $request->input('telefon'),
-            'email' => $request->input('email'), 
-            'adreça' => $request->input('adreça'),
-            'estat' => $request->input('estat'),
-            'id_center' => $request->input('id_center'),
-            'taquilla' => $request->input('taquilla'),
-            'talla_samarreta' => $request->input('talla_samarreta'),
-            'talla_pantalons' => $request->input('talla_pantalons'),
-            'talla_sabates' => $request->input('talla_sabates'),
-            'data_renovacio' => now(),
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'cognom' => 'required|string|max:255',
+            'telefon' => 'nullable|string|max:50',
+            'email' => 'nullable|email|max:255',
+            'adreça' => 'nullable|string|max:255',
+            'estat' => 'required|boolean',
+            'id_center' => 'required|exists:center,id',
+            'taquilla' => 'nullable|string|max:50',
+            'talla_samarreta' => 'nullable|string|max:10',
+            'talla_pantalons' => 'nullable|string|max:10',
+            'talla_sabates' => 'nullable|string|max:10',
         ]);
-        return redirect()->route('menu');
 
+        $validated['data_renovacio'] = now();
+
+        Profesional::create($validated);
+
+        return redirect()->route('menu');
     }
 
     /**
@@ -67,52 +57,38 @@ class ProfesionalController extends Controller
     public function show(Profesional $profesional)
     {
         $profesional->load(['center', 'trackings', 'evaluations']);
-        return view('profesional.show', compact('profesional'));
+        return view('profesional.show', ['profesional' => $profesional]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(profesional $profesional)
+    
+    public function edit(Profesional $profesional)
     {
-        $centre = Center::get();
-                return view(
-            "profesional.formulario_editar",
-            [
-                'profesional' => $profesional,
-                'nom' => $profesional->nom,
-                'cognom' => $profesional->cognom,
-                'telefon' => $profesional->telefon,
-                'email' => $profesional->email,
-                'taquilla' => $profesional->taquilla,
-                'adreça' => $profesional->adreça,
-                'id_center' => $profesional->id_center,
-                'centre' => $centre,
-                'talla_samarreta'=> $profesional->talla_samarreta,
-                'talla_pantalons'=> $profesional->talla_pantalons,
-                'talla_sabates'=> $profesional->talla_sabates,
-
-            ]
-        );
+        $centres = Center::all();
+        return view('profesional.formulario_editar', [
+            'profesional' => $profesional,
+            'nom' => $profesional->nom,
+            'cognom' => $profesional->cognom,
+            'telefon' => $profesional->telefon,
+            'email' => $profesional->email,
+            'taquilla' => $profesional->taquilla,
+            'adreça' => $profesional->adreça,
+            'id_center' => $profesional->id_center,
+            'centre' => $centres,
+            'talla_samarreta'=> $profesional->talla_samarreta,
+            'talla_pantalons'=> $profesional->talla_pantalons,
+            'talla_sabates'=> $profesional->talla_sabates,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Profesional $profesional)
     {
         {
         //Obtiene todos los campos del formulario.
         // Laravel usará solo los que estén permitidos en $fillable del modelo.
-
-
         $profesional->update($request->all());
 
         return redirect()->route('menu');
         }
     }
-
-    use Activable;
 
     public function active(Profesional $profesional)
     {
@@ -123,5 +99,4 @@ class ProfesionalController extends Controller
     {
         return $this->toggleActive($profesional, false, 'profesional.index');
     }
-
 }

@@ -3,24 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Profesional;
 use App\Models\Tracking;
+use App\Models\Profesional;
 use App\Traits\Activable;
+use App\Traits\CenterFilterable;
 
 class TrackingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use Activable, CenterFilterable;
+
     public function index()
     {
-        $tracking = Tracking::get();
-        return view("tracking.listar", 
-            
-            [
-                "tracking" => $tracking
-            ]
-        );
+        $trackings = Tracking::with('profesional')
+            ->whereHas('profesional', function($query) {
+                $query->where('id_center', session('id_center'));
+            })
+            ->get();
+
+        return view('tracking.listar', [
+            'tracking' => $trackings
+        ]);
     }
 
     /**
@@ -28,7 +30,7 @@ class TrackingController extends Controller
      */
    public function create()
     {
-        $professionals = Profesional::all();
+        $professionals = $this->professionalsInCenter()->get();
 
         // Obtenemos el ID del profesional desde query string
         $selectedProfesional = request()->query('profesional', null);
@@ -38,22 +40,26 @@ class TrackingController extends Controller
             'selectedProfesional' => $selectedProfesional,
         ]);
     }
+    
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        Tracking::create([ 
-            'tipus' => $request->input('tipus'),
-            'data' => $request->input('data'),
-            'tema' => $request->input('tema'),
-            'comentari' => $request->input('comentari'), 
-            'id_profesional' => $request->input('id_profesional'),
-            'id_profesional_registrador' => $request->input('id_profesional_registrador'),
-            'estat' => $request->input('estat'),
+        $validated = $request->validate([
+            'data' => 'required|date',
+            'observacions' => 'nullable|string',
+            'id_profesional' => 'required|exists:profesional,id',
+            'tipus' => 'required|string',
+            'tema' => 'required|string',
+            'comentari' => 'required|string',
+            'id_profesional_registrador' => 'required|exists:profesional,id',
         ]);
-        return redirect()->route('menu');
 
+        Tracking::create($validated);
+
+        return redirect()->route('tracking.index');
     }
 
     /**
@@ -64,37 +70,39 @@ class TrackingController extends Controller
         $tracking->load(['profesional', 'registrador']);
         return view('tracking.show', compact('tracking'));
     }
-        /**
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Tracking $tracking)
     {
-        $profesional = Profesional::get();
-                return view(
-            "tracking.formulario_editar",
-            [
-                "profesional"=>$profesional,
-                "tracking"=>$tracking
-            ]
-        );
+        $profesional = $this->professionalsInCenter()->get();
+        return view('tracking.formulario_editar', [
+            'tracking' => $tracking,
+            'data' => $tracking->data,
+            'observacions' => $tracking->observacions,
+            'id_profesional' => $tracking->id_profesional,
+            'profesional' => $profesional
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Tracking $tracking)
     {
-        {
-        //Obtiene todos los campos del formulario.
-        // Laravel usará solo los que estén permitidos en $fillable del modelo.
+        $validated = $request->validate([
+            'data' => 'required|date',
+            'observacions' => 'nullable|string',
+            'id_profesional' => 'required|exists:profesional,id',
+            'id_profesional_registrador' => 'required|exists:profesional,id',
+            'tipus' => 'required|string',
+            'tema' => 'required|string',
+            'comentari' => 'required|string',
+        ]);
 
-        $tracking->update($request->all());
 
-        return redirect()->route('menu');
-        }
+        $tracking->update($validated);
+
+        return redirect()->route('tracking.index');
     }
-
-    use Activable;
 
     public function active(Tracking $tracking)
     {
@@ -105,5 +113,4 @@ class TrackingController extends Controller
     {
         return $this->toggleActive($tracking, false, 'tracking.index');
     }
-
 }

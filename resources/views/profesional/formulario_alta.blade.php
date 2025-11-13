@@ -53,17 +53,14 @@
             </select>
         </div>
 
-        <!-- Centre -->
+       <!-- Centre -->
         <div>
             <label for="id_center" class="block text-gray-700 font-semibold mb-1">Centre *</label>
-            <select id="id_center" name="id_center" required
-                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
-                <option value="">-- Selecciona un centre --</option>
-                @foreach ($centre as $c)
-                    <option value="{{ $c->id }}">{{ $c->nom }}</option>
-                @endforeach
-            </select>
+            <input type="hidden" id="id_center" name="id_center" value="{{ session('id_center') }}">
+            <input type="text" class="w-full px-4 py-2 border rounded-lg bg-gray-100 cursor-not-allowed" 
+                value="{{ $centre->firstWhere('id', session('id_center'))->nom ?? 'No assignat' }}" disabled>
         </div>
+
 
         <!-- Taquilla -->
         <div>

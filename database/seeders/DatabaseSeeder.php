@@ -13,17 +13,7 @@ use Carbon\Carbon;
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
-    {
-        // -------------------------------------------------
-        // 1️⃣ USUARI DE PROVA
-        // -------------------------------------------------
-        User::updateOrCreate(
-            ['email' => 'test@example.com'],
-            [
-                'name' => 'Usuari Prova',
-                'password' => Hash::make('secret123'),
-            ]
-        );
+    { 
 
         // -------------------------------------------------
         // 2️⃣ CENTRES
@@ -54,6 +44,19 @@ class DatabaseSeeder extends Seeder
 
         $vallparadisId = DB::table('center')->where('nom', 'Vallparadis')->value('id');
         $centreNordId = DB::table('center')->where('nom', 'Centre Nord')->value('id');
+
+        // -------------------------------------------------
+            // 1️⃣ USUARI DE PROVA
+            // -------------------------------------------------
+            User::updateOrCreate(
+                ['email' => 'test@example.com'],
+                [
+                    'name' => 'Usuari Prova',
+                    'password' => Hash::make('secret123'),
+                    'id_center' => $vallparadisId, // assign a center here
+                ]
+            );
+
 
         // -------------------------------------------------
         // 3️⃣ PROFESSIONALS
@@ -199,7 +202,7 @@ class DatabaseSeeder extends Seeder
                 'objectiu' => 'Revisar protocols de seguretat i primers auxilis.',
                 'descripcio' => 'Sessions teòriques i pràctiques sobre riscos laborals i emergències.',
                 'formador' => 'Carla Soler',
-                'id_center' => $vallparadisId,
+                'id_center' => $centreNordId,
                 'estat' => true,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
