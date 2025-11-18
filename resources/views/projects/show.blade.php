@@ -18,7 +18,7 @@
             @endphp
 
             <div class="ml-4">
-                <span class="{{ $tipusColors[$projecte->tipus] ?? 'bg-gray-200 text-gray-800' }} px-4 py-2 rounded-full font-semibold text-sm shadow">
+                <span class="{{ $tipusColors[$projecte->tipus] ?? 'bg-blue-200 text-blue-800' }} px-4 py-2 rounded-full font-semibold text-sm shadow">
                     {{ $projecte->tipus }}
                 </span>
             </div>
