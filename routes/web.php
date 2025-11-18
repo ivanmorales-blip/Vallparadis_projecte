@@ -104,6 +104,16 @@ Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsCo
      [TrainingController::class, 'updateProfessionals']
      )->name('trainings.update_professionals');
 
+          // Trainings – update professionals
+     Route::post('/trainings/{training}/update-professionals',
+     [TrainingController::class, 'updateProfessionals']
+     )->name('trainings.updateProfessionals');
+
+     Route::get('/trainings/{training}/afegir-professionals',
+     [TrainingController::class, 'addProfessionals']
+     )->name('trainings.afegir_professionals');
+
+
 
     // Exportaciones
     Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
