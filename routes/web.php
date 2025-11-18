@@ -115,10 +115,19 @@ Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsCo
 
 
 
-    // Exportaciones
-    Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
-    Route::get('/export/uniform', [ExportController::class, 'exportUniform'])->name('export.uniform');
-    Route::get('/export/cursos', [ExportController::class, 'exportCursos'])->name('export.cursos');
+
+
+Route::resource('evaluation', EvaluationController::class);
+Route::get('/evaluation/{evaluation}/download', [EvaluationController::class, 'download'])->name('evaluation.download');
+Route::get('/evaluation/{evaluation}/download', [App\Http\Controllers\EvaluationController::class, 'download'])
+    ->name('evaluation.download');
+
+
+    Route::get('/dashboard', function() {
+    return redirect()->route('menu'); // O cualquier página que quieras
+
+})->name('dashboard');
+
 
 });
 

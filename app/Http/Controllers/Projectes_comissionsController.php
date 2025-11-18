@@ -23,38 +23,26 @@ class Projectes_comissionsController extends Controller
         return redirect()->route('projectes_comissions.projectes');
     }
 
-    /**
-     * Listado solo de proyectos
-     */
-    public function projectes()
-    {
-        $projectesTipus = Projectes_comissions::where('tipus', 'projecte')
-            ->with('profesional')
-            ->get();
+   public function projectes()
+{
+    $projectes = $this->projectsInCenter()
+        ->where('tipus', 'projecte')
+        ->with('profesional')
+        ->get();
 
-        $projectesCenter = $this->projectsInCenter()->get();
+    return view('projects.projects', ['projectes' => $projectes]);
+}
 
-        // Merge both collections
-        $projectes = $projectesTipus->merge($projectesCenter);
+public function comissions()
+{
+    $comissions = $this->projectsInCenter()
+        ->where('tipus', 'comissio')
+        ->with('profesional')
+        ->get();
 
-        return view('projects.projects', [
-            'projectes' => $projectes
-        ]);
+    return view('projectes_comissions.comissions', ['comissions' => $comissions]);
+}
 
-    }
-
-    /**
-     * Listado solo de comisiones
-     */
-    public function comissions()
-    {
-        $comissionsTipus = Projectes_comissions::where('tipus', 'comissio')->with('profesional')->get();
-        $comissionsCenter = $this->projectsInCenter()->get();
-
-        $comissions = $comissionsTipus->merge($comissionsCenter);
-        
-        return view('projectes_comissions.comissions', ['comissions' => $comissions]);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -123,7 +111,7 @@ class Projectes_comissionsController extends Controller
             'descripcio' => 'required|string',
             'observacions' => 'nullable|string',
             'centre_id' => 'required|exists:center,id',
-            'estat' => 'required|boolean',
+            'estat' => 'required|boolean', 
         ]);
 
         $projectes_comission->update($validated);

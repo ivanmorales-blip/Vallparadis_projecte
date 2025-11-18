@@ -6,8 +6,6 @@ use App\Models\Evaluation;
 use App\Models\Profesional;
 use Illuminate\Http\Request;
 use App\Traits\Activable;
-use App\Traits\CenterFilterable;
-use Illuminate\Support\Facades\Storage;
 
 class EvaluationController extends Controller
 {
@@ -16,21 +14,12 @@ class EvaluationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+  public function index()
     {
-        $evaluations = Evaluation::with(['profesional', 'profesionalAvaluador'])
-            ->whereHas('profesional', function($query) {
-                $query->where('id_center', session('id_center'));
-            })
-            ->get();
-
-
-        $averageSumatori = $evaluations->avg('sumatori');
-
-        return view('evaluation.listarevaluation', [
-            'evaluations' => $evaluations
-        ]);
+        $evaluations = Evaluation::with(['profesional', 'profesionalAvaluador'])->get();
+        return view('evaluation.listarevaluation', compact('evaluations'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -54,59 +43,35 @@ class EvaluationController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'data' => 'required|date',
-            'sumatori' => 'required|numeric',
-            'observacions' => 'nullable|string',
-            'arxiu' => 'nullable|file',
-            'id_profesional' => 'required|exists:profesional,id',
-            'id_profesional_avaluador' => 'nullable|exists:profesional,id',
-            'pregunta1' => 'nullable|integer',
-            'pregunta2' => 'nullable|integer',
-            'pregunta3' => 'nullable|integer',
-            'pregunta4' => 'nullable|integer',
-            'pregunta5' => 'nullable|integer',
-            'pregunta6' => 'nullable|integer',
-            'pregunta7' => 'nullable|integer',
-            'pregunta8' => 'nullable|integer',
-            'pregunta9' => 'nullable|integer',
-            'pregunta10' => 'nullable|integer',
-            'pregunta11' => 'nullable|integer',
-            'pregunta12' => 'nullable|integer',
-            'pregunta13' => 'nullable|integer',
-            'pregunta14' => 'nullable|integer',
-            'pregunta15' => 'nullable|integer',
-            'pregunta16' => 'nullable|integer',
-            'pregunta17' => 'nullable|integer',
-            'pregunta18' => 'nullable|integer',
-            'pregunta19' => 'nullable|integer',
-            'pregunta20' => 'nullable|integer',
-        ]);
+{
+    $request->validate([
+        'data' => 'required|date',
+        'sumatori' => 'required|numeric',
+        'observacions' => 'nullable|string',
+        'arxiu' => 'nullable|file',
+        'id_profesional' => 'required|exists:profesional,id',
+        'id_profesional_avaluador' => 'nullable|exists:profesional,id',
+    ]);
 
-        $evaluationData = [
-            'data' => $validated['data'],
-            'sumatori' => $validated['sumatori'],
-            'observacions' => $validated['observacions'] ?? null,
-            'id_profesional' => $validated['id_profesional'],
-            'id_profesional_avaluador' => $validated['id_profesional_avaluador'] ?? null,
-        ];
-
-        // Guardar archivo si existe
-        if ($request->hasFile('arxiu')) {
-            $evaluationData['arxiu'] = $request->file('arxiu')->store('evaluations', 'public');
-        }
-
-        // Guardar preguntas q0..q19 basadas en input pregunta1..pregunta20
-        for ($i = 1; $i <= 20; $i++) {
-            $evaluationData['q'.($i-1)] = $request->input('pregunta'.$i);
-        }
-
-        Evaluation::create($evaluationData);
-
-        return redirect()->route('evaluation.index')
-            ->with('success', 'Avaluació guardada correctament.');
+    $rutaArchivo = null;
+    if ($request->hasFile('arxiu')) {
+        $rutaArchivo = $request->file('arxiu')->store('evaluations', 'public');
     }
+
+    
+    Evaluation::create([
+        'data' => $request->data,
+        'sumatori' => $request->sumatori,
+        'observacions' => $request->observacions,
+        'arxiu' => $rutaArchivo,
+        'id_profesional' => $request->id_profesional,
+        'id_profesional_avaluador' => $request->id_profesional_avaluador,
+        
+    ]);
+
+    return redirect()->route('evaluation.index')->with('success', 'Avaluació guardada correctament.');
+}
+
 
     /**
      * Display the specified resource.
@@ -133,28 +98,41 @@ class EvaluationController extends Controller
 
     public function update(Request $request, Evaluation $evaluation)
     {
-        $validated = $request->validate(array_merge([
+        $validated = $request->validate([
             'data' => 'required|date',
             'sumatori' => 'required|numeric',
             'observacions' => 'nullable|string',
             'arxiu' => 'nullable|file',
-            'id_profesional' => ['required', $this->professionalRule()],
-            'id_profesional_avaluador' => ['required', $this->professionalRule()],
-        ], $this->questionValidationRules()));
+            'id_profesional' => 'required|exists:profesional,id',
+            'id_profesional_avaluador' => 'required|exists:profesional,id',
+        ]);
+
 
         if ($request->hasFile('arxiu')) {
-            if ($evaluation->arxiu && Storage::disk('public')->exists($evaluation->arxiu)) {
-                Storage::disk('public')->delete($evaluation->arxiu);
-            }
             $validated['arxiu'] = $request->file('arxiu')->store('evaluations', 'public');
+        } else {
+            unset($validated['arxiu']);
         }
 
+        
         $evaluation->update($validated);
+        return redirect()->route('evaluation.index')
+                         ->with ('success', 'Evaluació actualitzada correctament.');
 
-        return redirect()->route('evaluation.index')->with('success', 'Evaluació actualitzada correctament.');
+        
     }
 
-    public function active(Evaluation $evaluation)
+    /**
+     * Remove the specified resource from storage.
+     */
+    //public function destroy(string $id)
+    //{
+        //
+    //}
+
+    use Activable;
+
+    public function active (Evaluation $evaluation)
     {
         $this->toggleActive($evaluation, true);
         return response()->json(['success' => true]);
