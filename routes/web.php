@@ -95,6 +95,15 @@ Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsCo
     Route::resource('trainings', TrainingController::class);
     Route::patch('/trainings/{training}/active', [TrainingController::class, 'active'])->name('trainings.active');
     Route::delete('/trainings/{training}', [TrainingController::class, 'destroy'])->name('trainings.destroy');
+     // Trainings – afegir professionals
+     Route::get('/trainings/{training}/afegir-professionals',
+     [TrainingController::class, 'addProfessionals']
+     )->name('trainings.afegir_professionals');
+
+     Route::post('/trainings/{training}/afegir-professionals',
+     [TrainingController::class, 'updateProfessionals']
+     )->name('trainings.update_professionals');
+
 
     // Exportaciones
     Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
