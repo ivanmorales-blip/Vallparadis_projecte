@@ -45,7 +45,7 @@
                     class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
                     ➕ Donar d'alta Seguiment
                 </a>
-                <a href="{{ route('evaluation.create', ['profesional' => $profesional->id]) }}"
+                <a href="{{ route('evaluation.create', ['from_profesional' => $profesional->id]) }}"
                    class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
                     ➕ Donar d'alta Avaluació
                 </a>
@@ -99,8 +99,8 @@
                                 </span>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="{{ route('evaluation.edit', $evaluation->id) }}" 
-                                   class="text-blue-600 hover:text-blue-800 text-sm">✏️ Editar</a>
+                                          <a href="{{ route('evaluation.edit', ['evaluation' => $evaluation->id, 'from_profesional' => $profesional->id]) }}" 
+                                              class="text-blue-600 hover:text-blue-800 text-sm">✏️ Editar</a>
                             </div>
                         </li>
                     @endforeach

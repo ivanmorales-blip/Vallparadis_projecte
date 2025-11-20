@@ -1,80 +1,144 @@
 @extends('layouts.template')
 
 @section('contingut')
-<div class="p-8 bg-gray-50 min-h-screen">
-    <h1 class="text-3xl font-bold mb-6 text-orange-500">Editar Seguiment</h1>
+<div class="min-h-screen bg-gray-50 py-10 px-4">
+    <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-3xl p-10 border border-gray-200">
 
-    <form action="{{ route('tracking.update', $tracking->id) }}" method="POST" class="bg-white rounded-xl shadow-lg p-8 space-y-6">
-        @csrf
-        @method('PUT')
+        <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">
+            Editar Avaluació
+        </h1>
 
-        <!-- Tipus -->
-        <div>
-            <label for="tipus" class="block text-gray-700 font-semibold mb-1">Tipus *</label>
-            <input id="tipus" name="tipus" type="text" value="{{ $tracking->tipus }}" required
-                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
-        </div>
+        <form action="{{ route('evaluation.update', $evaluation->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            @csrf
+            @method('PUT')
 
-        <!-- data -->
-        <div>
-            <label for="data" class="block text-gray-700 font-semibold mb-1">Data *</label>
-            <input id="data" name="data" type="date" value="{{$tracking->data}}"required
-                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
-        </div>
+            <!-- Data -->
+            <div>
+                <label for="data" class="block text-sm font-medium text-gray-700 mb-2">Data *</label>
+                <input type="date" id="data" name="data" required
+                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                       value="{{ old('data', $evaluation->data->format('Y-m-d')) }}">
+            </div>
 
-        <!-- Tema -->
-        <div>
-            <label for="tema" class="block text-gray-700 font-semibold mb-1">Tema *</label>
-            <input id="tema" name="tema" type="text" value="{{$tracking->tema}}" required
-                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
-        </div>
+            <!-- Professional (bloqueado) -->
+            <div>
+                <label for="profesional_id" class="block text-sm font-medium text-gray-700 mb-2">Professional *</label>
+                <select id="profesional_id" name="id_profesional" required disabled
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-100 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    <option value="{{ $selectedProfesional }}" selected>
+                        {{ $professionals->firstWhere('id', $selectedProfesional)->nom ?? '' }}
+                        {{ $professionals->firstWhere('id', $selectedProfesional)->cognom ?? '' }}
+                    </option>
+                </select>
+            </div>
 
-        <!-- Comentari -->
-        <div>
-            <label for="comentari" class="block text-gray-700 font-semibold mb-1">Comentari *</label>
-            <input id="comentari" name="comentari" type="text" value="{{$tracking->comentari}}" required
-                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-300 focus:outline-none">
-        </div>
-
-        <!-- Profesional -->
-        <div>
-                <label for="id_profesional" class="block text-sm font-medium text-gray-700 mb-1">Professional *</label>
-                <select id="id_profesional" name="id_profesional" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un professional --</option>
-                    @foreach ($profesional as $prof)
-                        <option value="{{ $prof->id }}" {{ $tracking->id_profesional == $prof->id ? 'selected' : '' }}>
+            <!-- Avaluador -->
+            <div>
+                <label for="profesional_avaluador_id" class="block text-sm font-medium text-gray-700 mb-2">Avaluador *</label>
+                <select id="profesional_avaluador_id" name="id_profesional_avaluador" required
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    <option value="">Selecciona un avaluador</option>
+                    @foreach($professionals as $prof)
+                        <option value="{{ $prof->id }}"
+                                {{ (old('id_profesional_avaluador', $evaluation->id_profesional_avaluador) == $prof->id) ? 'selected' : '' }}>
                             {{ $prof->nom }} {{ $prof->cognom }}
                         </option>
                     @endforeach
                 </select>
-        </div>
+            </div>
 
-        <!-- Registrador -->
-        <div>
-                <label for="id_profesional_registrador" class="block text-sm font-medium text-gray-700 mb-1">Registrador *</label>
-                <select id="id_profesional_registrador" name="id_profesional_registrador" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un professional --</option>
-                    @foreach ($profesional as $prof)
-                    <option value="{{ $prof->id }}" {{ $tracking->id_profesional_registrador == $prof->id ? 'selected' : '' }}>
-                            {{ $prof->nom }} {{ $prof->cognom }}
-                    </option>
-                    @endforeach
-                </select>
-        </div>
+            <!-- Preguntas -->
+            <div>
+                <h2 class="text-lg font-semibold text-gray-800 mb-2 mt-4">Qüestionari</h2>
+                <div class="overflow-x-auto border rounded-xl">
+                    <table class="min-w-full text-sm text-gray-700">
+                        <thead class="bg-gray-100 text-center">
+                            <tr>
+                                <th class="px-3 py-2 text-left">Aspecte</th>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @php
+                            $questions = [
+                                "Realitza una correcta atenció a l'usuari",
+                                "Es preocupa per satisfer les seves necessitats dins dels recursos dels que disposa",
+                                "S'ha integrat dins l'equip de treball i participa i coopera sense dificultats",
+                                "Pot treballar amb altres equips diferents al seu si es necessita",
+                                "Compleix amb les funcions establertes",
+                                "Assoleix els objectius utilitzant els recursos disponibles per aconseguir els resultats esperats",
+                                "És coherent amb el que diu i amb les seves actuacions",
+                                "Les seves actuacions van alineades amb els valors de la nostra Entitat",
+                                "Mostra capacitat i interès en entendre i aplicar la normativa i els procediments establerts",
+                                "La seva actitud envers els seus responsables/comandaments és correcta",
+                                "Té capacitat per a comprendre, acceptar i adequar-se als canvis",
+                                "Desenvolupa amb autonomia les seves funcions, sense necessitat de recolzament immediat o constant",
+                                "Fa suggeriments i propostes de millora",
+                                "Assoleix els objectius, esforçant-se per aconseguir el resultat esperat",
+                                "La quantitat de treball que desenvolupa en relació amb el treball encomanat és adequada",
+                                "Realitza les tasques amb la qualitat esperada i/o necessària",
+                                "Expressa amb claredat i ordre els aspectes rellevants de la informació",
+                                "Disposa dels coneixements necessaris per a desenvolupar les tasques requerides del lloc de treball",
+                                "Mostra interès i motivació envers el seu lloc de treball",
+                                "La seva entrada i permanència en el lloc de treball es duu a terme sense retards o absències no justificades"
+                            ];
+                        @endphp
+                        @foreach($questions as $index => $text)
+                            @php $field = 'pregunta'.($index+1); @endphp
+                            <tr class="{{ $index % 2 == 0 ? 'bg-gray-50' : 'bg-white' }}">
+                                <td class="px-3 py-2">{{ $text }}</td>
+                                @for($i=1; $i<=4; $i++)
+                                    <td class="text-center">
+                                        <input type="radio" name="{{ $field }}" value="{{ $i }}"
+                                            {{ old($field, $evaluation->{'q'.$index}) == $i ? 'checked' : '' }}
+                                            class="accent-orange-500">
+                                    </td>
+                                @endfor
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <!-- Botons -->
-        <div class="flex space-x-4 mt-4">
-            <button type="submit"
-                class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-md transition">
-                Enviar
-            </button>
-            <button type="reset"
-                class="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold rounded-xl shadow-md transition">
-                Netejar
-            </button>
-        </div>
-    </form>
+            <!-- Sumatori -->
+            <div>
+                <label for="sumatori" class="block text-sm font-medium text-gray-700 mb-1">Mitjana</label>
+                <input type="number" id="sumatori" name="sumatori" step="0.01" required
+                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                       value="{{ old('sumatori', $evaluation->sumatori) }}">
+            </div>
+
+            <!-- Observacions -->
+            <div>
+                <label for="observacions" class="block text-sm font-medium text-gray-700 mb-1">Observacions</label>
+                <textarea id="observacions" name="observacions"
+                          class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('observacions', $evaluation->observacions) }}</textarea>
+            </div>
+
+            <!-- Arxiu -->
+            <div>
+                <label for="arxiu" class="block text-sm font-medium text-gray-700 mb-1">Arxiu</label>
+                <input type="file" id="arxiu" name="arxiu"
+                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                @if($evaluation->arxiu)
+                    <p class="mt-2 text-sm text-gray-600">
+                        Fitxer actual: <a href="{{ asset('storage/' . $evaluation->arxiu) }}" target="_blank" class="text-blue-600 underline">Veure</a>
+                    </p>
+                @endif
+            </div>
+
+            <!-- Botón enviar -->
+            <div class="text-center">
+                <button type="submit"
+                        class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-lg transition duration-200">
+                    Actualitzar Avaluació
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection

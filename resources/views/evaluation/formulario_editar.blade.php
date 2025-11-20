@@ -33,6 +33,10 @@
                         </option>
                     @endforeach
                 </select>
+                {{-- Si la edición proviene de la ficha del profesional, incluimos hidden para redirigir más tarde --}}
+                @if(request()->query('from_profesional'))
+                    <input type="hidden" name="return_to_profesional" value="{{ request()->query('from_profesional') }}">
+                @endif
             </div>
 
             <!-- Avaluador -->
