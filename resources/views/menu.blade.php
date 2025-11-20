@@ -75,6 +75,15 @@
             <a href="{{ route('trainings.create') }}" class="{{ $linkClasses }}">Alta Curs</a>
         </div>
 
+        <!-- Gestio Documentació interna -->
+        <div class="{{ $cardClasses }}">
+            <h2 class="text-xl flex items-center gap-2 text-gray-700 font-semibold mb-4 pb-2 border-b">
+                Documentació Interna
+            </h2>
+            <a href="{{ route('trainings.index') }}" class="{{ $linkClasses }} mb-2">Listar Documentació</a>
+            <a href="{{ route('trainings.create') }}" class="{{ $linkClasses }}">Alta Documentació</a>
+        </div>
+
     </div>
 </div>
 
