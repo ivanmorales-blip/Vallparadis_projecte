@@ -6,6 +6,7 @@ use App\Models\Evaluation;
 use App\Models\Profesional;
 use Illuminate\Http\Request;
 use App\Traits\Activable;
+use App\Traits\CenterFilterable;
 
 class EvaluationController extends Controller
 {
@@ -151,10 +152,6 @@ class EvaluationController extends Controller
             'oldValues'
         ));
     }
-
-
-
-
 
     public function update(Request $request, Evaluation $evaluation)
     {

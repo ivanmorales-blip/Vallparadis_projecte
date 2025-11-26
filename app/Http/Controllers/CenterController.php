@@ -97,12 +97,12 @@ class CenterController extends Controller
 
     public function active(Center $center)
     {
-        return $this->toggleActive($center, true, 'centers.index');
-    }
-
-    public function destroy(Center $center)
-    {
-        return $this->toggleActive($center, false, 'centers.index');
+        if ($center->activo== 1){
+            return $this->toggleActive($center, false, 'centers.index');
+        }
+        else{
+            return $this->toggleActive($center, true, 'centers.index');
+        }
     }
 
 

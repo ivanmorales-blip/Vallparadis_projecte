@@ -6,12 +6,9 @@
         
         <!-- Title with status -->
         <div class="flex justify-between items-start mb-6">
-            <h1 class="text-3xl font-bold text-orange-500">
-                {{ $document->tipus }}
-            </h1>
 
             <div class="ml-4">
-                @if ($document->estat)
+                @if ($manteniment->estat)
                     <span class="bg-green-200 text-green-800 px-4 py-2 rounded-full font-semibold text-sm shadow">Actiu</span>
                 @else
                     <span class="bg-red-200 text-red-800 px-4 py-2 rounded-full font-semibold text-sm shadow">Inactiu</span>
@@ -22,19 +19,17 @@
         <!-- Main Data -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700 mb-6">
             <div>
-                <p class="font-semibold">📄 Tipus de document:</p>
-                <p class="mb-3">{{ $document->tipus ?? '—' }}</p>
 
                 <p class="font-semibold">📅 Data:</p>
-                <p class="mb-3">{{ \Carbon\Carbon::parse($document->data)->format('d/m/Y') }}</p>
+                <p class="mb-3">{{ \Carbon\Carbon::parse($manteniment->data)->format('d/m/Y') }}</p>
             </div>
 
             <div>
                 <p class="font-semibold">🏫 Centre:</p>
-                <p class="mb-3">{{ $document->centre->nom ?? '—' }}</p>
+                <p class="mb-3">{{ $manteniment->centre->nom ?? '—' }}</p>
 
-                <p class="font-semibold">Professional:</p>
-                <p class="mb-3">{{ $document->professional->nom ?? '—' }}</p>
+                <p class="font-semibold">Responsable:</p>
+                <p class="mb-3">{{ $manteniment->responsable }}</p>
             </div>
         </div>
 
@@ -42,33 +37,33 @@
 
         <!-- Description and file -->
         <div class="mb-8">
-            @if (empty($document->descripcio))
-                <p class="text-gray-500 italic">No hi ha una descripció assignada a aquest document.</p>
+            @if (empty($manteniment->descripcio))
+                <p class="text-gray-500 italic">No hi ha una descripció assignada a aquest manteniment.</p>
             @else
                 <h2 class="text-2xl font-semibold text-gray-800 mb-2">📝 Descripció</h2>
-                <p class="text-gray-700 mb-4">{{ $document->descripcio }}</p>
+                <p class="text-gray-700 mb-4">{{ $manteniment->descripcio }}</p>
             @endif
         </div>
 
         <!-- Buttons -->
         <div class="flex flex-wrap justify-between gap-4">
             <!-- Back -->
-            <a href="{{ route('documentacio.index') }}" 
+            <a href="{{ route('manteniment.index') }}" 
                class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl shadow transition">
                 ⬅️ Tornar al llistat
             </a>
 
-            @if($document->arxiu)
-                <a href="{{ asset('storage/' . $document->arxiu) }}" target="_blank" 
+            @if($manteniment->documentacio)
+                <a href="{{ asset('storage/' . $manteniment->documentacio) }}" target="_blank" 
                    class="inline-block px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow transition">
                     📎 Veure fitxer
                 </a>
             @endif
 
             <!-- Edit -->
-            <a href="{{ route('documentacio.edit', ['documentacio' => $document->id]) }}" 
+            <a href="{{ route('manteniment.edit', ['manteniment' => $manteniment->id]) }}" 
                class="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow transition">
-                ✏️ Editar document
+                ✏️ Editar manteniment
             </a>
         </div>
     </div>

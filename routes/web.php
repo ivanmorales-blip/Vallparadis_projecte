@@ -8,6 +8,8 @@ use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\DocumentacioController;
+use App\Http\Controllers\MaintenanceController;
 use Illuminate\Support\Facades\Route;
 
 // Ruta de login
@@ -112,6 +114,16 @@ Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsCo
      Route::get('/trainings/{training}/afegir-professionals',
      [TrainingController::class, 'addProfessionals']
      )->name('trainings.afegir_professionals');
+
+    // Documentacio
+    Route::resource('documentacio', DocumentacioController::class);
+    Route::patch('/documentacio/{documentacio}/active', [DocumentacioController::class, 'active'])->name('documentacio.active');
+    Route::delete('/documentacio/{documentacio}', [DocumentacioController::class, 'destroy'])->name('documentacio.destroy');
+
+     // Manteniment
+     Route::resource('manteniment', MaintenanceController::class);
+     Route::patch('/manteniment/{manteniment}/active', [MaintenanceController::class, 'active'])->name('manteniment.active');
+     Route::delete('/manteniment/{manteniment}', [MaintenanceController::class, 'destroy'])->name('manteniment.destroy');
 
     // Exportaciones
     Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');

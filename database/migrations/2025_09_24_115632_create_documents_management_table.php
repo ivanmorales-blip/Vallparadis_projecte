@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    protected $table = 'documents_management';
+   
     /**
      * Run the migrations.
      */
@@ -21,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('professional_id');
             $table->foreign('professional_id')->references('id')->on('profesional')->onDelete('cascade');
             $table->text('arxiu');
+            $table->boolean('estat')->default(true);
             $table->timestamps();
         });
     }
