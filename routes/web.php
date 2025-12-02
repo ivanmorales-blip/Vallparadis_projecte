@@ -12,6 +12,8 @@ use App\Http\Controllers\HumanResourcesController;
 use App\Http\Controllers\TemesPendentsController;
 use App\Models\TemaPendent;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\DocumentacioController;
+use App\Http\Controllers\MaintenanceController;
 use Illuminate\Support\Facades\Route;
 
 // Ruta de login
@@ -164,6 +166,20 @@ Route::get('/temes/{tema}/download', function(TemaPendent $tema) {
     }
     abort(404, 'No hi ha documents adjunts');
 })->name('temes.download');
+    // Documentacio
+    Route::resource('documentacio', DocumentacioController::class);
+    Route::patch('/documentacio/{documentacio}/active', [DocumentacioController::class, 'active'])->name('documentacio.active');
+    Route::delete('/documentacio/{documentacio}', [DocumentacioController::class, 'destroy'])->name('documentacio.destroy');
+
+     // Manteniment
+     Route::resource('manteniment', MaintenanceController::class);
+     Route::patch('/manteniment/{manteniment}/active', [MaintenanceController::class, 'active'])->name('manteniment.active');
+     Route::delete('/manteniment/{manteniment}', [MaintenanceController::class, 'destroy'])->name('manteniment.destroy');
+
+    // Exportaciones
+    Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
+    Route::get('/export/uniform', [ExportController::class, 'exportUniform'])->name('export.uniform');
+    Route::get('/export/cursos', [ExportController::class, 'exportCursos'])->name('export.cursos');
 
 });
 

@@ -60,7 +60,7 @@ class TrainingController extends Controller
             'estat' => ['required', 'boolean'],
             'professionals' => ['nullable', 'array'], // extra assigned professionals
             'professionals.*' => [$this->professionalRule()],
-            'document' => ['nullable', 'file', 'mimes:pdf,doc,docx'],
+            'training' => ['nullable', 'file', 'mimes:pdf,doc,docx'],
         ]);
 
         // Fix column names to match your DB
@@ -75,9 +75,9 @@ class TrainingController extends Controller
         }
 
         // Handle file upload
-        if ($request->hasFile('document')) {
-            $path = $request->file('document')->store('documents', 'public');
-            $training->update(['document' => $path]);
+        if ($request->hasFile('training')) {
+            $path = $request->file('training')->store('trainings', 'public');
+            $training->update(['training' => $path]);
         }
 
         return redirect()->route('trainings.index')
@@ -116,14 +116,14 @@ class TrainingController extends Controller
             'formador' => ['required', 'string', 'max:255'],
             'id_center' => ['nullable', 'exists:center,id'],
             'estat' => ['required', 'boolean'],
-            'document' => ['nullable', 'file', 'mimes:pdf,doc,docx'],
+            'training' => ['nullable', 'file', 'mimes:pdf,doc,docx'],
         ]);
 
-        if ($request->hasFile('document')) {
-            if ($training->document && Storage::disk('public')->exists($training->document)) {
-                Storage::disk('public')->delete($training->document);
+        if ($request->hasFile('training')) {
+            if ($training->training && Storage::disk('public')->exists($training->training)) {
+                Storage::disk('public')->delete($training->training);
             }
-            $validated['document'] = $request->file('document')->store('documents', 'public');
+            $validated['training'] = $request->file('training')->store('trainings', 'public');
         }
 
         $training->update($validated);
@@ -137,7 +137,12 @@ class TrainingController extends Controller
      */
     public function active(Training $training)
     {
-        return $this->toggleActive($training, true, 'trainings.index');
+        if ($training->estat== 1){
+            return $this->toggleActive($training, false, 'trainings.index');
+        }
+        else{
+            return $this->toggleActive($training, true, 'trainings.index');
+        }
     }
 
     /**

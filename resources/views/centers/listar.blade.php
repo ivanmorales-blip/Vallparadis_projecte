@@ -17,32 +17,52 @@
             </thead>
             <tbody class="divide-y divide-gray-200">
                 @foreach ($centers as $index => $center)
-                <tr data-id="{{ $center->id }}" class="hover:bg-orange-50 transition duration-200">
-                    <td class="px-6 py-4 text-gray-500 font-medium">{{ $index + 1 }}</td>
-                    <td class="px-6 py-4 text-gray-800 font-semibold">{{ $center->nom }}</td>
-                    <td class="px-6 py-4 text-gray-700">{{ $center->adreça }}</td>
-                    <td class="px-6 py-4">
-                        <span class="estado px-2 py-1 rounded-full text-sm {{ $center->activo ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                <tr class="hover:bg-orange-50 transition duration-200">
+                    <td class="px-6 py-4 text-gray-500 font-medium cursor-pointer"
+                        onclick="window.location='{{ route('centers.show', $center) }}'">
+                        {{ $index + 1 }}
+                    </td>
+                    <td class="px-6 py-4 text-gray-800 font-semibold cursor-pointer"
+                        onclick="window.location='{{ route('centers.show', $center) }}'">
+                        {{ $center->nom }}
+                    </td>
+                    <td class="px-6 py-4 text-gray-700 cursor-pointer"
+                        onclick="window.location='{{ route('centers.show', $center) }}'">
+                        {{ $center->adreça }}
+                    </td>
+                    <td class="px-6 py-4 cursor-pointer"
+                        onclick="window.location='{{ route('centers.show', $center) }}'">
+                        <span class="estado px-2 py-1 rounded-full text-sm font-semibold {{ $center->activo ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
                             {{ $center->activo ? 'Activo' : 'Inactivo' }}
                         </span>
                     </td>
+
+                    <!-- Actions column: safe from row click -->
                     <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
-                        <a href="{{ route('centers.edit', $center) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
+                        <!-- Edit button -->
+                        <a href="{{ route('centers.edit', $center) }}" 
+                           class="text-orange-400 hover:text-orange-500 transition"
+                           title="Editar">
                             <svg class="h-6 w-6" aria-label="Editar">
                                 <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
                             </svg>
                         </a>
 
-                        <button class="activar-desactivar text-sm transition"
-                            title="{{ $center->estat ? 'Desactivar' : 'Activar' }}">
-                            <svg class="h-6 w-6 {{ $center->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
-                                aria-label="{{ $center->estat ? 'Desactivar' : 'Activar' }}">
-                                <use href="{{ asset('icons/sprite.svg#' . ($center->estat ? 'icon-x' : 'icon-check')) }}"></use>
-                            </svg>
-                        </button>
+                        <!-- Toggle Active/Inactive button -->
+                        <form action="{{ route('centers.active', $center) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit"
+                                    class="activar-desactivar text-sm transition"
+                                    title="{{ $center->activo ? 'Desactivar' : 'Activar' }}">
+                                <svg class="h-6 w-6 {{ $center->activo ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
+                                    aria-label="{{ $center->activo ? 'Desactivar' : 'Activar' }}">
+                                    <use href="{{ asset('icons/sprite.svg#' . ($center->activo ? 'icon-x' : 'icon-check')) }}"></use>
+                                </svg>
+                            </button>
+                        </form>
                     </td>
-
-                </tr> 
+                </tr>
                 @endforeach
             </tbody>
         </table>

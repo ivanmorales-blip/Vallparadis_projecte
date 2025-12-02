@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('maintenance', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('centre_id');
-            $table->foreign('centre_id')->references('id')->on('center')->onDelete('cascade');
             $table->dateTime('data_obertura');
             $table->text('descripcio');
-            $table->text('responsable');
-            $table->text('documentacio');            
+            $table->unsignedBigInteger('centre_id');
+            $table->foreign('centre_id')->references('id')->on('center')->onDelete('cascade');
+            $table->text('documentacio');
+            $table->text('responsable');  
+            $table->boolean('estat')->default(true);
             $table->timestamps();
         });
     }

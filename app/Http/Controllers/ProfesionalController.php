@@ -92,11 +92,12 @@ class ProfesionalController extends Controller
 
     public function active(Profesional $profesional)
     {
-        return $this->toggleActive($profesional, true, 'profesional.index');
+        if ($profesional->estat== 1){
+            return $this->toggleActive($profesional, false, 'profesional.index');
+        }
+        else{
+            return $this->toggleActive($profesional, true, 'profesional.index');
+        }
     }
 
-    public function destroy(Profesional $profesional)
-    {
-        return $this->toggleActive($profesional, false, 'profesional.index');
-    }
 }

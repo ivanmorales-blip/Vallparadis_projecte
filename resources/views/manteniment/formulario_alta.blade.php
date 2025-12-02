@@ -3,22 +3,15 @@
 @section('contingut')
 <div class="p-8 bg-gray-50 min-h-screen flex justify-center items-start">
     <div class="w-full max-w-2xl bg-white rounded-3xl shadow-2xl p-8">
-        <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Alta Documentació</h1>
+        <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Alta Manteniment</h1>
 
-        <form action="{{ route('documentacio.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form action="{{ route('manteniment.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
-
-            <!-- Tipus -->
-            <div>
-                <label for="tipus" class="block text-gray-700 font-semibold mb-2">Tipus *</label>
-                <input id="tipus" name="tipus" type="text" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-transparent transition">
-            </div>
 
             <!-- Data -->
             <div>
-                <label for="data" class="block text-sm font-medium text-gray-700 mb-1">Data *</label>
-                <input type="date" id="data" name="data" required
+                <label for="data_obertura" class="block text-sm font-medium text-gray-700 mb-1">Data *</label>
+                <input type="date" id="data_obertura" name="data_obertura" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
             </div>
 
@@ -29,23 +22,18 @@
                     class="w-full border border-gray-300 rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('descripcio') }}</textarea>
             </div>
 
-            <!-- Profesional -->
+            <!-- Documentacio adjunta -->
             <div>
-                <label for="professional_id" class="block text-sm font-medium text-gray-700 mb-1">Profesional *</label>
-                <select id="professional_id" name="professional_id" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un professional --</option>
-                    @foreach ($profesional as $prof)
-                        <option value="{{ $prof->id }}">{{ $prof->nom }} {{ $prof->cognom }}</option>
-                    @endforeach
-                </select>
+                <label for="documentacio" class="block text-sm font-medium text-gray-700 mb-1">Documentacio adjunta</label>
+                <input type="file" id="documentacio" name="documentacio"
+                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
             </div>
 
-            <!-- Document -->
-            <div>
-                <label for="document" class="block text-sm font-medium text-gray-700 mb-1">Document adjunt</label>
-                <input type="file" id="document" name="document"
-                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
+            <!-- Responsable -->
+            <div class="space-y-1">
+                <label for="responsable" class="block text-gray-700 font-semibold">Responsable *</label>
+                <textarea id="responsable" name="responsable" rows="4" required
+                    class="w-full border border-gray-300 rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('descripcio') }}</textarea>
             </div>
 
             <!-- Centre -->
