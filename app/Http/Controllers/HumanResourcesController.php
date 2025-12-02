@@ -2,117 +2,123 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Center;
+use Illuminate\Http\Request;
 use App\Models\TemaPendent;
-use App\Models\Seguiment;
 use App\Models\Profesional;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class HumanResourcesController extends Controller
 {
-    /**
-     * Lista todos los registros de un centro
-     */
-    public function index($centre_id = null)
+    // Llistat de temes pendents
+    public function index($centre_id)
     {
-        $centres = Center::all();
-        $centre_id = $centre_id ?? $centres->first()?->id;
+        $temes_pendents = TemaPendent::with(['profesional', 'professionalRegistra', 'derivatA'])
+                                      ->where('centre_id', $centre_id)
+                                      ->get();
 
-        // Cargar relaciones para evitar campos vacíos
-        $pendents = TemaPendent::with(['afectat', 'registra', 'derivat'])
-            ->where('centre_id', $centre_id)
-            ->get();
-
-        $seguiments = Seguiment::with('professional') // aquí la relación debe llamarse 'professional'
-            ->where('centre_id', $centre_id)
-            ->get();
-
-        return view('rrhh.lista', compact('centres', 'centre_id', 'pendents', 'seguiments'));
+        return view('rrhh.lista', compact('temes_pendents', 'centre_id'));
     }
 
-    /**
-     * Mostrar formulario de creación
-     */
-    public function create($centre_id, $type)
+    // Mostrar tema pendent
+    public function show($id)
     {
-        return view('rrhh.human_resources', compact('centre_id', 'type'));
+        $tema = TemaPendent::with(['profesional', 'professionalRegistra', 'derivatA'])->findOrFail($id);
+        return view('rrhh.show', compact('tema'));
     }
 
-    /**
-     * Guardar registro
-     */
+    // Formulari de creació
+    public function create($centre_id)
+{
+    $type = 'pendent'; // si es fijo
+    $professionals = Profesional::all();
+    $users = User::all();
+
+    return view('rrhh.human_resources', compact('centre_id', 'type', 'professionals', 'users'));
+}
+
+
+    // Guardar tema pendent
     public function store(Request $request, $centre_id)
     {
-        $tipus = $request->input('tipus');
+        $request->validate([
+            'data_obertura' => 'required|date',
+            'professional_afectat' => 'required|exists:profesional,id',
+            'professional_registra' => 'required|exists:users,id',
+            'derivat_a' => 'required|exists:profesional,id',
+            'descripcio' => 'required|string',
+            'documentacio_adjunta' => 'nullable|file|max:10240', // màxim 10MB
+        ]);
 
-        if ($tipus === 'pendent') {
-
-            $validated = $request->validate([
-                'data_obertura' => 'required|date',
-                'id_professional_afectat' => 'required|exists:profesional,id',
-                'id_registre' => 'required|exists:users,id',
-                'id_derivat' => 'nullable|exists:profesional,id',
-                'descripcio' => 'required|string',
-            ]);
-
-            TemaPendent::create([
-                'centre_id' => $centre_id,
-                'data_obertura' => $validated['data_obertura'],
-                'professional_afectat' => $validated['id_professional_afectat'],
-                'professional_registra' => $validated['id_registre'],
-                'derivat_a' => $validated['id_derivat'] ?? null,
-                'descripcio' => $validated['descripcio'],
-                'document' => $request->file('document')
-                                ? $request->file('document')->store('documents')
-                                : null,
-            ]);
-
-        } elseif ($tipus === 'seguiment') {
-
-            $validated = $request->validate([
-                'data' => 'required|date',
-                'id_professional' => 'required|exists:profesional,id',
-                'descripcio' => 'required|string',
-            ]);
-
-            Seguiment::create([
-                'centre_id' => $centre_id,
-                'data' => $validated['data'],
-                'id_professional' => $validated['id_professional'], // nombre correcto del campo en tabla
-                'descripcio' => $validated['descripcio'],
-            ]);
+        // Processar fitxer si existeix
+        $pathToFile = null;
+        if ($request->hasFile('documentacio_adjunta')) {
+            $pathToFile = $request->file('documentacio_adjunta')->store('documents', 'public');
         }
 
-        return redirect()->route('human_resources.index', $centre_id)
-                         ->with('success', 'Registre creat correctament');
+        // Crear registre únic amb tots els camps
+        $tema = TemaPendent::create([
+            'centre_id' => $centre_id,
+            'data_obertura' => $request->data_obertura,
+            'professional_afectat' => $request->professional_afectat,
+            'professional_registra' => $request->professional_registra,
+            'derivat_a' => $request->derivat_a,
+            'descripcio' => $request->descripcio,
+            'document' => $pathToFile,
+            'actiu' => true,
+            'estat' => true,
+        ]);
+
+        return redirect()->route('human_resources.index', $centre_id);
     }
 
-    /**
-     * Cambiar estado de Tema Pendent
-     */
-    public function toggleTema($temaId)
+    // Formulari d'edició
+    public function edit(TemaPendent $tema)
+    {
+        $professionals = Profesional::all();
+        $users = User::all();
+        $centre_id = $tema->centre_id; 
+        $type = 'pendent';
+        return view('rrhh.formulario_editar', compact('tema', 'professionals', 'users', 'centre_id', 'type'));
+    }
+
+    // Actualitzar tema pendent
+    public function update(Request $request, TemaPendent $tema)
+    {
+        $request->validate([
+            'data_obertura' => 'required|date',
+            'professional_afectat' => 'required|exists:profesional,id',
+            'professional_registra' => 'required|exists:users,id',
+            'derivat_a' => 'required|exists:profesional,id',
+            'descripcio' => 'required|string',
+            'documentacio_adjunta' => 'nullable|file|max:10240',
+        ]);
+
+        // Processar fitxer si existeix
+        if ($request->hasFile('documentacio_adjunta')) {
+            $tema->document = $request->file('documentacio_adjunta')->store('documents', 'public');
+        }
+
+        $tema->update([
+            'data_obertura' => $request->data_obertura,
+            'professional_afectat' => $request->professional_afectat,
+            'professional_registra' => $request->professional_registra,
+            'derivat_a' => $request->derivat_a,
+            'descripcio' => $request->descripcio,
+            'actiu' => $tema->actiu,
+            'estat' => $tema->estat,
+        ]);
+
+        return redirect()->route('human_resources.index', $tema->centre_id);
+    }
+
+    // Activar / Desactivar tema
+    public function toggleActive(TemaPendent $tema)
 {
-    $tema = TemaPendent::findOrFail($temaId); // buscar tema
-    $tema->completed = !$tema->completed; // ejemplo de toggle
+    $tema->actiu = !$tema->actiu; // invierte el estado
     $tema->save();
 
-    return redirect()->back()->with('success', 'Tema pendent actualizado');
+    return redirect()->back()->with('success', 'Estado actualizado correctamente.');
 }
 
-    public function active(Seguiment $seguiment)
-{
-    $seguiment->actiu = !$seguiment->actiu; // Cambiar de true a false o viceversa
-    $seguiment->save();
 
-    return redirect()->back()->with('success', 'Estat actualitzat correctament.');
-}
-
-public function activeTema(TemaPendent $tema)
-{
-    $tema->actiu = !$tema->actiu; // Cambiar de true a false o viceversa
-    $tema->save();
-
-    return redirect()->back()->with('success', 'Estat actualitzat correctament.');
-}
 }

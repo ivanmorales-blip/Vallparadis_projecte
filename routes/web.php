@@ -8,6 +8,10 @@ use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\HumanResourcesController;
+use App\Http\Controllers\TemesPendentsController;
+use App\Models\TemaPendent;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 
 // Ruta de login
@@ -113,11 +117,60 @@ Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsCo
      [TrainingController::class, 'addProfessionals']
      )->name('trainings.afegir_professionals');
 
-    // Exportaciones
-    Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
-    Route::get('/export/uniform', [ExportController::class, 'exportUniform'])->name('export.uniform');
-    Route::get('/export/cursos', [ExportController::class, 'exportCursos'])->name('export.cursos');
+
+Route::resource('evaluation', EvaluationController::class);
+Route::get('/evaluation/{evaluation}/download', [EvaluationController::class, 'download'])->name('evaluation.download');
+Route::get('/evaluation/{evaluation}/download', [App\Http\Controllers\EvaluationController::class, 'download'])
+    ->name('evaluation.download');
+
+
+// -----------------------------
+// INDEX / SHOW
+// -----------------------------
+Route::get('human_resources/{centre_id}', [HumanResourcesController::class, 'index'])
+    ->name('human_resources.index');
+
+Route::get('temes/{tema}', [HumanResourcesController::class, 'show'])
+    ->name('human_resources.show');
+
+// -----------------------------
+// CREAR / GUARDAR
+// -----------------------------
+Route::get('human_resources/create/{centre_id}/{type}', [HumanResourcesController::class, 'create'])
+    ->name('human_resources.create');
+
+Route::post('human_resources/store/{centre_id}', [HumanResourcesController::class, 'store'])
+    ->name('human_resources.store');
+
+// -----------------------------
+// EDITAR / ACTUALITZAR
+// -----------------------------
+Route::get('human_resources/{tema}/edit', [HumanResourcesController::class, 'edit'])
+    ->name('human_resources.edit');
+
+Route::put('human_resources/{tema}', [HumanResourcesController::class, 'update'])
+    ->name('human_resources.update');
+
+// -----------------------------
+// ACTIVAR / DESACTIVAR
+// -----------------------------
+Route::patch('human_resources/{tema}/active', [HumanResourcesController::class, 'toggleActive']
+)->name('human_resources.active');
+
+
+Route::get('/temes/{tema}/download', function(TemaPendent $tema) {
+    if ($tema->document && Storage::disk('public')->exists($tema->document)) {
+        return Storage::disk('public')->download($tema->document);
+    }
+    abort(404, 'No hi ha documents adjunts');
+})->name('temes.download');
 
 });
+
+
+    Route::get('/dashboard', function() {
+    return redirect()->route('menu'); // O cualquier página que quieras
+
+})->name('dashboard');;
 
 require __DIR__.'/auth.php';

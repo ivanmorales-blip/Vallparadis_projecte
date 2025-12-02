@@ -75,13 +75,14 @@
             <a href="{{ route('trainings.create') }}" class="{{ $linkClasses }}">Alta Curs</a>
         </div>
 
-        <!-- Gestio Documentació interna -->
+        <!--Recursos Humans-->
         <div class="{{ $cardClasses }}">
             <h2 class="text-xl flex items-center gap-2 text-gray-700 font-semibold mb-4 pb-2 border-b">
-                Documentació Interna
+                Recursos Humans
             </h2>
-            <a href="{{ route('trainings.index') }}" class="{{ $linkClasses }} mb-2">Listar Documentació</a>
-            <a href="{{ route('trainings.create') }}" class="{{ $linkClasses }}">Alta Documentació</a>
+            <a href="{{ route('human_resources.index', 1) }}" class="{{ $linkClasses }} mb-2">Llistar Recursos Humans</a>
+            <a href="{{ route('human_resources.create', [1, 'pendent']) }}" class="{{ $linkClasses }}">Alta Recurso Humà</a>
+
         </div>
 
     </div>

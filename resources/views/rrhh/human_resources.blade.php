@@ -1,125 +1,97 @@
 @extends('layouts.template')
 
 @section('contingut')
-@php $type = $type ?? 'pendent'; @endphp
-
-<div class="w-full max-w-4xl bg-white shadow-lg rounded-2xl p-8 mx-auto mt-10">
-    <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">
-        Afegir Registre - Centre {{ $centre_id }}
-    </h1>
-
-    @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-            <ul class="list-disc pl-5">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form method="POST" enctype="multipart/form-data" class="space-y-5"
-          action="{{ route('human_resources.store', [$centre_id, $type]) }}">
-        @csrf
-
-        <!-- Tipo -->
-        <div>
-            <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Tipus </label>
-            <select id="type" name="tipus" required class="w-full border px-4 py-2 rounded-xl">
-                <option value="pendent" {{ $type=='pendent' ? 'selected' : '' }}>Tema Pendent</option>
-                <option value="seguiment" {{ $type=='seguiment' ? 'selected' : '' }}>Seguiment</option>
-            </select>
+<div class="min-h-screen bg-gray-50 py-12 px-6">
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-3xl p-10 border border-gray-200">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8 border-b pb-4">
+            <h1 class="text-3xl font-extrabold text-orange-500 tracking-tight">
+                Tema Pendent
+            </h1>
+            <span class="text-gray-400 text-sm">Tema Pendent</span>
         </div>
 
-        <!-- Campos Tema Pendent -->
-        <div id="pendent-fields" style="{{ $type=='pendent' ? '' : 'display:none;' }}">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Data Obertura</label>
-                <input type="date" name="data_obertura" value="{{ old('data_obertura') }}" required class="w-full border px-4 py-2 rounded-xl">
+        <!-- Form -->
+        <form action="{{ route('human_resources.store', ['centre_id' => $centre_id, 'type' => $type]) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            @csrf
+
+            <!-- Data Obertura-->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="data_obertura" class="block text-gray-700 font-semibold mb-2">Data Obertura</label>
+                    <input id="data_obertura" name="data_obertura" type="date" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                </div>
             </div>
 
-            <!--Professional Afectat-->
-            <div>
-            <label for="professiona_afectat" class="block text-sm font-medium text-gray-700 mb-1">Professional Afectat</label>
-            <select name="professional_afectat" class="w-full border px-4 py-2 rounded-xl">
-                <option value="">-- Selecciona --</option>
-                @foreach(App\Models\Profesional::all() as $prof)
-                    <option value="{{ $prof->id }}" {{ old('professional_afectat')==$prof->id ? 'selected' : '' }}>{{ $prof->nom }}</option>
-                @endforeach
-            </select>
-        </div>
+            <!-- Professional Afectat -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="professional_afectat" class="block text-gray-700 font-semibold mb-2">Professional Afectat</label>
+                    <select id="professional_afectat" name="professional_afectat" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                        <option value="">-- Selecciona --</option>
+                        @foreach($professionals as $prof)
+                            <option value="{{ $prof->id }}">{{ $prof->nom }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <div>
-                <label for="id_registre" class="block text-sm font-medium text-gray-700 mb-1">Registre</label>
-                <select name="id_registre" class="w-full border px-4 py-2 rounded-xl">
-                    @foreach(App\Models\User::all() as $user)
-                        <option value="{{ $user->id }}" {{ old('id_registre')==$user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                    @endforeach
-                </select>
+                <!-- Professional que Registra -->
+                <div>
+                    <label for="professional_registra" class="block text-gray-700 font-semibold mb-2">Professional que Registra</label>
+                    <select id="professional_registra" name="professional_registra" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                        <option value="">-- Selecciona --</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ old('professional_registra') == $user->id ? 'selected' : '' }}>
+                                {{ $user->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
+            <!-- Derivat a -->
             <div>
-                <label for="professiona_afectat" class="block text-sm font-medium text-gray-700 mb-1">Registre</label>
-                <select name="id_registre" class="w-full border px-4 py-2 rounded-xl">
+                <label for="derivat_a" class="block text-gray-700 font-semibold mb-2">Derivat a</label>
+                <select name="derivat_a" id="derivat_a" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
                     <option value="">-- Selecciona --</option>
-                    @foreach(App\Models\Profesional::all() as $prof)
-                        <option value="{{ $prof->id }}" {{ old('id_derivat')==$prof->id ? 'selected' : '' }}>{{ $prof->nom }}</option>
+                    @foreach ($professionals as $prof)
+                        <option value="{{ $prof->id }}">{{ $prof->nom }}</option>
                     @endforeach
                 </select>
             </div>
-        </div>
 
-        <!-- Campos Seguiment -->
-        <div id="seguiment-fields" style="{{ $type=='seguiment' ? '' : 'display:none;' }}">
+            <!-- Documentació Adjunta -->
             <div>
-                <label class="block text-sm font-medium">Data *</label>
-                <input type="date" name="data" value="{{ old('data') }}" required class="w-full border px-4 py-2 rounded-xl">
+                <label for="documentacio_adjunta" class="block text-gray-700 font-semibold mb-2">Documentació Adjunta</label>
+                <input id="documentacio_adjunta" name="documentacio_adjunta" type="file"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
             </div>
 
+            <!-- Descripció -->
             <div>
-                <label class="block text-sm font-medium">Professional *</label>
-                <select name="id_professional" required class="w-full border px-4 py-2 rounded-xl">
-                    @foreach(App\Models\Profesional::all() as $prof)
-                        <option value="{{ $prof->id }}" {{ old('id_professional')==$prof->id ? 'selected' : '' }}>{{ $prof->nom }}</option>
-                    @endforeach
-                </select>
+                <label for="descripcio" class="block text-gray-700 font-semibold mb-2">Descripció</label>
+                <textarea id="descripcio" name="descripcio" rows="4"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"></textarea>
             </div>
-        </div>
 
-        <!-- Campos comunes -->
-        <div>
-            <label class="block text-sm font-medium">Descripció</label>
-            <textarea name="descripcio" rows="3" class="w-full border px-4 py-2 rounded-xl">{{ old('descripcio') }}</textarea>
-        </div>
+            <!-- Botons -->
+            <div class="flex justify-end space-x-4 pt-6 border-t mt-6">
+                <a href="{{ route('menu') }}"
+                   class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-2xl shadow transition text-center">
+                     Tornar al menú
+                </a>
 
-        <div>
-            <label class="block text-sm font-medium">Document</label>
-            <input type="file" name="document" class="w-full">
-        </div>
-
-        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg">
-            Guardar
-        </button>
-    </form>
+                <button type="submit"
+                    class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition">
+                    Enviar
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
-
-<script>
-    const tipoSelect = document.getElementById('type');
-    const pendentFields = document.getElementById('pendent-fields');
-    const seguimentFields = document.getElementById('seguiment-fields');
-    const form = document.querySelector('form');
-
-    // Cambiar visibilidad de campos y form action al cambiar tipo
-    tipoSelect.addEventListener('change', function() {
-        if (this.value === 'pendent') {
-            pendentFields.style.display = 'block';
-            seguimentFields.style.display = 'none';
-        } else {
-            pendentFields.style.display = 'none';
-            seguimentFields.style.display = 'block';
-        }
-
-        form.action = `/human_resources/store/{{ $centre_id }}/` + this.value;
-    });
-</script>
 @endsection
