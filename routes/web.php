@@ -127,7 +127,44 @@ Route::middleware(['auth', 'verified'])->group(function () {
      Route::get('/evaluation/{evaluation}/download', [App\Http\Controllers\EvaluationController::class, 'download'])
      ->name('evaluation.download');
 
-     
+     Route::get('human_resources/{centre_id}', [HumanResourcesController::class, 'index'])
+    ->name('human_resources.index');
+
+Route::get('temes/{tema}', [HumanResourcesController::class, 'show'])
+    ->name('human_resources.show');
+
+// -----------------------------
+// CREAR / GUARDAR
+// -----------------------------
+Route::get('human_resources/create/{centre_id}/{type}', [HumanResourcesController::class, 'create'])
+    ->name('human_resources.create');
+
+Route::post('human_resources/store/{centre_id}', [HumanResourcesController::class, 'store'])
+    ->name('human_resources.store');
+
+// -----------------------------
+// EDITAR / ACTUALITZAR
+// -----------------------------
+Route::get('human_resources/{tema}/edit', [HumanResourcesController::class, 'edit'])
+    ->name('human_resources.edit');
+
+Route::put('human_resources/{tema}', [HumanResourcesController::class, 'update'])
+    ->name('human_resources.update');
+
+// -----------------------------
+// ACTIVAR / DESACTIVAR
+// -----------------------------
+Route::patch('human_resources/{tema}/active', [HumanResourcesController::class, 'toggleActive']
+)->name('human_resources.active');
+
+
+Route::get('/temes/{tema}/download', function(TemaPendent $tema) {
+    if ($tema->document && Storage::disk('public')->exists($tema->document)) {
+        return Storage::disk('public')->download($tema->document);
+    }
+    abort(404, 'No hi ha documents adjunts');
+})->name('temes.download');
+
 
 
     Route::get('/dashboard', function() {
