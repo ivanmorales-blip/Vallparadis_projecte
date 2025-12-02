@@ -14,7 +14,7 @@ class TrackingController extends Controller
 
     public function index()
     {
-        $trackings = Tracking::with('profesional')
+        $trackings = Tracking::with(['profesional', 'registrador'])
             ->whereHas('profesional', function($query) {
                 $query->where('id_center', session('id_center'));
             })
@@ -25,17 +25,12 @@ class TrackingController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-   public function create()
+    public function create()
     {
         $professionals = $this->professionalsInCenter()->get();
 
-        // Obtenemos el profesional si vienes desde profesional/show
         $selectedProfesional = request()->query('profesional', null);
 
-        // Indica si debe bloquearse el select
         $disableProfessionalSelect = $selectedProfesional ? true : false;
 
         return view('tracking.formulario_alta', [
@@ -45,11 +40,6 @@ class TrackingController extends Controller
         ]);
     }
 
-    
-    /**
-     * Store a newly created resource in storage.
-     */
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -57,7 +47,6 @@ class TrackingController extends Controller
             'observacions' => 'nullable|string',
             'id_profesional' => 'required|exists:profesional,id',
             'tipus' => 'required|string',
-            'tema' => 'required|string',
             'comentari' => 'required|string',
             'id_profesional_registrador' => 'required|exists:profesional,id',
         ]);
@@ -67,40 +56,29 @@ class TrackingController extends Controller
         return redirect()->route('tracking.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-   public function show(Tracking $tracking)
+    public function show(Tracking $tracking)
     {
         $tracking->load(['profesional', 'registrador']);
         return view('tracking.show', compact('tracking'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Evaluation $evaluation)
+    // ✔️ CORREGIDO — ESTE ES EL EDIT CORRECTO DE SEGUIMENTS
+    public function edit(Tracking $tracking)
     {
         $professionals = $this->professionalsInCenter()->get();
 
-        // Profesional seleccionado siempre bloqueado en edición
-        $selectedProfesional = $evaluation->id_profesional;
+        // Profesional asignado al seguiment
+        $selectedProfesional = $tracking->id_profesional;
 
-        // Cargar las respuestas existentes en clave-valor
-        $oldValues = [];
-        for ($i = 0; $i < 20; $i++) {
-            $oldValues['pregunta'.($i+1)] = $evaluation->{'q'.$i};
-        }
-
-        return view('evaluation.formulario_editar', [
-            'evaluation' => $evaluation,
+        return view('tracking.formulario_editar', [
+            'tracking' => $tracking,
             'professionals' => $professionals,
-            'oldValues' => $oldValues,
-            'selectedProfesional' => $selectedProfesional
+            'selectedProfesional' => $selectedProfesional,
+            'disableProfessionalSelect' => true
         ]);
     }
 
-
+    // ✔️ CORREGIDO — SIN CAMPO TEMA
     public function update(Request $request, Tracking $tracking)
     {
         $validated = $request->validate([
@@ -109,16 +87,12 @@ class TrackingController extends Controller
             'id_profesional' => 'required|exists:profesional,id',
             'id_profesional_registrador' => 'required|exists:profesional,id',
             'tipus' => 'required|string',
-            'tema' => 'required|string',
             'comentari' => 'required|string',
         ]);
 
-
         $tracking->update($validated);
 
-        // Redirigir al menú
         return redirect()->route('menu')->with('success', 'Seguiment actualitzat correctament.');
-
     }
 
     public function active(Tracking $tracking)

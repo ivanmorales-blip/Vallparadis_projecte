@@ -5,8 +5,8 @@
     <div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl p-10 border border-gray-200">
 
         <h1 class="text-4xl font-extrabold text-orange-500 mb-6 text-center">
-            Afegir professionals al curs: 
-            <span class="text-gray-800">{{ $training->nom_curs }}</span>
+            Afegir professionals al projecte: 
+            <span class="text-gray-800">{{ $projecte->nom ?? $projecte->titol }}</span>
         </h1>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -67,9 +67,9 @@
                     class="px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 hover:scale-105">
                 💾 Guardar canvis
             </button>
-            <a href="{{ route('trainings.show', $training->id) }}" 
+            <a href="{{ route('projectes.show', $projecte->id) }}" 
                class="px-8 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 hover:scale-105">
-                ⬅️ Tornar al curs
+                ⬅️ Tornar al projecte
             </a>
         </div>
 
@@ -82,7 +82,7 @@
 <script>
 document.getElementById('save-btn').addEventListener('click', function() {
     saveDragDrop(
-        "{{ route('trainings.updateProfessionals', $training->id) }}",
+        "{{ route('projectes.updateProfessionals', $projecte->id) }}",
         "#assigned-professionals",
         "#assigned-count",
         "#available-count"

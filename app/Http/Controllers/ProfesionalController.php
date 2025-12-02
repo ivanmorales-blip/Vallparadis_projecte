@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Profesional;
 use App\Models\Center;
+use App\Models\Evaluation;
 use App\Traits\Activable;
 use App\Traits\CenterFilterable;
 

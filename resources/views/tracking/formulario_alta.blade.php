@@ -5,7 +5,7 @@
     <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-8 border border-gray-200">
 
         <h1 class="text-3xl font-bold text-orange-500 mb-8 text-center">
-            Formulari Seguiments
+            Formulari de Seguiments
         </h1>
 
         <form action="{{ route('tracking.store') }}" method="POST" class="space-y-6">
@@ -33,17 +33,6 @@
                 @enderror
             </div>
 
-            <!-- Tema -->
-            <div class="space-y-1">
-                <label for="tema" class="block text-gray-700 font-semibold">Tema *</label>
-                <input id="tema" name="tema" type="text" required
-                       value="{{ old('tema') }}"
-                       class="w-full px-4 py-2 border rounded-2xl focus:ring-2 focus:ring-orange-300 focus:outline-none">
-                @error('tema')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-
             <!-- Comentari -->
             <div class="space-y-1">
                 <label for="comentari" class="block text-gray-700 font-semibold">Comentari *</label>
@@ -58,7 +47,6 @@
             <div class="space-y-1">
                 <label for="id_profesional" class="block text-gray-700 font-semibold">Professional *</label>
 
-                {{-- Select editable o disabled según venga de professional/show --}}
                 <select id="id_profesional"
                         name="id_profesional_display"
                         {{ $disableProfessionalSelect ? 'disabled' : '' }}
@@ -73,29 +61,32 @@
                     @endforeach
                 </select>
 
-                {{-- Campo oculto para enviar valor real --}}
+                {{-- Hidden real --}}
                 @if($disableProfessionalSelect)
                     <input type="hidden" name="id_profesional" value="{{ $selectedProfesional }}">
                 @else
                     <input type="hidden" name="id_profesional" value="{{ old('id_profesional') }}">
                 @endif
+
                 @error('id_profesional')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
 
-            <!-- Registrador -->
+            <!-- Avaluador -->
             <div class="space-y-1">
-                <label for="id_profesional_registrador" class="block text-gray-700 font-semibold">Registrador *</label>
+                <label for="id_profesional_registrador" class="block text-gray-700 font-semibold">Avaluador *</label>
+
                 <select id="id_profesional_registrador" name="id_profesional_registrador" required
                         class="w-full border border-gray-300 rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un professional --</option>
+                    <option value="">-- Selecciona un avaluador --</option>
                     @foreach ($professionals as $prof)
                         <option value="{{ $prof->id }}" {{ old('id_profesional_registrador') == $prof->id ? 'selected' : '' }}>
                             {{ $prof->nom }} {{ $prof->cognom }}
                         </option>
                     @endforeach
                 </select>
+
                 @error('id_profesional_registrador')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
@@ -115,7 +106,7 @@
                 @enderror
             </div>
 
-            <!-- Botones -->
+            <!-- Botons -->
             <div class="flex flex-col md:flex-row gap-4 mt-6">
                 <button type="submit"
                         class="flex-1 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow transition">
@@ -123,7 +114,7 @@
                 </button>
                 <button type="button" onclick="window.location='{{ route('menu') }}'"
                         class="flex-1 px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold rounded-2xl shadow transition">
-                    Cancelar
+                    Cancel·lar
                 </button>
             </div>
 

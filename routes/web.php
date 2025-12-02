@@ -44,41 +44,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profesional/{profesional}', [ProfesionalController::class, 'show'])->name('profesional.show');
     Route::delete('/profesional/{profesional}', [ProfesionalController::class, 'destroy'])->name('profesional.destroy');
 
-Route::resource('projectes_comissions', Projectes_comissionsController::class);
 
-// Listados separados
-Route::get('/projectes', [Projectes_comissionsController::class, 'projectes'])
-     ->name('projectes_comissions.projectes');
+    Route::resource('projectes_comissions', Projectes_comissionsController::class);
 
-Route::get('/comissions', [Projectes_comissionsController::class, 'comissions'])
-     ->name('projectes_comissions.comissions');
+    // Listados separados
+    Route::get('/projectes', [Projectes_comissionsController::class, 'projectes'])
+        ->name('projectes_comissions.projectes');
 
-// Crear
-Route::get('projectes_comissions/create', [Projectes_comissionsController::class, 'create'])
-     ->name('projectes_comissions.create');
+    Route::get('/comissions', [Projectes_comissionsController::class, 'comissions'])
+        ->name('projectes_comissions.comissions');
 
-Route::post('projectes_comissions', [Projectes_comissionsController::class, 'store'])
-     ->name('projectes_comissions.store');
+    // Drag & Drop profesionales (PARÁMETRO CORRECTO)
+    Route::get('/projectes_comissions/{projectes_comission}/afegir-professionals', 
+        [Projectes_comissionsController::class, 'addProfessionals'])
+        ->name('projectes_comissions.addProfessionals');
 
-// Editar / Actualizar
-Route::get('projectes_comissions/{projectes_comission}/edit', [Projectes_comissionsController::class, 'edit'])
-     ->name('projectes_comissions.edit');
+    Route::post('/projectes_comissions/{projectes_comission}/update-professionals', 
+        [Projectes_comissionsController::class, 'updateProfessionals'])
+        ->name('projectes_comissions.updateProfessionals');
 
-Route::patch('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'update'])
-     ->name('projectes_comissions.update');
-
-// Activar / Desactivar
-Route::patch('projectes_comissions/{projectes_comission}/active', [Projectes_comissionsController::class, 'active'])
-     ->name('projectes_comissions.active');
-
-// Eliminar
-Route::delete('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'destroy'])
-     ->name('projectes_comissions.destroy');
-
-// Mostrar detalles
-Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'show'])
-     ->name('projectes_comissions.show');
-
+    // Activar / Desactivar proyecto o comissió
+    Route::patch('/projectes_comissions/{projectes_comission}/active', 
+        [Projectes_comissionsController::class, 'active'])
+        ->name('projectes_comissions.active');
 
     // Seguimiento (tracking)
     Route::resource('tracking', TrackingController::class)->except(['destroy']);
@@ -115,6 +103,7 @@ Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsCo
      [TrainingController::class, 'addProfessionals']
      )->name('trainings.afegir_professionals');
 
+
     // Documentacio
     Route::resource('documentacio', DocumentacioController::class);
     Route::patch('/documentacio/{documentacio}/active', [DocumentacioController::class, 'active'])->name('documentacio.active');
@@ -125,10 +114,24 @@ Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsCo
      Route::patch('/manteniment/{manteniment}/active', [MaintenanceController::class, 'active'])->name('manteniment.active');
      Route::delete('/manteniment/{manteniment}', [MaintenanceController::class, 'destroy'])->name('manteniment.destroy');
 
-    // Exportaciones
-    Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
-    Route::get('/export/uniform', [ExportController::class, 'exportUniform'])->name('export.uniform');
-    Route::get('/export/cursos', [ExportController::class, 'exportCursos'])->name('export.cursos');
+     // Exportar datos
+     Route::get('/export/taquilla', [ExportController::class, 'exportTaquilla'])->name('export.taquilla');
+     Route::get('/export/uniform', [ExportController::class, 'exportUniform'])->name('export.uniform');
+     Route::get('/export/cursos', [ExportController::class, 'exportCursos'])->name('export.cursos');
+
+     Route::resource('evaluation', EvaluationController::class);
+     Route::get('/evaluation/{evaluation}/download', [EvaluationController::class, 'download'])->name('evaluation.download');
+     Route::get('/evaluation/{evaluation}/download', [App\Http\Controllers\EvaluationController::class, 'download'])
+     ->name('evaluation.download');
+
+     
+
+
+    Route::get('/dashboard', function() {
+    return redirect()->route('menu'); // O cualquier página que quieras
+
+})->name('dashboard');
+
 
 });
 

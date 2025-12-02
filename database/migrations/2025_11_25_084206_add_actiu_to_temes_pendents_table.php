@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
 {
     Schema::table('temes_pendents', function (Blueprint $table) {
-        $table->boolean('actiu')->default(1);
+        //$table->boolean('actiu')->default(1);
     });
 }
 

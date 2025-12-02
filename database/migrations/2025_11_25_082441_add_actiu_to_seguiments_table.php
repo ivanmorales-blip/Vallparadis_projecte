@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
 {
     Schema::table('seguiments', function (Blueprint $table) {
-        $table->boolean('actiu')->default(true)->after('centre_id');
+        //$table->boolean('actiu')->default(true)->after('centre_id');
     });
 }
 

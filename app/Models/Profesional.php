@@ -35,6 +35,13 @@ class Profesional extends Model
     {
         return $this->hasMany(Evaluation::class, 'id_profesional');
     }
+   public function projectes_comissions()
+    {
+        return $this->belongsToMany(
+            Projectes_comissions::class,
+            'projectes_comissions_profesional', // tabla pivot
+        );
+    }
 
     /*public function uniform(): HasMany{
         return $this->hasMany(Uniformity::class);
