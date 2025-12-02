@@ -38,7 +38,9 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
+                                    
                                     <!-- Editar -->
+                                    
                                     <a href="{{ route('projectes_comissions.edit', $projecte) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
                                         <svg class="h-6 w-6" aria-label="Editar">
                                             <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
@@ -46,17 +48,18 @@
                                     </a>
 
                                     <!-- Activar / Desactivar -->
-                                    <form action="{{ route('projectes_comissions.active', $projecte) }}" method="POST">
+                                    <form action="{{ route('human_resources.active', $tema) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" class="activar-desactivar text-sm transition"
-                                                title="{{ $projecte->estat ? 'Desactivar' : 'Activar' }}">
-                                            <svg class="h-6 w-6 {{ $projecte->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
-                                                 aria-label="{{ $projecte->estat ? 'Desactivar' : 'Activar' }}">
-                                                <use href="{{ asset('icons/sprite.svg#' . ($projecte->estat ? 'icon-x' : 'icon-check')) }}"></use>
+                                                title="{{ $tema->actiu ? 'Desactivar' : 'Activar' }}">
+                                            <svg class="h-6 w-6 {{ $tema->actiu ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
+                                                aria-label="{{ $tema->actiu ? 'Desactivar' : 'Activar' }}">
+                                                <use href="{{ asset('icons/sprite.svg#' . ($tema->actiu ? 'icon-x' : 'icon-check')) }}"></use>
                                             </svg>
                                         </button>
                                     </form>
+
                                 </td>
                             </tr>
                         @endforeach

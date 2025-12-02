@@ -1,125 +1,105 @@
 @extends('layouts.template')
 
 @section('contingut')
-<div class="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
-    <div class="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-8">
+<div class="min-h-screen bg-gray-50 py-12 px-6">
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-3xl p-10 border border-gray-200">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8 border-b pb-4">
+            <h1 class="text-3xl font-extrabold text-orange-500 tracking-tight">
+                Editar Tema Pendent
+            </h1>
+            <span class="text-gray-400 text-sm">Tema Pendent</span>
+        </div>
 
-        <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">
-            {{ $type == 'pendent' ? 'Editar Tema Pendent' : 'Editar Seguiment' }}
-        </h1>
-
-        <form action="{{ route('rrhh.update', [$centre_id, $type, $item->id]) }}" 
-              method="POST" 
-              enctype="multipart/form-data"
-              class="space-y-5">
-            
+        <!-- Formulario -->
+        <form action="{{ route('human_resources.update', $tema->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
-            @method('PATCH')
+            @method('PUT')
 
-            {{-- ===================================== --}}
-            {{--             TEMA PENDENT             --}}
-            {{-- ===================================== --}}
-            @if ($type == 'pendent')
-
-                <!-- Data obertura -->
+            <!-- Data Obertura -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Data Obertura *</label>
-                    <input type="date" name="data_obertura" value="{{ $item->data_obertura }}" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 
-                               focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    <label for="data_obertura" class="block text-gray-700 font-semibold mb-2">Data Obertura</label>
+                    <input id="data_obertura" name="data_obertura" type="date" required
+                        value="{{ old('data_obertura', $tema->data_obertura) }}"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                </div>
+            </div>
+
+            <!-- Professional Afectat -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="professional_afectat" class="block text-gray-700 font-semibold mb-2">Professional Afectat</label>
+                    <select id="professional_afectat" name="professional_afectat" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                        <option value="">-- Selecciona --</option>
+                        @foreach($professionals as $prof)
+                            <option value="{{ $prof->id }}" {{ old('professional_afectat', $tema->professional_afectat) == $prof->id ? 'selected' : '' }}>
+                                {{ $prof->nom }} {{ $prof->cognom ?? '' }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
-                <!-- Professional afectat -->
+                <!-- Professional que Registra -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Professional afectat *</label>
-                    <input type="text" name="professional_afectat" value="{{ $item->professional_afectat }}" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 
-                               focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    <label for="professional_registra" class="block text-gray-700 font-semibold mb-2">Professional que Registra</label>
+                    <select id="professional_registra" name="professional_registra" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                        <option value="">-- Selecciona --</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ old('professional_registra', $tema->professional_registra) == $user->id ? 'selected' : '' }}>
+                                {{ $user->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+            </div>
 
-                <!-- Descripció -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Descripció *</label>
-                    <textarea name="descripcio" rows="3" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 
-                               focus:outline-none focus:ring-2 focus:ring-orange-400">{{ $item->descripcio }}</textarea>
-                </div>
-
-                <!-- Professional que registra -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Professional que registra *</label>
-                    <input type="text" name="professional_registra" value="{{ $item->professional_registra }}" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 
-                               focus:outline-none focus:ring-2 focus:ring-orange-400">
-                </div>
-
-                <!-- A qui es derivat -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">A qui es derivat</label>
-                    <input type="text" name="derivat_a" value="{{ $item->derivat_a }}"
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 
-                               focus:outline-none focus:ring-2 focus:ring-orange-400">
-                </div>
-
-            @else
-
-            {{-- ===================================== --}}
-            {{--              SEGUIMENT                --}}
-            {{-- ===================================== --}}
-
-                <!-- Data -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Data *</label>
-                    <input type="date" name="data" value="{{ $item->data }}" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 
-                               focus:outline-none focus:ring-2 focus:ring-orange-400">
-                </div>
-
-                <!-- Professional -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Professional *</label>
-                    <input type="text" name="professional" value="{{ $item->professional }}" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 
-                               focus:outline-none focus:ring-2 focus:ring-orange-400">
-                </div>
-
-                <!-- Descripció -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Descripció *</label>
-                    <textarea name="descripcio" rows="3" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 
-                               focus:outline-none focus:ring-2 focus:ring-orange-400">{{ $item->descripcio }}</textarea>
-                </div>
-
-            @endif
-
-            <!-- Document adjunt -->
+            <!-- Derivat a -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Document adjunt</label>
-                
-                @if($item->document)
-                    <p class="text-sm text-blue-600 underline mb-1">
-                        Document actual: <a href="{{ asset('uploads/'.$item->document) }}" target="_blank">Veure arxiu</a>
-                    </p>
-                @endif
+                <label for="derivat_a" class="block text-gray-700 font-semibold mb-2">Derivat a</label>
+                <select name="derivat_a" id="derivat_a"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                    <option value="">-- Cap --</option>
+                    @foreach ($professionals as $prof)
+                        <option value="{{ $prof->id }}" {{ old('derivat_a', $tema->derivat_a) == $prof->id ? 'selected' : '' }}>
+                            {{ $prof->nom }} {{ $prof->cognom ?? '' }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-                <input type="file" name="document"
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2">
+            <!-- Documentació Adjunta -->
+            <div>
+                <label for="documentacio_adjunta" class="block text-gray-700 font-semibold mb-2">Documentació Adjunta</label>
+                <input id="documentacio_adjunta" name="documentacio_adjunta" type="file"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                @if($tema->document)
+                    <p class="text-gray-500 text-sm mt-1">Actual: <a href="{{ asset($tema->document) }}" target="_blank" class="underline text-blue-500">Veure document</a></p>
+                @endif
+            </div>
+
+            <!-- Descripció -->
+            <div>
+                <label for="descripcio" class="block text-gray-700 font-semibold mb-2">Descripció</label>
+                <textarea id="descripcio" name="descripcio" rows="4"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">{{ old('descripcio', $tema->descripcio) }}</textarea>
             </div>
 
             <!-- Botons -->
-            <div class="flex justify-between items-center pt-4">
-                <a href="{{ route('rrhh.show', $centre_id) }}"
-                   class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl transition shadow">
-                    Cancel·lar
+            <div class="flex justify-end space-x-4 pt-6 border-t mt-6">
+                <a href="{{ route('human_resources.index', $tema->centre_id) }}"
+                   class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-2xl shadow transition text-center">
+                     Cancel·lar
                 </a>
 
                 <button type="submit"
-                        class="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow transition">
-                    Actualitzar
+                    class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition">
+                    Guardar canvis
                 </button>
             </div>
-
         </form>
     </div>
 </div>

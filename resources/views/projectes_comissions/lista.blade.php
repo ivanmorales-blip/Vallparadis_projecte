@@ -25,37 +25,37 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         @foreach($comissions as $comissio)
-<tr id="row-{{ $comissio->id }}" class="hover:bg-orange-50 transition duration-200 cursor-pointer"
-    onclick="window.location='{{ route('projectes_comissions.show', $comissio->id) }}'">
-    <td class="px-6 py-4 text-gray-600 font-medium">{{ $comissio->id }}</td>
-    <td class="px-6 py-4 text-gray-800">{{ $comissio->nom }}</td>
-    <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($comissio->data_inici)->format('d/m/Y') }}</td>
-    <td class="px-6 py-4 text-gray-700">{{ $comissio->profesional->nom ?? '' }} {{ $comissio->profesional->cognom ?? '' }}</td>
-    <td class="px-6 py-4">
-        <span class="estado px-3 py-1 rounded-full font-semibold text-sm {{ $comissio->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
-            {{ $comissio->estat ? 'Actiu' : 'Inactiu' }}
-        </span>
-    </td>
-    <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
-        <a href="{{ route('projectes_comissions.edit', $comissio) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
-            <svg class="h-6 w-6" aria-label="Editar">
-                <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
-            </svg>
-        </a>
-        <form action="{{ route('projectes_comissions.active', $comissio) }}" method="POST">
-            @csrf
-            @method('PATCH')
-            <button type="submit" class="activar-desactivar text-sm transition"
-                    title="{{ $comissio->estat ? 'Desactivar' : 'Activar' }}">
-                <svg class="h-6 w-6 {{ $comissio->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
-                     aria-label="{{ $comissio->estat ? 'Desactivar' : 'Activar' }}">
-                    <use href="{{ asset('icons/sprite.svg#' . ($comissio->estat ? 'icon-x' : 'icon-check')) }}"></use>
-                </svg>
-            </button>
-        </form>
-    </td>
-</tr>
-@endforeach
+                <tr id="row-{{ $comissio->id }}" class="hover:bg-orange-50 transition duration-200 cursor-pointer"
+                    onclick="window.location='{{ route('projectes_comissions.show', $comissio->id) }}'">
+                    <td class="px-6 py-4 text-gray-600 font-medium">{{ $comissio->id }}</td>
+                    <td class="px-6 py-4 text-gray-800">{{ $comissio->nom }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($comissio->data_inici)->format('d/m/Y') }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ $comissio->profesional->nom ?? '' }} {{ $comissio->profesional->cognom ?? '' }}</td>
+                    <td class="px-6 py-4">
+                        <span class="estado px-3 py-1 rounded-full font-semibold text-sm {{ $comissio->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
+                            {{ $comissio->estat ? 'Actiu' : 'Inactiu' }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
+                        <a href="{{ route('projectes_comissions.edit', $comissio) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
+                            <svg class="h-6 w-6" aria-label="Editar">
+                                <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
+                            </svg>
+                        </a>
+                        <form action="{{ route('projectes_comissions.active', $comissio) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="activar-desactivar text-sm transition"
+                                    title="{{ $comissio->estat ? 'Desactivar' : 'Activar' }}">
+                                <svg class="h-6 w-6 {{ $comissio->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
+                                    aria-label="{{ $comissio->estat ? 'Desactivar' : 'Activar' }}">
+                                    <use href="{{ asset('icons/sprite.svg#' . ($comissio->estat ? 'icon-x' : 'icon-check')) }}"></use>
+                                </svg>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
                     </tbody>
                 </table>
             </div>

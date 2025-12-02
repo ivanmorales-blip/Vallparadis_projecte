@@ -8,6 +8,10 @@ use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\HumanResourcesController;
+use App\Http\Controllers\TemesPendentsController;
+use App\Models\TemaPendent;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\DocumentacioController;
 use App\Http\Controllers\MaintenanceController;
 use Illuminate\Support\Facades\Route;
@@ -103,7 +107,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
      [TrainingController::class, 'addProfessionals']
      )->name('trainings.afegir_professionals');
 
-
     // Documentacio
     Route::resource('documentacio', DocumentacioController::class);
     Route::patch('/documentacio/{documentacio}/active', [DocumentacioController::class, 'active'])->name('documentacio.active');
@@ -134,5 +137,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 });
+
+
+    Route::get('/dashboard', function() {
+    return redirect()->route('menu'); // O cualquier página que quieras
+
+})->name('dashboard');;
 
 require __DIR__.'/auth.php';
