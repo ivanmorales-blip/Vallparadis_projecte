@@ -2,26 +2,23 @@
 
 @section('contingut')
 <div class="p-8 bg-gray-50 min-h-screen">
-
     <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 relative">
-<div class="flex justify-between items-start mb-6">
 
-
-            <!-- Etiqueta SEGUIMENT -->
-        <div class="flex justify-between items-start ">
-            <span class="flex justify-right items-right absolute top-6 left-6 bg-purple-200 text-purple-800 px-4 py-1 rounded-full font-semibold ">
-                Seguiment
-            </span>
-        </div>
-</div>
-
-
-        <h1 class="text-3xl font-bold mb-8 text-orange-500">
+        <div class="flex justify-between items-start mb-6">
+            <h1 class="text-3xl font-bold mb-8 text-orange-500">
             Seguiment {{ $tema->profesional->nom ?? '' }} {{ $tema->profesional->cognom ?? '' }}
         </h1>
         
 
-        <!-- Dades del seguiment -->
+            <!-- Etiqueta SEGUIMENT -->
+        <div class="ml-4 flex items-center">
+                <span class="bg-purple-100 text-purple-800 px-5 py-2 rounded-full font-semibold text-sm shadow-lg animate-pulse">
+                    Segiment
+                </span>
+            </div>
+        </div>
+
+ <!-- Dades del seguiment -->
         <div class="grid grid-cols-2 gap-8 mt-6">
 
             <!-- Data -->
@@ -77,6 +74,14 @@
         </div>
 
     </div>
+
+
+
+
+
+</div>        
+
+       
 
 </div>
 @endsection

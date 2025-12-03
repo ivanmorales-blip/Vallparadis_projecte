@@ -29,7 +29,9 @@
 
                 <tbody class="divide-y divide-gray-200">
                     @foreach($temes_pendents as $tema)
-                        <tr id="row-{{ $tema->id }}" class="hover:bg-orange-50 transition duration-200">
+                        <tr id="row-{{ $tema->id }}" 
+                            class="hover:bg-orange-50 transition duration-200 cursor-pointer"
+                            onclick="window.location='{{ route('human_resources.show', $tema->id) }}'">
 
                             <!-- ID -->
                             <td class="px-6 py-4 text-gray-600 font-medium">{{ $tema->id }}</td>
@@ -39,8 +41,8 @@
                                 {{ \Carbon\Carbon::parse($tema->data_obertura)->format('d/m/Y') ?? 'N/A' }}
                             </td>
 
-                            <!-- Professional Afectat (solo aquí se hace clic para abrir SHOW) -->
-                            <td class="px-6 py-4 text-orange-600 font-semibold hover:underline cursor-pointer"
+                            <!-- Professional Afectat -->
+                            <td class="px-6 py-4 text-gray-700"
                                 onclick="window.location='{{ route('human_resources.show', $tema->id) }}'">
                                 {{ $tema->profesional->nom ?? 'N/A' }} {{ $tema->profesional->cognom ?? '' }}
                             </td>
