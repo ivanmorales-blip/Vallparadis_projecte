@@ -14,6 +14,23 @@ function drop(event, target) {
         target === 'assigned' ? 'assigned-professionals' : 'available-professionals'
     );
     ul.appendChild(draggedItem);
+
+    // 🔥 Actualizamos contadores dinámicamente
+    updateCounters();
+}
+
+/**
+ * Actualiza dinámicamente los contadores de disponibles y asignados.
+ */
+function updateCounters() {
+    const availableCount = document.querySelectorAll('#available-professionals li').length;
+    const assignedCount = document.querySelectorAll('#assigned-professionals li').length;
+
+    const availableSpan = document.getElementById('available-count');
+    const assignedSpan = document.getElementById('assigned-count');
+
+    if (availableSpan) availableSpan.textContent = availableCount;
+    if (assignedSpan) assignedSpan.textContent = assignedCount;
 }
 
 /**
@@ -51,7 +68,7 @@ async function saveDragDrop(url, assignedSelector, assignedCountSelector = null,
         }
 
         // Toast de éxito
-        showToast('✅ Professionals actualitzats correctament!');
+        showToast('Professionals actualitzats correctament!');
 
         // Volver a la página anterior tras 800ms
         setTimeout(() => {
@@ -63,7 +80,7 @@ async function saveDragDrop(url, assignedSelector, assignedCountSelector = null,
         }, 1000);
 
     } catch (error) {
-        showToast('❌ Error al guardar els canvis.', true);
+        showToast('Error al guardar els canvis.', true);
         console.error(error);
     }
 }

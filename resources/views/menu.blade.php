@@ -1,10 +1,10 @@
 @extends('layouts.template')
 
 @section('contingut')
-<div class="container mx-auto px-4 py-12">
+<div class="min-h-screen flex flex-col md:pl-20 bg-gray-50 p-6">
 
     <!-- Header -->
-    <div class="flex items-center space-x-4 mb-12">
+    <div class="flex items-center space-x-4 mb-8">
         <svg class="h-12 w-12 text-gray-600">
             <use href="{{ asset('icons/sprite.svg#computer-desktop') }}"></use>
         </svg>
@@ -12,10 +12,9 @@
     </div>
 
     <!-- Grid Cards -->
-    <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-
+    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 overflow-y-auto max-h-[calc(100vh-6rem)] pr-2 custom-scrollbar">
         @php
-            $cardBase = "bg-white border border-gray-200 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 flex flex-col";
+            $cardBase = "bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 p-6 flex flex-col transform hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)]";
             $linkBase = "text-orange-500 font-medium hover:underline hover:text-orange-600 transition-colors duration-200";
         @endphp
 
@@ -23,7 +22,7 @@
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
                 <svg class="h-6 w-6 text-gray-600 mr-2">
-                    <use href="{{ asset('icons/sprite.svg') }}?v={{ filemtime(public_path('icons/sprite.svg')) }}#centre-icone"></use>
+                    <use href="{{ asset('icons/sprite.svg#centre-icone') }}"></use>
                 </svg>
                 <h2 class="text-lg font-semibold text-gray-700">Centres</h2>
             </div>
@@ -35,7 +34,7 @@
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
                 <svg class="h-6 w-6 text-gray-600 mr-2">
-                    <use href="{{ asset('icons/sprite.svg') }}?v={{ filemtime(public_path('icons/sprite.svg')) }}#profesionals-icone"></use>
+                    <use href="{{ asset('icons/sprite.svg#profesionals-icone') }}"></use>
                 </svg>
                 <h2 class="text-lg font-semibold text-gray-700">Professionals</h2>
             </div>
@@ -71,7 +70,7 @@
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
                 <svg class="h-6 w-6 text-gray-600 mr-2">
-                    <use href="{{ asset('icons/sprite.svg') }}?v={{ filemtime(public_path('icons/sprite.svg')) }}#tracking-icone"></use>
+                    <use href="{{ asset('icons/sprite.svg#tracking-icone') }}"></use>
                 </svg>
                 <h2 class="text-lg font-semibold text-gray-700">Seguiments i Avaluacions</h2>
             </div>
@@ -83,7 +82,7 @@
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
                 <svg class="h-6 w-6 text-gray-600 mr-2">
-                    <use href="{{ asset('icons/sprite.svg') }}?v={{ filemtime(public_path('icons/sprite.svg')) }}#training-icone"></use>
+                    <use href="{{ asset('icons/sprite.svg#training-icone') }}"></use>
                 </svg>
                 <h2 class="text-lg font-semibold text-gray-700">Cursos</h2>
             </div>
@@ -95,7 +94,7 @@
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
                 <svg class="h-6 w-6 text-gray-600 mr-2">
-                    <use href="{{ asset('icons/sprite.svg') }}?v={{ filemtime(public_path('icons/sprite.svg')) }}#human-resources-icone"></use>
+                    <use href="{{ asset('icons/sprite.svg#human-resources-icone') }}"></use>
                 </svg>
                 <h2 class="text-lg font-semibold text-gray-700">Recursos Humans</h2>
             </div>
@@ -107,7 +106,7 @@
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
                 <svg class="h-6 w-6 text-gray-600 mr-2">
-                    <use href="{{ asset('icons/sprite.svg') }}?v={{ filemtime(public_path('icons/sprite.svg')) }}#documentacio-icone"></use>
+                    <use href="{{ asset('icons/sprite.svg#documentacio-icone') }}"></use>
                 </svg>
                 <h2 class="text-lg font-semibold text-gray-700">Documentació interna</h2>
             </div>
@@ -119,7 +118,7 @@
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
                 <svg class="h-6 w-6 text-gray-600 mr-2">
-                    <use href="{{ asset('icons/sprite.svg') }}?v={{ filemtime(public_path('icons/sprite.svg')) }}#manteniment-icone"></use>
+                    <use href="{{ asset('icons/sprite.svg#manteniment-icone') }}"></use>
                 </svg>
                 <h2 class="text-lg font-semibold text-gray-700">Manteniment</h2>
             </div>
@@ -127,6 +126,32 @@
             <a href="{{ route('manteniment.create') }}" class="{{ $linkBase }}">Alta Manteniment</a>
         </div>
 
+        <!-- Serveis Generals -->
+        <div class="{{ $cardBase }}">
+            <div class="flex items-center mb-4">
+                <svg class="h-6 w-6 text-gray-600 mr-2">
+                    <use href="{{ asset('icons/sprite.svg#general-services-icone') }}"></use>
+                </svg>
+                <h2 class="text-lg font-semibold text-gray-700">Serveis Generals</h2>
+            </div>
+            <a href="{{ route('general_services.index') }}" class="{{ $linkBase }} mb-2">Llistar Serveis Generals</a>
+            <a href="{{ route('general_services.create') }}" class="{{ $linkBase }}">Alta Servei General</a>
+        </div>
+
     </div>
 </div>
+
+{{-- Scroll premium y microanimaciones --}}
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(209,115,46,0.6);
+        border-radius: 10px;
+    }
+</style>
 @endsection

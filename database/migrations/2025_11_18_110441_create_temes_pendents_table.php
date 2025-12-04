@@ -18,7 +18,7 @@ return new class extends Migration
         $table->string('professional_registra')->nullable();
         $table->string('document')->nullable();
         $table->unsignedBigInteger('derivat_a')->nullable();
-        $table->foreign('derivat_a')->references('id')->on('professionals')->onDelete('set null');
+        $table->foreign('derivat_a')->references('id')->on('profesional')->onDelete('set null');
 
 
         // Relación con centro

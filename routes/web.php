@@ -10,6 +10,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\HumanResourcesController;
 use App\Http\Controllers\TemesPendentsController;
+use App\Http\Controllers\General_servicesController;
 use App\Models\TemaPendent;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\DocumentacioController;
@@ -77,6 +78,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/tracking/{tracking}/active', [TrackingController::class, 'active'])->name('tracking.active');
     Route::delete('/tracking/{tracking}', [TrackingController::class, 'destroy'])->name('tracking.destroy');
     Route::get('/tracking/create', [TrackingController::class, 'create'])->name('tracking.create');
+
+    Route::resource('general_services', General_servicesController::class);
 
     // Evaluaciones
     Route::resource('evaluation', EvaluationController::class)->except(['destroy']);
