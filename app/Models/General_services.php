@@ -26,4 +26,8 @@ class General_services extends Model
     {
         return $this->belongsTo(\App\Models\Center::class, 'id_center');
     }
+     public function trackings()
+    {
+        return $this->hasMany(Tracking::class, 'id_general_services');
+    }
 }

@@ -1,87 +1,82 @@
 @extends('layouts.template')
 
 @section('contingut')
-<div class="p-8 bg-gray-50 min-h-screen">
-    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 relative">
 
-        <div class="flex justify-between items-start mb-6">
-            <h1 class="text-3xl font-bold mb-8 text-orange-500">
-            Seguiment {{ $tema->profesional->nom ?? '' }} {{ $tema->profesional->cognom ?? '' }}
-        </h1>
-        
+<div class="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100 p-8">
 
-            <!-- Etiqueta SEGUIMENT -->
-        <div class="ml-4 flex items-center">
-                <span class="bg-purple-100 text-purple-800 px-5 py-2 rounded-full font-semibold text-sm shadow-lg animate-pulse">
-                    Segiment
+    <div class="max-w-5xl mx-auto bg-white shadow-2xl rounded-3xl p-10 border border-gray-100 relative">
+
+        <!-- Encabezado -->
+        <div class="flex items-start justify-between mb-10">
+            <div>
+                <h1 class="text-4xl font-extrabold text-gray-800 tracking-tight">
+                    Seguiment 
+                    <span class="text-orange-500">{{ $tema->profesional->nom ?? '' }} {{ $tema->profesional->cognom ?? '' }}</span>
+                </h1>
+                <p class="text-gray-500 mt-1 text-sm">
+                    Detalls del seguiment del professional assignat
+                </p>
+            </div>
+
+            <!-- Badge -->
+            <div>
+                <span class="px-6 py-2 rounded-full bg-purple-100 text-purple-700 font-semibold text-sm shadow animate-pulse">
+                    Seguiment
                 </span>
             </div>
         </div>
 
- <!-- Dades del seguiment -->
-        <div class="grid grid-cols-2 gap-8 mt-6">
+        <!-- Datos principales -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
 
-            <!-- Data -->
-            <div>
-                <h3 class="font-semibold text-gray-700">📅 Data:</h3>
-                <p class="text-gray-600">
-                    {{ \Carbon\Carbon::parse($tema->data_obertura)->format('d/m/Y') }}
-                </p>
+            <!-- Fecha -->
+            <div class="bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                <h3 class="font-semibold text-gray-700">Data</h3>
+                <p class="text-gray-600 mt-1">{{ \Carbon\Carbon::parse($tema->data_obertura)->format('d/m/Y') }}</p>
             </div>
 
             <!-- Professional -->
-            <div>
-                <h3 class="font-semibold text-gray-700"> Professional:</h3>
-                <p class="text-gray-600">
-                    {{ $tema->profesional->nom ?? 'N/A' }} {{ $tema->profesional->cognom ?? '' }}
-                </p>
+            <div class="bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                <h3 class="font-semibold text-gray-700">Professional</h3>
+                <p class="text-gray-600 mt-1">{{ $tema->profesional->nom ?? 'N/A' }} {{ $tema->profesional->cognom ?? '' }}</p>
             </div>
 
-            <!-- Descripció -->
-            <div class="col-span-2">
-                <h3 class="font-semibold text-gray-700"> Descripció:</h3>
-                <p class="text-gray-600">{{ $tema->descripcio }}</p>
+            <!-- Descripción -->
+            <div class="col-span-2 bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                <h3 class="font-semibold text-gray-700">Descripció</h3>
+                <p class="text-gray-600 mt-2 leading-relaxed">{{ $tema->descripcio }}</p>
             </div>
 
-            <!-- Documents -->
-            <div class="col-span-2">
-                <h3 class="font-semibold text-gray-700">Documents adjunts:</h3>
-
+            <!-- Documentos adjuntos -->
+            <div class="col-span-2 bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                <h3 class="font-semibold text-gray-700">Documents adjunts</h3>
                 @if($tema->document)
-                    <a href="{{ route('temes.download', $tema->id) }}" 
-                    class="text-blue-500 underline">
+                    <a href="{{ route('temes.download', $tema->id) }}"
+                       class="mt-2 inline-block text-blue-600 font-semibold hover:underline">
                         Descarregar document
                     </a>
                 @else
-                    <p class="text-gray-600">No hi ha documents adjunts</p>
+                    <p class="text-gray-600 mt-2">No hi ha documents adjunts</p>
                 @endif
             </div>
 
-
         </div>
 
-        <!-- Botons -->
-        <div class="mt-10 flex justify-between">
-            
-        <a href="{{ route('menu') }}"
-            class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-2xl shadow transition text-center">
-            Tornar
-        </a>
+        <!-- Botones -->
+        <div class="mt-12 flex justify-between items-center">
+            <a href="{{ route('menu') }}"
+               class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-2xl shadow transition">
+                Tornar
+            </a>
+
             <a href="{{ route('human_resources.edit', $tema->id) }}"
-               class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg shadow">
+               class="px-8 py-3 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white rounded-2xl shadow-lg font-semibold transition">
                 Editar
             </a>
         </div>
 
     </div>
 
-
-
-
-
-</div>        
-
-       
-
 </div>
+
 @endsection

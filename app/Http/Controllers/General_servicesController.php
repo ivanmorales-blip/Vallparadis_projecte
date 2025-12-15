@@ -41,7 +41,7 @@ class General_servicesController extends Controller
 
         General_services::create($request->all());
 
-        return redirect()->route('serveis_generals.index')
+        return redirect()->route('generals_services.index')
                          ->with('success', 'Servicio general añadido correctamente.');
     }
 

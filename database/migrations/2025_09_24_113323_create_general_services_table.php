@@ -12,13 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('general_services', function (Blueprint $table) {
+            $table->engine = 'InnoDB'; // Necesario para claves foráneas
             $table->id();
-            $table-> string('tipus', 255);
-            $table-> string('contacte', 255);
-            $table-> string('encarregat', 255);
-            $table-> text('observacions')->nullable();
+            $table->string('tipus', 255);
+            $table->string('contacte', 255);
+            $table->string('encarregat', 255);
+            $table->string('horari', 255);
+            $table->text('observacions')->nullable();
             $table->unsignedBigInteger('id_center');
-            $table->foreign('id_center')->references('id')->on('center')->onDelete('cascade');
+            $table->foreign('id_center')
+                  ->references('id')
+                  ->on('center')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }

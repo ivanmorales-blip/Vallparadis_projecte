@@ -6,11 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tracking extends Model
 {
-    protected $table= "tracking";
-    protected $fillable = ['tipus','data','tema','comentari','id_profesional','id_profesional_registrador','estat'];
+    protected $table = 'tracking';
 
+    protected $fillable = [
+        'tipus',
+        'data',
+        'tema',
+        'comentari',
+        'id_profesional',
+        'id_profesional_registrador',
+        'id_general_services',
+        'estat'
+    ];
 
-     public function profesional()
+    public function profesional()
     {
         return $this->belongsTo(Profesional::class, 'id_profesional');
     }
@@ -20,4 +29,11 @@ class Tracking extends Model
         return $this->belongsTo(Profesional::class, 'id_profesional_registrador');
     }
 
+    /**
+     * Tracking pertenece a un servicio general
+     */
+    public function generalService()
+    {
+        return $this->belongsTo(General_services::class, 'id_general_services');
+    }
 }
