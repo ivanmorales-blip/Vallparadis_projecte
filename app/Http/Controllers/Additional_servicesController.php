@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class Additional_servicesController extends Controller
 {
     /**
-     * Listar servicios generales.
+     * Listar servicios adicionales.
      */
     public function index()
     {
