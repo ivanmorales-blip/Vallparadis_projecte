@@ -93,7 +93,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     /*
-    | SERVICIOS GENERALES ✅ (TU CONTROLADOR)
+    | SERVICIOS GENERALES 
     */
     Route::middleware(['auth', \App\Http\verificador\verificador::class . 'privilege:equipdirectiu,equipadministracio'])->group(function () {
     Route::resource('general_services', General_servicesController::class);

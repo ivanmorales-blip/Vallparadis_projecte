@@ -25,28 +25,37 @@ return new class extends Migration
             $table->boolean('estat')->default(true);
             $table->timestamps();
 
-            // Foreign keys
-            $table->foreign('id_profesional')
-                  ->references('id')
-                  ->on('profesional')
-                  ->onDelete('cascade');
+                $table->string('tipus');
+                $table->date('data');
+                $table->string('tema');
+                $table->text('comentari')->nullable();
 
-            $table->foreign('id_profesional_registrador')
-                  ->references('id')
-                  ->on('profesional')
-                  ->onDelete('cascade');
+                $table->unsignedBigInteger('id_general_services');
+                $table->unsignedBigInteger('id_profesional')->nullable();
+                $table->unsignedBigInteger('id_profesional_registrador')->nullable();
 
-            $table->foreign('id_general_services')
-                  ->references('id')
-                  ->on('general_services')
-                  ->onDelete('cascade');
+                $table->boolean('estat')->default(true);
+                $table->timestamps();
 
-            $table->foreign('id_manteniment')
+                $table->foreign('id_general_services')
+                    ->references('id')->on('general_services')
+                    ->onDelete('cascade');
+
+                $table->foreign('id_profesional')
+                    ->references('id')->on('profesional')
+                    ->nullOnDelete();
+
+                $table->foreign('id_profesional_registrador')
+                    ->references('id')->on('profesional')
+                    ->nullOnDelete();
+
+                $table->foreign('id_manteniment')
                   ->references('id')
                   ->on('maintenance')
                   ->onDelete('cascade');
-        });
-    }
+            });
+
+        }
 
     /**
      * Reverse the migrations.

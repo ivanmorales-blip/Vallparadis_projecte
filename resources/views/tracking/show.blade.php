@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('contingut')
-<div class="min-h-screen bg-gray-100 flex justify-center py-12 px-4">
+<div class="min-h-screen bg-gray-100 py-10 px-4 flex justify-center">
     <div class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl p-10 border border-gray-200">
 
         {{-- Header --}}
@@ -19,61 +19,43 @@
 
             {{-- Columna izquierda --}}
             <div class="space-y-4">
-                <div class="flex items-center">
-                    <span class="text-orange-500 text-xl mr-3">🧩</span>
-                    <div>
-                        <p class="font-semibold text-gray-800">Tipus</p>
-                        <p class="text-gray-600">{{ $tracking->tipus ?? '—' }}</p>
-                    </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Tipus</p>
+                    <p class="text-gray-600">{{ $tracking->tipus ?? '—' }}</p>
                 </div>
 
-                <div class="flex items-center">
-                    <span class="text-orange-500 text-xl mr-3">📅</span>
-                    <div>
-                        <p class="font-semibold text-gray-800">Data</p>
-                        <p class="text-gray-600">{{ \Carbon\Carbon::parse($tracking->data)->format('d/m/Y') }}</p>
-                    </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Data</p>
+                    <p class="text-gray-600">{{ \Carbon\Carbon::parse($tracking->data)->format('d/m/Y') }}</p>
                 </div>
 
-                <div class="flex items-center">
-                    <span class="text-orange-500 text-xl mr-3">💬</span>
-                    <div>
-                        <p class="font-semibold text-gray-800">Tema</p>
-                        <p class="text-gray-600">{{ $tracking->tema ?? '—' }}</p>
-                    </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Tema</p>
+                    <p class="text-gray-600">{{ $tracking->tema ?? '—' }}</p>
                 </div>
             </div>
 
             {{-- Columna derecha --}}
             <div class="space-y-4">
-                <div class="flex items-center">
-                    <span class="text-orange-500 text-xl mr-3">👤</span>
-                    <div>
-                        <p class="font-semibold text-gray-800">Professional</p>
-                        <p class="text-gray-600">
-                            {{ $tracking->profesional->nom ?? '—' }} {{ $tracking->profesional->cognom ?? '' }}
-                        </p>
-                    </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Professional</p>
+                    <p class="text-gray-600">
+                        {{ $tracking->profesional->nom ?? '—' }} {{ $tracking->profesional->cognom ?? '' }}
+                    </p>
                 </div>
 
-                <div class="flex items-center">
-                    <span class="text-orange-500 text-xl mr-3">📝</span>
-                    <div>
-                        <p class="font-semibold text-gray-800">Avaluador</p>
-                        <p class="text-gray-600">
-                            {{ $tracking->registrador->nom ?? '—' }} {{ $tracking->registrador->cognom ?? '' }}
-                        </p>
-                    </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Avaluador</p>
+                    <p class="text-gray-600">
+                        {{ $tracking->registrador->nom ?? '—' }} {{ $tracking->registrador->cognom ?? '' }}
+                    </p>
                 </div>
 
-                <div class="flex items-center">
-                    <span class="text-orange-500 text-xl mr-3">📌</span>
-                    <div>
-                        <p class="font-semibold text-gray-800">Estat</p>
-                        <span class="{{ $tracking->estat ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }} px-4 py-1 rounded-full font-semibold text-sm">
-                            {{ $tracking->estat ? 'Actiu' : 'Inactiu' }}
-                        </span>
-                    </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Estat</p>
+                    <span class="{{ $tracking->estat ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }} px-4 py-1 rounded-full font-semibold text-sm">
+                        {{ $tracking->estat ? 'Actiu' : 'Inactiu' }}
+                    </span>
                 </div>
             </div>
         </div>
@@ -87,12 +69,12 @@
         {{-- Botones --}}
         <div class="flex flex-col md:flex-row justify-between gap-4">
             <a href="{{ route('profesional.show', $tracking->id_profesional) }}" 
-               class="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold rounded-2xl shadow transition flex items-center justify-center gap-2">
-                ⬅️ Tornar
+               class="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold rounded-2xl shadow transition text-center">
+                Tornar
             </a>
-            <a href="{{ route('tracking.edit', $tracking->id) }}" 
-               class="flex-1 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow transition flex items-center justify-center gap-2">
-                ✏️ Editar
+            <a href="{{ route('tracking.editForProfesional', $tracking->id) }}" 
+               class="flex-1 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow transition text-center">
+                Editar
             </a>
         </div>
 

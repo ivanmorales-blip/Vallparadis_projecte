@@ -18,15 +18,15 @@
             </span>
         </div>
 
-        <!-- Información General Premium -->
+        <!-- Información General -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700 mb-8">
             <div class="space-y-3 p-4 bg-gray-50 rounded-xl shadow-inner border border-gray-200">
-                <p><span class="font-semibold text-gray-800">📞 Telèfon:</span> {{ $profesional->telefon ?? '—' }}</p>
-                <p><span class="font-semibold text-gray-800">📧 Email:</span> {{ $profesional->email ?? '—' }}</p>
+                <p><span class="font-semibold text-gray-800">Telèfon:</span> {{ $profesional->telefon ?? '—' }}</p>
+                <p><span class="font-semibold text-gray-800">Email:</span> {{ $profesional->email ?? '—' }}</p>
                 <p><span class="font-semibold text-gray-800">Taquilla:</span> {{ $profesional->taquilla ?? '—' }}</p>
             </div>
             <div class="space-y-3 p-4 bg-gray-50 rounded-xl shadow-inner border border-gray-200">
-                <p><span class="font-semibold text-gray-800">🏠 Adreça:</span> {{ $profesional->adreça ?? '—' }}</p>
+                <p><span class="font-semibold text-gray-800">Adreça:</span> {{ $profesional->adreça ?? '—' }}</p>
                 <p><span class="font-semibold text-gray-800">Centre:</span> {{ $profesional->center->nom ?? '—' }}</p>
             </div>
             <div class="space-y-3 p-4 bg-gray-50 rounded-xl shadow-inner border border-gray-200">
@@ -43,17 +43,16 @@
         <div class="mt-4 mb-8">
             <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Gestió</h2>
             <div class="bg-gray-50 p-6 rounded-xl shadow-inner flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0">
-                <a href="{{ route('tracking.create', ['profesional' => $profesional->id]) }}"
+                <a href="{{ route('tracking.createForProfesional', ['profesional' => $profesional->id]) }}"
                     class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
-                    ➕ Donar d'alta Seguiment
+                    Donar d'alta Seguiment
                 </a>
                 <a href="{{ route('evaluation.create', ['from_profesional' => $profesional->id]) }}"
-                class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
-                    ➕ Donar d'alta Avaluació
+                    class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
+                    Donar d'alta Avaluació
                 </a>
             </div>
         </div>
-
 
         <!-- Seguiments y Avaluacions lado a lado -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -68,7 +67,7 @@
                     <ul class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
                         @foreach($profesional->trackings as $tracking)
                             <li 
-                                onclick="window.location='{{ route('tracking.show', $tracking->id) }}'"
+                                onclick="window.location='{{ route('tracking.showForProfesional', $tracking->id) }}'"
                                 class="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-orange-100 transition cursor-pointer"
                             >
                                 <div class="space-y-1">
@@ -127,11 +126,11 @@
         <div class="flex flex-wrap justify-between gap-4">
             <a href="{{ route('profesional.index') }}" 
                class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl shadow transition">
-                ⬅️ Tornar al llistat
+                Tornar al llistat
             </a>
             <a href="{{ route('profesional.edit', $profesional->id) }}" 
                class="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow transition">
-                ✏️ Editar Professional
+                Editar Professional
             </a>
         </div>
 
