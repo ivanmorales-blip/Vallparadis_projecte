@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_profesional');
             $table->unsignedBigInteger('id_profesional_registrador');
             $table->unsignedBigInteger('id_general_services');
+            $table->unsignedBigInteger('id_manteniment');
             $table->boolean('estat')->default(true);
             $table->timestamps();
 
@@ -38,6 +39,11 @@ return new class extends Migration
             $table->foreign('id_general_services')
                   ->references('id')
                   ->on('general_services')
+                  ->onDelete('cascade');
+
+            $table->foreign('id_manteniment')
+                  ->references('id')
+                  ->on('maintenance')
                   ->onDelete('cascade');
         });
     }

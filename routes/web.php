@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('centers', CenterController::class);
     Route::patch('centers/{center}/active', [CenterController::class, 'active'])->name('centers.active');
 
+
     /*
     | Profesionales
     */
@@ -86,13 +87,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*
     | Tracking
     */
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . 'privilege:equipdirectiu'])->group(function () {
     Route::resource('tracking', TrackingController::class);
     Route::patch('tracking/{tracking}/active', [TrackingController::class, 'active'])->name('tracking.active');
+    });
 
     /*
     | SERVICIOS GENERALES ✅ (TU CONTROLADOR)
     */
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . 'privilege:equipdirectiu,equipadministracio'])->group(function () {
     Route::resource('general_services', General_servicesController::class);
+    });
 
     /*
     | Evaluaciones
@@ -120,24 +125,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*
     | Documentación
     */
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . 'privilege:equipdirectiu'])->group(function () {
     Route::resource('documentacio', DocumentacioController::class);
     Route::patch('documentacio/{documentacio}/active', [DocumentacioController::class, 'active'])->name('documentacio.active');
+        });
 
     /*
     | Mantenimiento
     */
+
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu,equipadministracio'])->group(function () {
     Route::resource('manteniment', MaintenanceController::class);
     Route::patch('manteniment/{manteniment}/active', [MaintenanceController::class, 'active'])->name('manteniment.active');
+        });
 
     /*
     | Recursos Humanos
     */
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . 'privilege:equipdirectiu'])->group(function () {
     Route::get('human_resources/{centre_id}', [HumanResourcesController::class, 'index'])->name('human_resources.index');
     Route::get('human_resources/create/{centre_id}/{type}', [HumanResourcesController::class, 'create'])->name('human_resources.create');
     Route::post('human_resources/store/{centre_id}', [HumanResourcesController::class, 'store'])->name('human_resources.store');
     Route::get('human_resources/{tema}/edit', [HumanResourcesController::class, 'edit'])->name('human_resources.edit');
     Route::put('human_resources/{tema}', [HumanResourcesController::class, 'update'])->name('human_resources.update');
     Route::patch('human_resources/{tema}/active', [HumanResourcesController::class, 'toggleActive'])->name('human_resources.active');
+    });
 
     /*
     | Descarga documentos temas

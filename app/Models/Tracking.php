@@ -16,6 +16,7 @@ class Tracking extends Model
         'id_profesional',
         'id_profesional_registrador',
         'id_general_services',
+        'id_manteniment',
         'estat'
     ];
 

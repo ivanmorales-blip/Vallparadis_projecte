@@ -66,6 +66,7 @@
             <a href="{{ route('projectes_comissions.create') }}" class="{{ $linkBase }}">Alta Comissió</a>
         </div>
 
+
         <!-- Seguiments i Avaluacions -->
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
@@ -74,7 +75,9 @@
                 </svg>
                 <h2 class="text-lg font-semibold text-gray-700">Seguiments i Avaluacions</h2>
             </div>
+            @if (session('privilegis') === 'equipdirectiu')
             <a href="{{ route('tracking.create') }}" class="{{ $linkBase }} mb-2">Donar d'alta Seguiment</a>
+            @endif
             <a href="{{ route('evaluation.create') }}" class="{{ $linkBase }}">Donar d'alta Avaluació</a>
         </div>
 
@@ -90,6 +93,7 @@
             <a href="{{ route('trainings.create') }}" class="{{ $linkBase }}">Alta Curs</a>
         </div>
 
+        @if (session('privilegis') === 'equipdirectiu')
         <!-- Recursos Humans -->
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
@@ -101,7 +105,9 @@
             <a href="{{ route('human_resources.index', 1) }}" class="{{ $linkBase }} mb-2">Llistar Recursos Humans</a>
             <a href="{{ route('human_resources.create', [1, 'pendent']) }}" class="{{ $linkBase }}">Alta Recurso Humà</a>
         </div>
+        @endif
 
+        @if (session('privilegis') === 'equipdirectiu')
         <!-- Documentació interna -->
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
@@ -113,7 +119,10 @@
             <a href="{{ route('documentacio.index') }}" class="{{ $linkBase }} mb-2">Listar Documentació</a>
             <a href="{{ route('documentacio.create') }}" class="{{ $linkBase }}">Alta Documentació</a>
         </div>
+        @endif
 
+
+        @if (session('privilegis') === 'equipdirectiu' || session('privilegis') === 'equipadministracio')
         <!-- Manteniment -->
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
@@ -125,7 +134,10 @@
             <a href="{{ route('manteniment.index') }}" class="{{ $linkBase }} mb-2">Listar Manteniment</a>
             <a href="{{ route('manteniment.create') }}" class="{{ $linkBase }}">Alta Manteniment</a>
         </div>
+        @endif
 
+        
+        @if (session('privilegis') === 'equipdirectiu' || session('privilegis') === 'equipadministracio')
         <!-- Serveis Generals -->
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
@@ -137,6 +149,7 @@
             <a href="{{ route('general_services.index') }}" class="{{ $linkBase }} mb-2">Llistar Serveis Generals</a>
             <a href="{{ route('general_services.create') }}" class="{{ $linkBase }}">Alta Servei General</a>
         </div>
+        @endif
 
     </div>
 </div>

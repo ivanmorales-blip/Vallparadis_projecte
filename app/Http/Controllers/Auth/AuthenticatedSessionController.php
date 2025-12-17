@@ -30,6 +30,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->put('id_center', auth()->user()->id_center);
 
+        $request->session()->put('privilegis', auth()->user()->privilegis);
+
         return redirect()->intended(route('menu', absolute: false));
 
     }

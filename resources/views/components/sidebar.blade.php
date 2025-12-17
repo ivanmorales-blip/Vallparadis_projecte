@@ -31,7 +31,7 @@
             ['title'=>'Projectes','icon'=>'computer-desktop','links'=>[['name'=>'Llistar Projectes','route'=>route('projectes_comissions.projectes')],['name'=>'Alta Projecte','route'=>route('projectes_comissions.create')]]],
             ['title'=>'Comissions','icon'=>'computer-desktop','links'=>[['name'=>'Llistar Comissions','route'=>route('projectes_comissions.comissions')],['name'=>'Alta Comissió','route'=>route('projectes_comissions.create')]]],
             ['title'=>'Seguiments','icon'=>'tracking-icone','links'=>[['name'=>'Llistar Seguiments','route'=>route('tracking.index')],['name'=>'Alta Seguiment','route'=>route('tracking.create')]]],
-            ['title'=>'Avaluacions','icon'=>'evaluation-icone','links'=>[['name'=>'Llistar Avaluacions','route'=>route('evaluation.index')],['name'=>'Alta Avaluació','route'=>route('evaluation.create')]]],
+            ['title'=>'Avaluacions','icon'=>'tracking-icone','links'=>[['name'=>'Llistar Avaluacions','route'=>route('evaluation.index')],['name'=>'Alta Avaluació','route'=>route('evaluation.create')]]],
             ['title'=>'Cursos','icon'=>'training-icone','links'=>[['name'=>'Llistar Cursos','route'=>route('trainings.index')],['name'=>'Alta Cursos','route'=>route('trainings.create')]]],
             ['title'=>'Recursos Humans','icon'=>'human-resources-icone','links'=>[['name'=>'Llistar Recursos Humans','route'=>route('human_resources.index',1)],['name'=>'Alta Recurso Humà','route'=>route('human_resources.create',[1,'pendent'])]]],
             ['title'=>'Documentació interna','icon'=>'documentacio-icone','links'=>[['name'=>'Llistar Documentació','route'=>route('documentacio.index')],['name'=>'Alta Documentació','route'=>route('documentacio.create')]]],

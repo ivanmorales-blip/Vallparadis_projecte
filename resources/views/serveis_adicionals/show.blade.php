@@ -18,7 +18,7 @@
 
                 <div>
                     <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-3">
-                        Servei Complementari
+                        Servei General
                     </h1>
 
                     <p class="text-gray-500 text-lg">

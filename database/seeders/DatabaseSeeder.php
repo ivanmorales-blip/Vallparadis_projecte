@@ -51,9 +51,30 @@ class DatabaseSeeder extends Seeder
             User::updateOrCreate(
                 ['email' => 'test@example.com'],
                 [
-                    'name' => 'Usuari Prova',
+                    'name' => 'Usuari Prova1',
                     'password' => Hash::make('secret123'),
                     'id_center' => $vallparadisId, // assign a center here
+                    'privilegis' => 'equiptecnic' // Equip tecnic, equip directiu, administracio
+                ]
+            );
+
+            User::updateOrCreate(
+                ['email' => 'example@example.com'],
+                [
+                    'name' => 'Usuari Prova2',
+                    'password' => Hash::make('secret321'),
+                    'id_center' => $vallparadisId, // assign a center here
+                    'privilegis' => 'equipdirectiu' // Equip tecnic, equip directiu, administracio
+                ]
+            );
+
+            User::updateOrCreate(
+                ['email' => 'test@test.com'],
+                [
+                    'name' => 'Usuari Prova3',
+                    'password' => Hash::make('secret213'),
+                    'id_center' => $vallparadisId, // assign a center here
+                    'privilegis' => 'equipadministracio' // Equip tecnic, equip directiu, administracio
                 ]
             );
 

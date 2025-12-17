@@ -30,4 +30,9 @@ class Maintenance extends Model
     {
         return $this->belongsTo(Profesional::class, 'professional_id');
     }
+
+    public function trackings()
+    {
+        return $this->hasMany(Tracking::class, 'id_manteniment', 'id');
+    }
 }
