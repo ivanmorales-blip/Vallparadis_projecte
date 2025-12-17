@@ -17,7 +17,8 @@ use App\Http\Controllers\{
     DocumentacioController,
     MaintenanceController,
     ExportController,
-    HumanResourcesController
+    HumanResourcesController, 
+    External_ContactsController
 };
 
 /*
@@ -151,6 +152,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('human_resources/{tema}/active', [HumanResourcesController::class, 'toggleActive'])->name('human_resources.active');
     });
 
+    
     /*
     | Descarga documentos temas
     */
@@ -160,6 +162,43 @@ Route::middleware(['auth', 'verified'])->group(function () {
         }
         abort(404);
     })->name('temes.download');
+
+    /*
+    | Contactos Externos
+    */
+
+// Listar contactos
+Route::get('external-contacts', [External_ContactsController::class, 'index'])
+    ->name('external_contacts.index');
+
+// Crear contacto (centro opcional)
+Route::get('external-contacts/create/{centre_id?}', [External_ContactsController::class, 'create'])
+    ->name('external_contacts.create');
+
+// Guardar contacto
+Route::post('external-contacts/store', [External_ContactsController::class, 'store'])
+    ->name('external_contacts.store');
+
+Route::get('external-contacts/{id}', [External_ContactsController::class, 'show'])
+    ->name('external_contacts.show');
+
+Route::get('external-contacts/{id}/edit', [External_ContactsController::class, 'edit'])
+    ->name('external_contacts.edit');
+
+Route::patch('external-contacts/{id}/active', [External_ContactsController::class, 'active'])
+    ->name('external_contacts.active');
+
+Route::put('external-contacts/{id}', [External_ContactsController::class, 'update'])
+    ->name('external_contacts.update');
+
+
+
+
+
+
+
+
+     
 
     /*
     | Exportaciones

@@ -4,8 +4,14 @@
 <div class="p-8 bg-gray-50 min-h-screen">
     <h1 class="text-3xl font-bold mb-6 text-orange-500 text-center">Listado de Profesionales</h1>
 
+    <!-- Buscador -->
+    <div class="mb-4">
+        <input type="text" id="searchInput" placeholder="Buscar por nombre..."
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-orange-400">
+    </div>
+
     <div class="overflow-x-auto">
-        <table class="min-w-full bg-white shadow-lg rounded-xl border border-gray-200">
+        <table id="profesionalTable" class="min-w-full bg-white shadow-lg rounded-xl border border-gray-200">
             <thead class="bg-orange-100">
                 <tr>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700">#</th>
@@ -22,7 +28,6 @@
                 @foreach ($profesional as $index => $profesionalItem)
                 <tr class="hover:bg-orange-50 transition duration-200 cursor-pointer"
                     onclick="window.location='{{ route('profesional.show', $profesionalItem->id) }}'">
-                    
                     <td class="px-6 py-4 text-gray-600 font-medium">{{ $index + 1 }}</td>
                     <td class="px-6 py-4 text-gray-800 font-semibold">{{ $profesionalItem->nom }}</td>
                     <td class="px-6 py-4 text-gray-700">{{ $profesionalItem->cognom }}</td>
@@ -79,4 +84,25 @@
         </a>
     </div>
 </div>
+
+<!-- Script de búsqueda -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('searchInput');
+        const table = document.getElementById('profesionalTable').getElementsByTagName('tbody')[0];
+
+        input.addEventListener('keyup', function() {
+            const filter = input.value.toLowerCase();
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 0; i < rows.length; i++) {
+                const nomCell = rows[i].getElementsByTagName('td')[1];
+                if (nomCell) {
+                    const nomText = nomCell.textContent || nomCell.innerText;
+                    rows[i].style.display = nomText.toLowerCase().includes(filter) ? '' : 'none';
+                }
+            }
+        });
+    });
+</script>
 @endsection
