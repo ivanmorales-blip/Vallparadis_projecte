@@ -17,7 +17,8 @@ use App\Http\Controllers\{
     DocumentacioController,
     MaintenanceController,
     ExportController,
-    HumanResourcesController
+    HumanResourcesController,
+    Additional_servicesController,
 };
 
 /*
@@ -87,7 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*
     | Tracking
     */
-    Route::middleware(['auth', \App\Http\verificador\verificador::class . 'privilege:equipdirectiu'])->group(function () {
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu'])->group(function () {
     Route::resource('tracking', TrackingController::class);
     Route::patch('tracking/{tracking}/active', [TrackingController::class, 'active'])->name('tracking.active');
     });
@@ -95,8 +96,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*
     | SERVICIOS GENERALES ✅ (TU CONTROLADOR)
     */
-    Route::middleware(['auth', \App\Http\verificador\verificador::class . 'privilege:equipdirectiu,equipadministracio'])->group(function () {
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu,equipadministracio'])->group(function () {
     Route::resource('general_services', General_servicesController::class);
+    });
+
+    /*
+    | SERVICIOS ADICIONALES 
+    */
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu,equipadministracio'])->group(function () {
+    Route::resource('serveis_adicionals', Additional_servicesController::class);
     });
 
     /*
@@ -125,7 +133,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*
     | Documentación
     */
-    Route::middleware(['auth', \App\Http\verificador\verificador::class . 'privilege:equipdirectiu'])->group(function () {
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu'])->group(function () {
     Route::resource('documentacio', DocumentacioController::class);
     Route::patch('documentacio/{documentacio}/active', [DocumentacioController::class, 'active'])->name('documentacio.active');
         });
@@ -142,7 +150,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*
     | Recursos Humanos
     */
-    Route::middleware(['auth', \App\Http\verificador\verificador::class . 'privilege:equipdirectiu'])->group(function () {
+    Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu'])->group(function () {
     Route::get('human_resources/{centre_id}', [HumanResourcesController::class, 'index'])->name('human_resources.index');
     Route::get('human_resources/create/{centre_id}/{type}', [HumanResourcesController::class, 'create'])->name('human_resources.create');
     Route::post('human_resources/store/{centre_id}', [HumanResourcesController::class, 'store'])->name('human_resources.store');

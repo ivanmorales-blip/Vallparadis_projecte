@@ -151,6 +151,18 @@
         </div>
         @endif
 
+        <!-- Serveis Adicionals -->
+        <div class="{{ $cardBase }}">
+            <div class="flex items-center mb-4">
+                <svg class="h-6 w-6 text-gray-600 mr-2">
+                    <use href="{{ asset('icons/sprite.svg#aditional-services-icone') }}"></use>
+                </svg>
+                <h2 class="text-lg font-semibold text-gray-700">Serveis Adicionals</h2>
+            </div>
+            <a href="{{ route('serveis_adicionals.index') }}" class="{{ $linkBase }} mb-2">Llistar Serveis Adicionals</a>
+            <a href="{{ route('serveis_adicionals.create') }}" class="{{ $linkBase }}">Alta Servei Adicional</a>
+        </div>
+
     </div>
 </div>
 

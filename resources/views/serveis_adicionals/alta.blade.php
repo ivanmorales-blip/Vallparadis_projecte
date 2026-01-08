@@ -33,6 +33,14 @@
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
             </div>
 
+            <!-- Data inici -->
+            <div>
+                <label for="data_inici" class="block text-sm font-medium text-gray-700 mb-1">Data inici *</label>
+                <input type="date" id="data_inici" name="data_inici" required
+                       value="{{ old('data_inici') }}"
+                       class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+            </div>
+
             <!-- Centre -->
             <div>
                 <label for="id_center" class="block text-sm font-medium text-gray-700 mb-1">Centre *</label>
