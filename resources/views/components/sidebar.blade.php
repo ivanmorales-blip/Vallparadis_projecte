@@ -12,21 +12,17 @@
     </div>
 
     {{-- Buscador --}}
-    
     <div class="p-4 border-b border-gray-200">
         <input id="sidebarSearch" type="text" placeholder="Cerca..." 
             class="w-full px-4 py-2 text-sm rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-300
                     bg-white/50 backdrop-blur-sm shadow-sm placeholder-gray-400 transition-all duration-300 hover:shadow-md">
     </div>
 
-
-
     {{-- Navegación principal con scroll --}}
     <nav class="flex flex-col p-4 space-y-3 flex-grow overflow-y-auto custom-scrollbar">
 
         @php
         $menuItems = [
-            ['title'=>'Centres','icon'=>'centre-icone','links'=>[['name'=>'Llistar Centres','route'=>route('centers.index')],['name'=>'Alta Centre','route'=>route('centers.create')]]],
             ['title'=>'Professionals','icon'=>'profesionals-icone','links'=>[['name'=>'Llistar Professionals','route'=>route('profesional.index')],['name'=>'Alta Professional','route'=>route('profesional.create')]]],
             ['title'=>'Projectes','icon'=>'computer-desktop','links'=>[['name'=>'Llistar Projectes','route'=>route('projectes_comissions.projectes')],['name'=>'Alta Projecte','route'=>route('projectes_comissions.create')]]],
             ['title'=>'Comissions','icon'=>'computer-desktop','links'=>[['name'=>'Llistar Comissions','route'=>route('projectes_comissions.comissions')],['name'=>'Alta Comissió','route'=>route('projectes_comissions.create')]]],

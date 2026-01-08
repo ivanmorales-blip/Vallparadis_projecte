@@ -11,23 +11,31 @@ class General_services extends Model
 
     protected $table = 'general_services';
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'tipus',
         'contacte',
         'encarregat',
-        'id_center',
+        'horari',
         'observacions',
+        'id_center',
     ];
 
     /**
      * Relación con el centro.
+     * Un servicio pertenece a un centro
      */
     public function center()
     {
         return $this->belongsTo(\App\Models\Center::class, 'id_center');
     }
-     public function trackings()
+
+    /**
+     * Relación con los trackings.
+     * Un servicio tiene muchos seguimientos
+     */
+    public function trackings()
     {
-        return $this->hasMany(Tracking::class, 'id_general_services');
+        return $this->hasMany(\App\Models\Tracking::class, 'id_general_services');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tracking;
 use App\Models\Profesional;
+use App\Models\General_services;
 use App\Traits\Activable;
 use App\Traits\CenterFilterable;
 
@@ -12,37 +13,33 @@ class TrackingController extends Controller
 {
     use Activable, CenterFilterable;
 
-    public function index()
-    {
-        $trackings = Tracking::with(['profesional', 'registrador'])
-            ->whereHas('profesional', function($query) {
-                $query->where('id_center', session('id_center'));
-            })
-            ->get();
+    /* ==========================================================
+     |  SEGUIMENTS ORIENTATS A PROFESSIONALS
+     ========================================================== */
 
-        return view('tracking.listar', [
-            'tracking' => $trackings
-        ]);
+    public function indexForProfessional()
+    {
+        // No se usa actualmente
     }
 
-    public function create()
+    // FORMULARIO DE CREACIÓN DE SEGUIMENT PARA UN PROFESIONAL
+    public function createForProfesional($profesionalId = null)
     {
         $professionals = $this->professionalsInCenter()->get();
-
-        $selectedProfesional = request()->query('profesional', null);
-
-        $disableProfessionalSelect = $selectedProfesional ? true : false;
+        $disableProfessionalSelect = $profesionalId ? true : false;
 
         return view('tracking.formulario_alta', [
             'professionals' => $professionals,
-            'selectedProfesional' => $selectedProfesional,
+            'selectedProfesional' => $profesionalId,
             'disableProfessionalSelect' => $disableProfessionalSelect,
         ]);
     }
 
-    public function store(Request $request)
+    // GUARDAR SEGUIMENT DE PROFESIONAL
+    public function storeForProfesional(Request $request)
     {
         $validated = $request->validate([
+            'tema' => 'required|string|max:255',
             'data' => 'required|date',
             'observacions' => 'nullable|string',
             'id_profesional' => 'required|exists:profesional,id',
@@ -53,35 +50,35 @@ class TrackingController extends Controller
 
         Tracking::create($validated);
 
-        return redirect()->route('tracking.index');
+        return redirect()->route('menu')
+            ->with('success', 'Seguiment del professional creat correctament.');
     }
 
-    public function show(Tracking $tracking)
+    // MOSTRAR UN SEGUIMENT DE PROFESIONAL
+    public function showForProfesional(Tracking $tracking)
     {
         $tracking->load(['profesional', 'registrador']);
         return view('tracking.show', compact('tracking'));
     }
 
-    // ✔️ CORREGIDO — ESTE ES EL EDIT CORRECTO DE SEGUIMENTS
-    public function edit(Tracking $tracking)
+    // FORMULARIO DE EDICIÓN DE SEGUIMENT DE PROFESIONAL
+    public function editForProfesional(Tracking $tracking)
     {
         $professionals = $this->professionalsInCenter()->get();
-
-        // Profesional asignado al seguiment
-        $selectedProfesional = $tracking->id_profesional;
 
         return view('tracking.formulario_editar', [
             'tracking' => $tracking,
             'professionals' => $professionals,
-            'selectedProfesional' => $selectedProfesional,
-            'disableProfessionalSelect' => true
+            'selectedProfesional' => $tracking->id_profesional,
+            'disableProfessionalSelect' => true,
         ]);
     }
 
-    // ✔️ CORREGIDO — SIN CAMPO TEMA
-    public function update(Request $request, Tracking $tracking)
+    // ACTUALIZAR SEGUIMENT DE PROFESIONAL
+    public function updateForProfesional(Request $request, Tracking $tracking)
     {
         $validated = $request->validate([
+            'tema' => 'required|string|max:255',
             'data' => 'required|date',
             'observacions' => 'nullable|string',
             'id_profesional' => 'required|exists:profesional,id',
@@ -92,16 +89,104 @@ class TrackingController extends Controller
 
         $tracking->update($validated);
 
-        return redirect()->route('menu')->with('success', 'Seguiment actualitzat correctament.');
+        return redirect()->route('menu')
+            ->with('success', 'Seguiment del professional actualitzat correctament.');
     }
 
-    public function active(Tracking $tracking)
+    // ACTIVAR / DESACTIVAR SEGUIMENT DE PROFESIONAL
+    public function activeForProfesional(Tracking $tracking)
     {
-        return $this->toggleActive($tracking, true, 'tracking.index');
+        return $this->toggleActive($tracking, true, 'tracking.indexForProfesional');
     }
 
-    public function destroy(Tracking $tracking)
+    // ELIMINAR SEGUIMENT DE PROFESIONAL
+    public function destroyForProfesional(Tracking $tracking)
     {
-        return $this->toggleActive($tracking, false, 'tracking.index');
+        return $this->toggleActive($tracking, false, 'tracking.indexForProfesional');
     }
+
+
+    /* ==========================================================
+     |  SEGUIMENTS ORIENTATS A SERVEIS GENERALS
+     |  (pendents d’implementar)
+     ========================================================== */
+
+   // Seguiments de Serveis Generals
+    public function indexForGeneralService($generalServiceId)
+    {
+        //no la necesito
+    }
+
+    public function createForGeneralService($generalServiceId)
+    {
+        $professionals = $this->professionalsInCenter()->get();
+        $generalService = General_services::findOrFail($generalServiceId);
+
+        return view('tracking.tracking_general_service.alta', [
+            'professionals' => $professionals,
+            'generalService' => $generalService
+        ]);
+    }
+
+
+    public function storeForGeneralService(Request $request)
+    {
+        $validated = $request->validate([
+            'data' => 'required|date',
+            'tema' => 'required|string|max:255',
+            'tipus' => 'required|string|max:255',
+            'comentari' => 'required|string',
+            'id_profesional' => 'required|exists:profesional,id',
+            'id_general_services' => 'required|exists:general_services,id',
+        ]);
+
+        Tracking::create($validated);
+
+        return redirect()->route('general_services.show', $validated['id_general_services'])
+                        ->with('success', 'Seguiment creat correctament.');
+    }
+
+    public function showForGeneralService(Tracking $tracking)
+    {
+        // Cargar relaciones necesarias
+        $tracking->load(['profesional', 'registrador']);
+
+        return view('tracking.tracking_general_service.show', compact('tracking'));
+    }
+
+
+    public function editForGeneralService(Tracking $tracking)
+    {
+        $professionals = $this->professionalsInCenter()->get();
+
+        return view('tracking.tracking_general_service.editar', [
+            'tracking' => $tracking,
+            'professionals' => $professionals
+        ]);
+    }
+
+    public function updateForGeneralService(Request $request, Tracking $tracking)
+    {
+        $validated = $request->validate([
+            'data' => 'required|date',
+            'tema' => 'required|string|max:255',
+            'tipus' => 'required|string|max:255',
+            'comentari' => 'required|string',
+            'id_profesional' => 'required|exists:profesional,id',
+        ]);
+
+        $tracking->update($validated);
+
+        return redirect()->route('general_services.show', $tracking->id_general_services)
+                        ->with('success', 'Seguiment actualitzat correctament.');
+    }
+
+    public function destroyForGeneralService(Tracking $tracking)
+    {
+        $tracking->delete();
+
+        return redirect()->route('general_services.show', $tracking->id_general_services)
+                        ->with('success', 'Seguiment eliminat correctament.');
+    }
+
 }

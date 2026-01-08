@@ -9,7 +9,7 @@
             <h1 class="text-3xl font-extrabold text-orange-500 tracking-tight">
                 Formulari de Professional
             </h1>
-            <span class="text-gray-400 text-sm">🧾 Alta de professional</span>
+            <span class="text-gray-400 text-sm">Alta de professional</span>
         </div>
 
         <!-- Form -->
@@ -121,12 +121,12 @@
             <div class="flex justify-end space-x-4 pt-6 border-t mt-6">
                 <a href="{{ route('menu') }}"
                    class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-2xl shadow transition text-center">
-                    🏠 Tornar al menú
+                    Tornar al menú
                 </a>
 
                 <button type="submit"
                     class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition">
-                    💾 Enviar
+                    Enviar
                 </button>
             </div>
         </form>

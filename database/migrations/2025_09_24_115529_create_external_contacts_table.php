@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telefon', 255);
             $table->string('correu', 255);
             $table->text('observacions');
+            $table->boolean('actiu')->default(true);
             $table->timestamps();
         });
     }
