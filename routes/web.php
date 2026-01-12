@@ -148,17 +148,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('manteniment/{manteniment}/active', [MaintenanceController::class, 'active'])->name('manteniment.active');
         });
 
-    /*
-    | Recursos Humanos
+    
+        /*
+    | Recursos Humans
     */
     Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu'])->group(function () {
-    Route::get('human_resources/{centre_id}', [HumanResourcesController::class, 'index'])->name('human_resources.index');
-    Route::get('human_resources/create/{centre_id}/{type}', [HumanResourcesController::class, 'create'])->name('human_resources.create');
-    Route::post('human_resources/store/{centre_id}', [HumanResourcesController::class, 'store'])->name('human_resources.store');
-    Route::get('human_resources/{tema}/edit', [HumanResourcesController::class, 'edit'])->name('human_resources.edit');
-    Route::put('human_resources/{tema}', [HumanResourcesController::class, 'update'])->name('human_resources.update');
-    Route::patch('human_resources/{tema}/active', [HumanResourcesController::class, 'toggleActive'])->name('human_resources.active');
-    });
+    Route::get('human_resources/{centre_id}', [HumanResourcesController::class, 'index'])
+        ->name('human_resources.index');
+    Route::get('human_resources/show/{id}', [HumanResourcesController::class, 'show'])
+        ->name('human_resources.show');
+    Route::get('human_resources/create/{centre_id}/{type}', [HumanResourcesController::class, 'create'])
+        ->name('human_resources.create');
+    Route::post('human_resources/store/{centre_id}', [HumanResourcesController::class, 'store'])
+        ->name('human_resources.store');
+    Route::get('human_resources/{tema}/edit', [HumanResourcesController::class, 'edit'])
+        ->name('human_resources.edit');
+    Route::put('human_resources/{tema}', [HumanResourcesController::class, 'update'])
+        ->name('human_resources.update');
+    Route::patch('human_resources/{tema}/active', [HumanResourcesController::class, 'toggleActive'])
+        ->name('human_resources.active');
+});
 
     
     /*
