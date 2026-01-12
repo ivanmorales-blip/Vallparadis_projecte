@@ -161,7 +161,8 @@
             </div>
             <a href="{{ route('serveis_adicionals.index') }}" class="{{ $linkBase }} mb-2">Llistar Serveis Adicionals</a>
             <a href="{{ route('serveis_adicionals.create') }}" class="{{ $linkBase }}">Alta Servei Adicional</a>
-            
+        </div>    
+        
         <!-- Contactes Externs -->
         <div class="{{ $cardBase }}">
             <div class="flex items-center mb-4">
