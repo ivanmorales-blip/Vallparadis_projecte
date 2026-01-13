@@ -49,21 +49,17 @@ class Additional_servicesController extends Controller
     /**
      * Mostrar un servicio específico.
      */
-    public function show(Additional_services $aditional_services)
+    public function show(Additional_services $serveis_adicional)
     {
-        return view('serveis_adicionals.show', ['aditional_services' => $aditional_services]);
+        return view('serveis_adicionals.show', ['aditional_services' => $serveis_adicional]);
     }
 
     /**
      * Mostrar formulario de edición.
      */
-    public function edit(Additional_services $aditional_services)
+    public function edit(Additional_services $serveis_adicionals)
     {
-        $centers = Center::all();
-        return view('serveis_adicionals.editar', [
-        'serveis_adicional' => $aditional_services,
-        'centers' => $centers
-        ]);
+        return view('serveis_adicionals.editar', ['serveis_adicionals' => $serveis_adicionals]);
     }
 
     /**

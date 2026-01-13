@@ -5,30 +5,28 @@
     <div class="w-full max-w-2xl bg-white rounded-3xl shadow-2xl p-8">
         <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Edición Centro</h1>
 
-    <form action="{{ route('serveis_adicionals.update', $serveis_adicional) }}" method="POST">
+    <form action="{{ route('serveis_adicionals.update', $serveis_adicionals) }}" method="POST">
     @csrf
     @method('PUT')
-
-
 
             <!-- Tipus -->
             <div>
                 <label for="tipus" class="block text-sm font-medium text-gray-700 mb-1">Tipus *</label>
-                <input id="tipus" name="tipus" type="text" value="{{ old('tipus', $serveis_adicional->tipus) }}" required
+                <input id="tipus" name="tipus" type="text" value="{{ old('tipus', $serveis_adicionals->tipus) }}" required
                     class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-transparent transition">
             </div>
 
             <!-- Contacte -->
             <div>
                 <label for="contacte" class="block text-sm font-medium text-gray-700 mb-1">Contacte *</label>
-                <input type="text" id="contacte" name="contacte" value="{{ old('contacte', $serveis_adicional->contacte) }}" required
+                <input type="text" id="contacte" name="contacte" value="{{ old('contacte', $serveis_adicionals->contacte) }}" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
             </div>
 
             <!-- responsable -->
             <div>
                 <label for="responsable" class="block text-sm font-medium text-gray-700 mb-1">Responsable *</label>
-                <input type="text" id="responsable" name="responsable" value="{{ old('responsable', $serveis_adicional->responsable) }}"required
+                <input type="text" id="responsable" name="responsable" value="{{ old('responsable', $serveis_adicionals->responsable) }}"required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
             </div>
 
@@ -36,22 +34,15 @@
             <div>
                 <label for="data_inici" class="block text-sm font-medium text-gray-700 mb-1">Data inici *</label>
                 <input type="date" id="data_inici" name="data_inici" required
-                       value="{{ old('data_inici', $serveis_adicional->data_inici) }}"
+                       value="{{ old('data_inici', $serveis_adicionals->data_inici) }}"
                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-            </div>
-
-            <!-- Centre -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Centre</label>
-                <input type="text" value="{{ $serveis_adicional->center->nom }}"  readonly>
-                <input type="hidden" name="centre_id" value="{{ $serveis_adicional->centre_id }}">
             </div>
 
             <!-- Observacions / Seguiment (opcional) -->
             <div>
                 <label for="observacions" class="block text-sm font-medium text-gray-700 mb-1">Observacions / Seguiment</label>
                 <textarea name="observacions" rows="3"
-                class="w-full border rounded-xl">{{ old('observacions', $serveis_adicional->observacions) }}</textarea>
+                class="w-full border rounded-xl">{{ old('observacions', $serveis_adicionals->observacions) }}</textarea>
             </div>
 
             <!-- Botón enviar -->

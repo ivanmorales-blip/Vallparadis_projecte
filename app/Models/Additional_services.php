@@ -22,6 +22,6 @@ class Additional_services extends Model
 
     public function center()
     {
-        return $this->belongsTo(Center::class, 'id_center');
+        return $this->belongsTo(Center::class, 'centre_id');
     }
 }
