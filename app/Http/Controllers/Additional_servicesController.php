@@ -13,8 +13,8 @@ class Additional_servicesController extends Controller
      */
     public function index()
     {
-        $services = Additional_services::with('center')->get();
-        return view('serveis_adicionals.lista', ['services' => $services]);
+        $serveis_adicionals = Additional_services::with('center')->get();
+        return view('serveis_adicionals.lista', ['serveis_adicionals' => $serveis_adicionals]);
     }
 
     /**
@@ -36,7 +36,7 @@ class Additional_servicesController extends Controller
             'contacte'     => 'required|string|max:255',
             'responsable'  => 'required|string|max:255',
             'data_inici'   => 'required|date',
-            'centre_id'    => 'required|exists:center,id',
+            'centrserveis_adicionale_id'    => 'required|exists:center,id',
             'observacions' => 'nullable|string',
         ]);
 
@@ -51,15 +51,15 @@ class Additional_servicesController extends Controller
      */
     public function show(Additional_services $serveis_adicional)
     {
-        return view('serveis_adicionals.show', ['aditional_services' => $serveis_adicional]);
+        return view('serveis_adicionals.show', ['aditional_service' => $serveis_adicional]);
     }
 
     /**
      * Mostrar formulario de edición.
      */
-    public function edit(Additional_services $serveis_adicionals)
+    public function edit(Additional_services $service)
     {
-        return view('serveis_adicionals.editar', ['serveis_adicionals' => $serveis_adicionals]);
+        return view('serveis_adicionals.editar', ['serveis_adicional' => $service]);
     }
 
     /**
