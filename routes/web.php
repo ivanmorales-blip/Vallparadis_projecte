@@ -20,6 +20,7 @@ use App\Http\Controllers\{
     HumanResourcesController,
     Additional_servicesController,
     External_ContactsController,
+    serveis_adicionalsController,
 };
 
 /*
@@ -101,14 +102,69 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('general_services', General_servicesController::class);
     });
 
-    /*
-    | SERVICIOS ADICIONALES 
-    */
+    /*servicis adicionals*/
     Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu,equipadministracio'])->group(function () {
-    Route::resource('serveis_adicionals', Additional_servicesController::class);
+    Route::resource('serveis_adicionals', serveis_adicionalsController::class);
     });
 
-    /*
+   /*
+    |--------------------------------------------------------------------------
+    | SEGUIMENTS PER A SERVEIS GENERALS
+    |--------------------------------------------------------------------------
+    */
+
+    // Formulari alta seguiment d’un servei general
+    Route::get(
+        'general-services/{generalService}/trackings/create',
+        [TrackingController::class, 'createForGeneralService']
+    )->name('tracking.general_service.create');
+
+    // Guardar seguiment
+    Route::post(
+        'general-services/trackings',
+        [TrackingController::class, 'storeForGeneralService']
+    )->name('tracking.general_service.store');
+
+    // Veure un seguiment
+    Route::get(
+        'general-services/trackings/{tracking}',
+        [TrackingController::class, 'showForGeneralService']
+    )->name('tracking.general_service.show');
+
+    // Editar seguiment
+    Route::get(
+        'general-services/trackings/{tracking}/edit',
+        [TrackingController::class, 'editForGeneralService']
+    )->name('tracking.general_service.edit');
+
+    // Actualitzar seguiment
+    Route::patch(
+        'general-services/trackings/{tracking}',
+        [TrackingController::class, 'updateForGeneralService']
+    )->name('tracking.general_service.update');
+
+    // Eliminar seguiment
+    Route::delete(
+        'general-services/trackings/{tracking}',
+        [TrackingController::class, 'destroyForGeneralService']
+    )->name('tracking.general_service.destroy');
+    // Seguiments Manteniment
+    Route::get('tracking/maintenance/{maintenance}/create', [TrackingController::class, 'createForMaintenance'])->name('tracking.maintenance.create');
+    Route::post('tracking/maintenance', [TrackingController::class, 'storeForMaintenance'])->name('tracking.maintenance.store');
+    Route::get('tracking/maintenance/{tracking}/edit', [TrackingController::class, 'editForMaintenance'])->name('tracking.maintenance.edit');
+    Route::put('tracking/maintenance/{tracking}', [TrackingController::class, 'updateForMaintenance'])->name('tracking.maintenance.update');
+    Route::delete('tracking/maintenance/{tracking}', [TrackingController::class, 'destroyForMaintenance'])->name('tracking.maintenance.destroy');
+    Route::get('tracking/maintenance/{tracking}', [TrackingController::class, 'showForMaintenance'])->name('tracking.maintenance.show');
+
+    // Seguiments Recursos Humans
+    Route::get('tracking/human_resource/{humanResource}/create', [TrackingController::class, 'createForHumanResource'])->name('tracking.human_resource.create');
+    Route::post('tracking/human_resource', [TrackingController::class, 'storeForHumanResource'])->name('tracking.human_resource.store');
+    Route::get('tracking/human_resource/{tracking}/edit', [TrackingController::class, 'editForHumanResource'])->name('tracking.human_resource.edit');
+    Route::put('tracking/human_resource/{tracking}', [TrackingController::class, 'updateForHumanResource'])->name('tracking.human_resource.update');
+    Route::delete('tracking/human_resource/{tracking}', [TrackingController::class, 'destroyForHumanResource'])->name('tracking.human_resource.destroy');
+    Route::get('tracking/human_resource/{tracking}', [TrackingController::class, 'showForHumanResource'])->name('tracking.human_resource.show');
+
+        /*
     | Evaluaciones
     */
     Route::resource('evaluation', EvaluationController::class);

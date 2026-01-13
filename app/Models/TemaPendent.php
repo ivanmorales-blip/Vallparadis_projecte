@@ -2,45 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 
 class TemaPendent extends Model
 {
-    use HasFactory;
+    protected $table = 'Tema_pendent';
 
-    protected $table = 'temes_pendents';
     protected $fillable = [
         'centre_id',
-        'data_obertura',
-        'professional_afectat',
-        'professional_registra',
-        'derivat_a',
+        'professional_id',
+        'data_opertura',
         'descripcio',
-        'document',
-        'actiu'
+        'estat',
     ];
+
+    public function centre()
+    {
+        return $this->belongsTo(Center::class, 'centre_id');
+    }
+
+    public function professional()
+    {
+        return $this->belongsTo(Profesional::class, 'professional_id');
+    }
 
     public function trackings()
     {
-        return $this->hasMany(Tracking::class, 'tema_pendent_id');
+        return $this->hasMany(Tracking::class, 'id_human_resource', 'id');
     }
-
-
-public function profesional() {
-    return $this->belongsTo(Profesional::class, 'professional_afectat'); 
-}
-
-public function professionalRegistra()
-{
-    return $this->belongsTo(User::class, 'professional_registra'); 
-}
-
-
-public function derivatA()
-{
-    return $this->belongsTo(Profesional::class, 'derivat_a');
-}
-
 }

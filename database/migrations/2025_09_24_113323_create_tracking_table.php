@@ -11,37 +11,49 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Asegúrate que estas tablas ya existan antes de migrar tracking:
+        // general_services, maintenance, human_resources, profesional
+
         Schema::create('tracking', function (Blueprint $table) {
-    $table->engine = 'InnoDB';
-    $table->id();
-    $table->string('tipus', 255);
-    $table->date('data');
-    $table->string('tema', 255);
-    $table->text('comentari');
-    $table->unsignedBigInteger('id_profesional')->nullable();
-    $table->unsignedBigInteger('id_profesional_registrador')->nullable();
-    $table->unsignedBigInteger('id_general_services');
-    $table->unsignedBigInteger('id_manteniment');
-    $table->boolean('estat')->default(true);
-    $table->timestamps();
+            $table->id();
 
-    $table->foreign('id_general_services')
-          ->references('id')->on('general_services')
-          ->onDelete('cascade');
+            $table->string('tipus', 255);
+            $table->date('data');
+            $table->string('tema', 255);
+            $table->text('comentari');
 
-    $table->foreign('id_profesional')
-          ->references('id')->on('profesional')
-          ->nullOnDelete();
+            // Relaciones opcionales
+            $table->unsignedBigInteger('id_profesional')->nullable();
+            $table->unsignedBigInteger('id_profesional_registrador')->nullable();
+            $table->unsignedBigInteger('id_general_services')->nullable();
+            $table->unsignedBigInteger('id_manteniment')->nullable();
+            $table->unsignedBigInteger('id_human_resource')->nullable();
 
-    $table->foreign('id_profesional_registrador')
-          ->references('id')->on('profesional')
-          ->nullOnDelete();
+            $table->boolean('estat')->default(true);
+            $table->timestamps();
 
-    $table->foreign('id_manteniment')
-          ->references('id')->on('maintenance')
-          ->onDelete('cascade');
-});
-}
+            // Claves foráneas
+            $table->foreign('id_general_services')
+                  ->references('id')->on('general_services')
+                  ->onDelete('cascade');
+
+            $table->foreign('id_profesional')
+                  ->references('id')->on('profesional')
+                  ->nullOnDelete();
+
+            $table->foreign('id_profesional_registrador')
+                  ->references('id')->on('profesional')
+                  ->nullOnDelete();
+
+            $table->foreign('id_manteniment')
+                  ->references('id')->on('maintenance')
+                  ->nullOnDelete();
+
+            $table->foreign('id_human_resource')
+                  ->references('id')->on('human_resources')
+                  ->nullOnDelete();
+        });
+    }
 
     /**
      * Reverse the migrations.

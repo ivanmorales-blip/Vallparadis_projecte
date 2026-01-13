@@ -188,5 +188,149 @@ class TrackingController extends Controller
         return redirect()->route('general_services.show', $tracking->id_general_services)
                         ->with('success', 'Seguiment eliminat correctament.');
     }
+    /* ==========================================================
+    |  SEGUIMENTS ORIENTATS A MANTENIMENT
+    ========================================================== */
+
+    public function createForMaintenance($maintenanceId)
+    {
+        $professionals = $this->professionalsInCenter()->get();
+        $maintenance = Maintenance::findOrFail($maintenanceId);
+
+        return view('tracking.tracking_maintenance.alta', [
+            'professionals' => $professionals,
+            'maintenance' => $maintenance
+        ]);
+    }
+
+    public function storeForMaintenance(Request $request)
+    {
+        $validated = $request->validate([
+            'data' => 'required|date',
+            'tema' => 'required|string|max:255',
+            'tipus' => 'required|string|max:255',
+            'comentari' => 'required|string',
+            'id_profesional' => 'required|exists:profesional,id',
+            'id_manteniment' => 'required|exists:maintenance,id',
+        ]);
+
+        Tracking::create($validated);
+
+        return redirect()->route('maintenance.show', $validated['id_manteniment'])
+                        ->with('success', 'Seguiment creat correctament.');
+    }
+
+    public function showForMaintenance(Tracking $tracking)
+    {
+        $tracking->load(['profesional', 'registrador']);
+
+        return view('tracking.tracking_maintenance.show', compact('tracking'));
+    }
+
+    public function editForMaintenance(Tracking $tracking)
+    {
+        $professionals = $this->professionalsInCenter()->get();
+
+        return view('tracking.tracking_maintenance.editar', [
+            'tracking' => $tracking,
+            'professionals' => $professionals
+        ]);
+    }
+
+    public function updateForMaintenance(Request $request, Tracking $tracking)
+    {
+        $validated = $request->validate([
+            'data' => 'required|date',
+            'tema' => 'required|string|max:255',
+            'tipus' => 'required|string|max:255',
+            'comentari' => 'required|string',
+            'id_profesional' => 'required|exists:profesional,id',
+        ]);
+
+        $tracking->update($validated);
+
+        return redirect()->route('maintenance.show', $tracking->id_manteniment)
+                        ->with('success', 'Seguiment actualitzat correctament.');
+    }
+
+    public function destroyForMaintenance(Tracking $tracking)
+    {
+        $tracking->delete();
+
+        return redirect()->route('maintenance.show', $tracking->id_manteniment)
+                        ->with('success', 'Seguiment eliminat correctament.');
+    }
+    /* ==========================================================
+    |  SEGUIMENTS ORIENTATS A RECURSOS HUMANS
+    ========================================================== */
+
+    public function createForHumanResource($humanResourceId)
+    {
+        $professionals = $this->professionalsInCenter()->get();
+        $humanResource = HumanResource::findOrFail($humanResourceId);
+
+        return view('tracking.tracking_human_resource.alta', [
+            'professionals' => $professionals,
+            'humanResource' => $humanResource
+        ]);
+    }
+
+    public function storeForHumanResource(Request $request)
+    {
+        $validated = $request->validate([
+            'data' => 'required|date',
+            'tema' => 'required|string|max:255',
+            'tipus' => 'required|string|max:255',
+            'comentari' => 'required|string',
+            'id_profesional' => 'required|exists:profesional,id',
+            'id_human_resource' => 'required|exists:human_resources,id',
+        ]);
+
+        Tracking::create($validated);
+
+        return redirect()->route('human_resources.show', $validated['id_human_resource'])
+                        ->with('success', 'Seguiment creat correctament.');
+    }
+
+    public function showForHumanResource(Tracking $tracking)
+    {
+        $tracking->load(['profesional', 'registrador']);
+
+        return view('tracking.tracking_human_resource.show', compact('tracking'));
+    }
+
+    public function editForHumanResource(Tracking $tracking)
+    {
+        $professionals = $this->professionalsInCenter()->get();
+
+        return view('tracking.tracking_human_resource.editar', [
+            'tracking' => $tracking,
+            'professionals' => $professionals
+        ]);
+    }
+
+    public function updateForHumanResource(Request $request, Tracking $tracking)
+    {
+        $validated = $request->validate([
+            'data' => 'required|date',
+            'tema' => 'required|string|max:255',
+            'tipus' => 'required|string|max:255',
+            'comentari' => 'required|string',
+            'id_profesional' => 'required|exists:profesional,id',
+        ]);
+
+        $tracking->update($validated);
+
+        return redirect()->route('human_resources.show', $tracking->id_human_resource)
+                        ->with('success', 'Seguiment actualitzat correctament.');
+    }
+
+    public function destroyForHumanResource(Tracking $tracking)
+    {
+        $tracking->delete();
+
+        return redirect()->route('human_resources.show', $tracking->id_human_resource)
+                        ->with('success', 'Seguiment eliminat correctament.');
+    }
 
 }
