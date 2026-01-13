@@ -18,7 +18,7 @@
 
                 <div>
                     <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-3">
-                        Servei General
+                        Servei Adicional
                     </h1>
 
                     <p class="text-gray-500 text-lg">
@@ -29,7 +29,7 @@
                 <!-- Tag animat -->
                 <span class="px-5 py-2.5 bg-gradient-to-r from-orange-400 to-orange-500 text-white 
                              font-semibold rounded-full shadow-lg text-sm animate-pulse">
-                    {{ $general_service->tipus }}
+                    {{ $service->tipus }}
                 </span>
             </div>
 
@@ -40,12 +40,12 @@
                 <div class="p-6 rounded-2xl bg-gray-50/60 border border-gray-200 shadow-inner 
                             hover:shadow-xl transition-all duration-300">
                     <p class="text-gray-900 font-semibold mb-1 text-lg">Contacte</p>
-                    <p class="text-gray-700 text-base">{{ $general_service->contacte }}</p>
+                    <p class="text-gray-700 text-base">{{ $service->contacte }}</p>
 
                     <div class="h-px bg-gray-200 my-5"></div>
 
                     <p class="text-gray-900 font-semibold mb-1 text-lg">Encarregat</p>
-                    <p class="text-gray-700">{{ $general_service->encarregat }}</p>
+                    <p class="text-gray-700">{{ $service->encarregat }}</p>
                 </div>
 
                 <!-- Card 2 -->
@@ -54,14 +54,14 @@
 
                     <p class="text-gray-900 font-semibold mb-1 text-lg">Centre</p>
                     <p class="text-gray-700 mb-5">
-                        {{ $general_service->center->nom ?? '—' }}
+                        {{ $service->center->nom ?? '—' }}
                     </p>
 
                     <div class="h-px bg-gray-200 my-5"></div>
 
                     <p class="text-gray-900 font-semibold mb-1 text-lg">Observacions</p>
                     <p class="text-gray-700 whitespace-pre-wrap leading-relaxed">
-                        {{ $general_service->observacions ?? '—' }}
+                        {{ $service->observacions ?? '—' }}
                     </p>
                 </div>
 
@@ -71,7 +71,7 @@
             <div class="flex flex-wrap justify-between gap-5 mt-12">
 
                 <!-- Back -->
-                <a href="{{ route('general_services.index') }}" 
+                <a href="{{ route('serveis_adicionals.index') }}" 
                    class="px-7 py-3.5 text-gray-700 bg-white border border-gray-300 rounded-2xl 
                           shadow hover:shadow-xl hover:bg-gray-100 transition-all 
                           hover:-translate-y-0.5 hover:scale-[1.03] font-medium">
@@ -79,7 +79,7 @@
                 </a>
 
                 <!-- Edit -->
-                <a href="{{ route('general_services.edit', $general_service->id) }}" 
+                <a href="{{ route('serveis_adicionals.edit', $service->id) }}" 
                    class="px-8 py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 
                           text-white font-semibold rounded-2xl shadow-lg 
                           hover:shadow-2xl transition-all hover:-translate-y-1 

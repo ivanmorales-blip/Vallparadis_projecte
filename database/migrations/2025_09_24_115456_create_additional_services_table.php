@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('data_inici');
             $table->string('responsable', 255);
             $table->string('contacte', 255);
-            $table->text('observacions');
+            $table->text('observacions')->nullable();
             $table->timestamps();
         });
     }

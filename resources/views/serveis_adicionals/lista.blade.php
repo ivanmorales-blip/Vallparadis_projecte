@@ -28,22 +28,22 @@
                     </td>
 
                     <td class="px-6 py-4 font-semibold text-gray-800 cursor-pointer"
-                        onclick="window.location='{{ route('general_services.show', $service->id) }}'">
+                        onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
                         {{ $service->tipus }}
                     </td>
 
                     <td class="px-6 py-4 text-gray-600 cursor-pointer"
-                        onclick="window.location='{{ route('general_services.show', $service->id) }}'">
+                        onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
                         {{ $service->contacte }}
                     </td>
 
                     <td class="px-6 py-4 text-gray-600 cursor-pointer"
-                        onclick="window.location='{{ route('general_services.show', $service->id) }}'">
+                        onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
                         {{ $service->encarregat }}
                     </td>
 
                     <td class="px-6 py-4 text-gray-700 cursor-pointer"
-                        onclick="window.location='{{ route('general_services.show', $service->id) }}'">
+                        onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
                         {{ $service->center->nom ?? '—' }}
                     </td>
 
@@ -51,7 +51,7 @@
                     <td class="px-6 py-4 flex space-x-3">
 
                         <!-- Edit button -->
-                        <a href="{{ route('general_services.edit', $service) }}" 
+                        <a href="{{ route('serveis_adicionals.edit', $service) }}" 
                            class="text-orange-400 hover:text-orange-500 transition"
                            title="Editar">
                             <svg class="h-6 w-6" aria-label="Editar">
@@ -60,7 +60,7 @@
                         </a>
 
                         <!-- Delete / Toggle button -->
-                        <form action="{{ route('general_services.destroy', $service) }}" 
+                        <form action="{{ route('serveis_adicionals.destroy', $service) }}" 
                               method="POST" onsubmit="return confirm('Segur que vols eliminar aquest servei?')">
                             @csrf
                             @method('DELETE')

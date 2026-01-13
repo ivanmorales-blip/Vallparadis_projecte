@@ -32,17 +32,18 @@ class Additional_servicesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tipus' => 'required|string|max:255',
-            'contacte' => 'required|string|max:255',
-            'encarregat' => 'required|string|max:255',
-            'id_center' => 'required|exists:center,id',
+            'tipus'        => 'required|string|max:255',
+            'contacte'     => 'required|string|max:255',
+            'responsable'  => 'required|string|max:255',
+            'data_inici'   => 'required|date',
+            'centre_id'    => 'required|exists:center,id',
             'observacions' => 'nullable|string',
         ]);
 
         Additional_services::create($request->all());
 
         return redirect()->route('serveis_adicionals.index')
-            ->with('success', 'Servicio general añadido correctamente.');
+            ->with('success', 'Servicio adicional añadido correctamente.');
     }
 
     /**
@@ -50,7 +51,7 @@ class Additional_servicesController extends Controller
      */
     public function show(Additional_services $general_service)
     {
-        return view('serveis_adicionals.show', compact('additional_service'));
+        return view('serveis_adicionals.show', compact('service'));
     }
 
     /**
@@ -59,7 +60,7 @@ class Additional_servicesController extends Controller
     public function edit(Additional_services $general_service)
     {
         $centers = Center::all();
-        return view('serveis_adicionals.alta', compact('additional_service', 'centers'));
+        return view('serveis_adicionals.alta', compact('service', 'centers'));
     }
 
     /**
@@ -68,10 +69,11 @@ class Additional_servicesController extends Controller
     public function update(Request $request, Additional_services $general_service)
     {
         $request->validate([
-            'tipus' => 'required|string|max:255',
-            'contacte' => 'required|string|max:255',
-            'encarregat' => 'required|string|max:255',
-            'id_center' => 'required|exists:center,id',
+            'tipus'        => 'required|string|max:255',
+            'contacte'     => 'required|string|max:255',
+            'responsable'  => 'required|string|max:255',
+            'data_inici'   => 'required|date',
+            'centre_id'    => 'required|exists:center,id',
             'observacions' => 'nullable|string',
         ]);
 
