@@ -14,7 +14,7 @@ class Additional_servicesController extends Controller
     public function index()
     {
         $services = Additional_services::with('center')->get();
-        return view('serveis_adicionals.lista', compact('services'));
+        return view('serveis_adicionals.lista', ['services' => $services]);
     }
 
     /**
@@ -23,7 +23,7 @@ class Additional_servicesController extends Controller
     public function create()
     {
         $centers = Center::all();
-        return view('serveis_adicionals.alta', compact('centers'));
+        return view('serveis_adicionals.alta', ['centers' => $centers]);
     }
 
     /**
@@ -49,24 +49,27 @@ class Additional_servicesController extends Controller
     /**
      * Mostrar un servicio específico.
      */
-    public function show(Additional_services $general_service)
+    public function show(Additional_services $aditional_services)
     {
-        return view('serveis_adicionals.show', compact('service'));
+        return view('serveis_adicionals.show', ['aditional_services' => $aditional_services]);
     }
 
     /**
      * Mostrar formulario de edición.
      */
-    public function edit(Additional_services $general_service)
+    public function edit(Additional_services $aditional_services)
     {
         $centers = Center::all();
-        return view('serveis_adicionals.alta', compact('service', 'centers'));
+        return view('serveis_adicionals.editar', [
+        'serveis_adicional' => $aditional_services,
+        'centers' => $centers
+        ]);
     }
 
     /**
      * Actualizar un servicio.
      */
-    public function update(Request $request, Additional_services $general_service)
+    public function update(Request $request, Additional_services $serveis_adicional)
     {
         $request->validate([
             'tipus'        => 'required|string|max:255',
@@ -77,19 +80,26 @@ class Additional_servicesController extends Controller
             'observacions' => 'nullable|string',
         ]);
 
-        $general_service->update($request->all());
+        $serveis_adicional->update($request->only([
+            'tipus', 'contacte', 'responsable', 'data_inici', 'centre_id', 'observacions'
+        ]));
 
         return redirect()->route('serveis_adicionals.index')
-            ->with('success', 'Servicio general actualizado correctamente.');
+                        ->with('success', 'Servicio general actualizado correctamente.');
     }
+
 
     /**
      * Eliminar un servicio.
      */
-    public function destroy(Additional_services $general_service)
+    public function destroy(Additional_services $serveis_adicional)
     {
-        $general_service->delete();
-        return redirect()->route('serveis_adicionals.index')
-            ->with('success', 'Servicio general eliminado correctamente.');
+    $serveis_adicional->delete();
+
+    return redirect()
+        ->route('serveis_adicionals.index')
+        ->with('success', 'Servicio eliminado correctamente.');
     }
+
+
 }

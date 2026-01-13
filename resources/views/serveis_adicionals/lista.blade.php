@@ -2,7 +2,7 @@
 
 @section('contingut')
 <div class="p-8 bg-gray-50 min-h-screen">
-    <h1 class="text-3xl font-bold mb-6 text-orange-500">Llistat de Serveis Adicionals</h1>
+    <h1 class="text-3xl font-bold mb-6 text-orange-500">Llistat de Serveis Complementaris</h1>
 
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white shadow-lg rounded-xl border border-gray-200">
@@ -12,7 +12,6 @@
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Tipus</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Contacte</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Encarregat</th>
-                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Centre</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Accions</th>
                 </tr>
             </thead>
@@ -39,13 +38,9 @@
 
                     <td class="px-6 py-4 text-gray-600 cursor-pointer"
                         onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
-                        {{ $service->encarregat }}
+                        {{ $service->responsable }}
                     </td>
 
-                    <td class="px-6 py-4 text-gray-700 cursor-pointer"
-                        onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
-                        {{ $service->center->nom ?? '—' }}
-                    </td>
 
                     <!-- Actions column (no redirect) -->
                     <td class="px-6 py-4 flex space-x-3">
@@ -60,8 +55,8 @@
                         </a>
 
                         <!-- Delete / Toggle button -->
-                        <form action="{{ route('serveis_adicionals.destroy', $service) }}" 
-                              method="POST" onsubmit="return confirm('Segur que vols eliminar aquest servei?')">
+                        <form action="{{ route('serveis_adicionals.destroy', $service) }}" method="POST">
+
                             @csrf
                             @method('DELETE')
                             <button type="submit" 
@@ -84,7 +79,7 @@
     <div class="mt-6 flex space-x-4">
         <a href="{{ route('serveis_adicionals.create') }}" 
            class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">
-           Afegir Servei Adicional
+           Afegir Servei Complementaris
         </a>
 
         <a href="{{ route('menu') }}" 

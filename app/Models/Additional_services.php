@@ -15,6 +15,11 @@ class Additional_services extends Model
         'observacions',
     ];
 
+    protected $casts = [
+    'data_inici' => 'date',
+    ];
+
+
     public function center()
     {
         return $this->belongsTo(Center::class, 'id_center');

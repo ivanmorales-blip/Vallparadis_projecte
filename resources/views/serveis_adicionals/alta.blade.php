@@ -11,12 +11,8 @@
             <!-- Tipus -->
             <div>
                 <label for="tipus" class="block text-sm font-medium text-gray-700 mb-1">Tipus *</label>
-                <select id="tipus" name="tipus" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona tipus --</option>
-                    <option value="CUINA">CUINA</option>
-                    <option value="NETEJA/BUGADERIA">NETEJA/BUGADERIA</option>
-                </select>
+                <input id="tipus" name="tipus" type="text" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-transparent transition">
             </div>
 
             <!-- Contacte -->

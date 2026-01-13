@@ -29,7 +29,7 @@
                 <!-- Tag animat -->
                 <span class="px-5 py-2.5 bg-gradient-to-r from-orange-400 to-orange-500 text-white 
                              font-semibold rounded-full shadow-lg text-sm animate-pulse">
-                    {{ $service->tipus }}
+                    {{ $aditional_services->tipus }}
                 </span>
             </div>
 
@@ -40,12 +40,12 @@
                 <div class="p-6 rounded-2xl bg-gray-50/60 border border-gray-200 shadow-inner 
                             hover:shadow-xl transition-all duration-300">
                     <p class="text-gray-900 font-semibold mb-1 text-lg">Contacte</p>
-                    <p class="text-gray-700 text-base">{{ $service->contacte }}</p>
+                    <p class="text-gray-700 text-base">{{ $aditional_services->contacte }}</p>
 
                     <div class="h-px bg-gray-200 my-5"></div>
 
                     <p class="text-gray-900 font-semibold mb-1 text-lg">Encarregat</p>
-                    <p class="text-gray-700">{{ $service->encarregat }}</p>
+                    <p class="text-gray-700">{{ $aditional_services->encarregat }}</p>
                 </div>
 
                 <!-- Card 2 -->
@@ -54,14 +54,14 @@
 
                     <p class="text-gray-900 font-semibold mb-1 text-lg">Centre</p>
                     <p class="text-gray-700 mb-5">
-                        {{ $service->center->nom ?? '—' }}
+                        {{ $aditional_services->center->nom ?? '—' }}
                     </p>
 
                     <div class="h-px bg-gray-200 my-5"></div>
 
                     <p class="text-gray-900 font-semibold mb-1 text-lg">Observacions</p>
                     <p class="text-gray-700 whitespace-pre-wrap leading-relaxed">
-                        {{ $service->observacions ?? '—' }}
+                        {{ $aditional_services->observacions ?? '—' }}
                     </p>
                 </div>
 
@@ -79,7 +79,7 @@
                 </a>
 
                 <!-- Edit -->
-                <a href="{{ route('serveis_adicionals.edit', $service->id) }}" 
+                <a href="{{ route('serveis_adicionals.index', $aditional_services->id) }}" 
                    class="px-8 py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 
                           text-white font-semibold rounded-2xl shadow-lg 
                           hover:shadow-2xl transition-all hover:-translate-y-1 

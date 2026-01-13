@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             // 1️⃣ USUARI DE PROVA
             // -------------------------------------------------
             User::updateOrCreate(
-                ['email' => 'test@example.com'],
+                ['email' => 'tecnic@example.com'],
                 [
                     'name' => 'Usuari Prova1',
                     'password' => Hash::make('secret123'),
@@ -59,20 +59,20 @@ class DatabaseSeeder extends Seeder
             );
 
             User::updateOrCreate(
-                ['email' => 'example@example.com'],
+                ['email' => 'directiu@example.com'],
                 [
                     'name' => 'Usuari Prova2',
-                    'password' => Hash::make('secret321'),
+                    'password' => Hash::make('secret123'),
                     'id_center' => $vallparadisId, // assign a center here
                     'privilegis' => 'equipdirectiu' // Equip tecnic, equip directiu, administracio
                 ]
             );
 
             User::updateOrCreate(
-                ['email' => 'test@test.com'],
+                ['email' => 'administracio@example.com'],
                 [
                     'name' => 'Usuari Prova3',
-                    'password' => Hash::make('secret213'),
+                    'password' => Hash::make('secret123'),
                     'id_center' => $vallparadisId, // assign a center here
                     'privilegis' => 'equipadministracio' // Equip tecnic, equip directiu, administracio
                 ]

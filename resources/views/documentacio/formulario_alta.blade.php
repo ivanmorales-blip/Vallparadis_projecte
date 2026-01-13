@@ -11,8 +11,23 @@
             <!-- Tipus -->
             <div>
                 <label for="tipus" class="block text-gray-700 font-semibold mb-2">Tipus *</label>
-                <input id="tipus" name="tipus" type="text" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-transparent transition">
+                <select id="tipus" name="tipus" required
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
+                    <option value="">-- Selecciona un centre --</option>
+                    <option value="Organització del Centre">Organització del Centre</option>
+                    <option value="Documents del Departament">Documents del Departament</option>
+                    <option value="Memòries i Seguiment anual">Memòries i Seguiment anual</option>
+                    <option value="PRL">PRL</option>
+                    <option value="Comitè d’Empresa">Comitè d’Empresa</option>
+                    <option value="Informes professionals">Informes professionals</option>
+                    <option value="Informes persones usuàries">Informes persones usuàries</option>
+                    <option value="Qualitat i ISO">Qualitat i ISO</option>
+                    <option value="Projectes">Projectes</option>
+                    <option value="Comissions">Comissions</option>
+                    <option value="Famílies">Famílies</option>
+                    <option value="Comunicació i Reunions">Comunicació i Reunions</option>
+                    <option value="Altres">Altres</option>
+                </select>
             </div>
 
             <!-- Data -->
