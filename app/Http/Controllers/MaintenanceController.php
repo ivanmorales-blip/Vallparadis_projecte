@@ -27,11 +27,17 @@ class MaintenanceController extends Controller
     public function create()
     {   
         $centerId = $this->currentCenterId();
-        $center = Center::where('id', $centerId)->get();
+        $center = Center::find($centerId); // devuelve un único modelo en vez de colección
+
+        if (!$center) {
+            abort(404, 'Centre no trobat');
+        }
+
         return view('manteniment.formulario_alta', [
             'center' => $center
         ]);
     }
+
 
    public function store(Request $request)
     {

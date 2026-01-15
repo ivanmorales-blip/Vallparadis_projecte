@@ -8,10 +8,10 @@
         <form action="{{ route('manteniment.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
 
-            <!-- Data -->
+            <!-- Data Obertura -->
             <div>
                 <label for="data_obertura" class="block text-sm font-medium text-gray-700 mb-1">Data *</label>
-                <input type="date" id="data_obertura" name="data_obertura" required
+                <input type="date" id="data_obertura" name="data_obertura" value="{{ old('data_obertura') }}" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
             </div>
 
@@ -24,7 +24,7 @@
 
             <!-- Documentacio adjunta -->
             <div>
-                <label for="documentacio" class="block text-sm font-medium text-gray-700 mb-1">Documentacio adjunta</label>
+                <label for="documentacio" class="block text-sm font-medium text-gray-700 mb-1">Documentació adjunta</label>
                 <input type="file" id="documentacio" name="documentacio"
                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
             </div>
@@ -32,17 +32,17 @@
             <!-- Responsable -->
             <div class="space-y-1">
                 <label for="responsable" class="block text-gray-700 font-semibold">Responsable *</label>
-                <textarea id="responsable" name="responsable" rows="4" required
-                    class="w-full border border-gray-300 rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('descripcio') }}</textarea>
+                <textarea id="responsable" name="responsable" rows="2" required
+                    class="w-full border border-gray-300 rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('responsable') }}</textarea>
             </div>
 
             <!-- Centre -->
             <div>
-                <label for="centre_id" class="block text-sm font-medium text-gray-700 mb-1">Centre</label>
+                <label for="centre_id" class="block text-sm font-medium text-gray-700 mb-1">Centre *</label>
                 <select id="centre_id" name="centre_id" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
                     <option value="">-- Selecciona un centre --</option>
-                    @foreach($center as $center)
+                    @foreach($centers as $center)
                         <option value="{{ $center->id }}" {{ old('centre_id') == $center->id ? 'selected' : '' }}>
                             {{ $center->nom }}
                         </option>
