@@ -66,27 +66,18 @@
 
             <!-- Centre -->
             <div>
-                <label for="centre_id" class="block text-sm font-medium text-gray-700 mb-1">Centre *</label>
-                <select id="centre_id" name="centre_id" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un centre --</option>
-                    @foreach($centres as $centre)
-                        <option value="{{ $centre->id }}" {{ $projectes_comission->centre_id == $centre->id ? 'selected' : '' }}>
-                            {{ $centre->nom }}
-                        </option>
-                    @endforeach
-                </select>
+                <input type="hidden" name="id_center" value="{{ session('id_center') }}">
             </div>
 
             <!-- Estat -->
-<div>
-    <label for="estat" class="block text-sm font-medium text-gray-700 mb-1">Actiu *</label>
-    <select id="estat" name="estat" required
-        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-        <option value="1" {{ $projectes_comission->estat ? 'selected' : '' }}>Sí</option>
-        <option value="0" {{ !$projectes_comission->estat ? 'selected' : '' }}>No</option>
-    </select>
-</div>
+            <div>
+                <label for="estat" class="block text-sm font-medium text-gray-700 mb-1">Actiu *</label>
+                <select id="estat" name="estat" required
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    <option value="1" {{ $projectes_comission->estat ? 'selected' : '' }}>Sí</option>
+                    <option value="0" {{ !$projectes_comission->estat ? 'selected' : '' }}>No</option>
+                </select>
+            </div>
 
 
             <!-- Botons -->

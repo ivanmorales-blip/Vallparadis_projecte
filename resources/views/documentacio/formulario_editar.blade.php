@@ -19,9 +19,9 @@
             <!-- Data -->
             <div>
                 <label for="data" class="block text-sm font-medium text-gray-700 mb-1">Data *</label>
-                <input type="date" id="data" name="data" value="{{ old('data', $document->data) }}" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
-            </div>
+                <input type="date" id="data" name="data" required value="{{ old('data', optional($document->data)->format('Y-m-d')) }}"
+                class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
+            </div> 
 
             <!-- Descripció -->
             <div class="space-y-1">
@@ -63,8 +63,6 @@
 
             <!-- Centre -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Centre</label>
-                <input type="text" value="{{ $center->nom }}" class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-100" readonly>
                 <input type="hidden" name="centre_id" value="{{ $center->id }}">
             </div>
 

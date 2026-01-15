@@ -57,19 +57,7 @@
 
             <!-- Centre -->
             <div>
-                <label for="id_center" class="block text-sm font-medium text-gray-700 mb-1">Centre *</label>
-                <select id="id_center" name="id_center" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un centre --</option>
-                    @foreach($centers as $center)
-                        <option value="{{ $center->id }}" {{ old('id_center') == $center->id ? 'selected' : '' }}>
-                            {{ $center->nom }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('id_center')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
+                <input type="hidden" id="id_center" name="id_center" value="{{ session('id_center') }}">
             </div>
 
             <!-- Observacions -->

@@ -54,8 +54,7 @@
             </div>
 
             <!-- Estat i Centre -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
+            <div>
                     <label for="estat" class="block text-gray-700 font-semibold mb-2">Estat *</label>
                     <select id="estat" name="estat" required
                         class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
@@ -63,15 +62,10 @@
                         <option value="1">Actiu</option>
                         <option value="0">Inactiu</option>
                     </select>
-                </div>
+            </div>
 
-                <div>
-                    <label for="id_center" class="block text-gray-700 font-semibold mb-2">Centre *</label>
+            <div>
                     <input type="hidden" id="id_center" name="id_center" value="{{ session('id_center') }}">
-                    <input type="text"
-                        class="w-full px-4 py-2 border border-gray-300 bg-gray-100 rounded-xl text-gray-700 shadow-sm cursor-not-allowed"
-                        value="{{ $centre->firstWhere('id', session('id_center'))->nom ?? 'No assignat' }}" disabled>
-                </div>
             </div>
 
             <!-- Taquilla -->
@@ -119,7 +113,7 @@
 
             <!-- Botons -->
             <div class="flex justify-end space-x-4 pt-6 border-t mt-6">
-                <a href="{{ route('menu') }}"
+                <a href="{{ route('profesional.index') }}"
                    class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-2xl shadow transition text-center">
                     Tornar al menú
                 </a>

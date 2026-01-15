@@ -56,15 +56,7 @@
             </div>
 
             <div>
-                <label for="center_id" class="block text-sm font-medium text-gray-700 mb-1">Centre *</label>
-                <select id="center_id" name="center_id" required
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
-                    @foreach($centers as $center)
-                        <option value="{{ $center->id }}" {{ $training->center_id == $center->id ? 'selected' : '' }}>
-                            {{ $center->nom }}
-                        </option>
-                    @endforeach
-                </select>
+                <input type="hidden" id="center_id" name="center_id" value="{{ $training->center_id }}">
             </div>
 
             <div>

@@ -87,7 +87,7 @@ class ProfesionalController extends Controller
         // Laravel usará solo los que estén permitidos en $fillable del modelo.
         $profesional->update($request->all());
 
-        return redirect()->route('menu');
+        return redirect()->route('profesional.index');
         }
     }
 

@@ -78,7 +78,6 @@ class DatabaseSeeder extends Seeder
                 ]
             );
 
-
         // -------------------------------------------------
         // 3️⃣ PROFESSIONALS
         // -------------------------------------------------
@@ -196,7 +195,7 @@ class DatabaseSeeder extends Seeder
                 'hores' => 30,
                 'objectiu' => 'Millorar la productivitat i la planificació diària del personal.',
                 'descripcio' => 'Curs pràctic amb sessions teòriques i exercicis sobre gestió eficient del temps.',
-                'formador' => 'Anna Puig',
+                'formador' => $mariaId,
                 'id_center' => $vallparadisId,
                 'estat' => true,
                 'created_at' => Carbon::now(),
@@ -209,7 +208,7 @@ class DatabaseSeeder extends Seeder
                 'hores' => 40,
                 'objectiu' => 'Explorar les aplicacions de la IA en l’àmbit educatiu.',
                 'descripcio' => 'Tallers pràctics sobre IA aplicada a l’aprenentatge personalitzat.',
-                'formador' => 'Jordi Riera',
+                'formador' => $joanId,
                 'id_center' => $vallparadisId,
                 'estat' => true,
                 'created_at' => Carbon::now(),
@@ -222,7 +221,7 @@ class DatabaseSeeder extends Seeder
                 'hores' => 20,
                 'objectiu' => 'Revisar protocols de seguretat i primers auxilis.',
                 'descripcio' => 'Sessions teòriques i pràctiques sobre riscos laborals i emergències.',
-                'formador' => 'Carla Soler',
+                'formador' => $joanId,
                 'id_center' => $centreNordId,
                 'estat' => true,
                 'created_at' => Carbon::now(),

@@ -5,7 +5,7 @@
     <div class="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-8">
         <h1 class="text-3xl font-bold text-orange-500 mb-6 text-center">Afegir Servei Adicional</h1>
 
-        <form action="{{ route('serveis_adicionals.store') }}" method="POST" class="space-y-5">
+        <form action="{{ route('serveis_adicional.store') }}" method="POST" class="space-y-5">
             @csrf
 
             <!-- Tipus -->
@@ -60,7 +60,7 @@
 
             <!-- Botones -->
             <div class="flex justify-between items-center pt-4">
-                <a href="{{ route('serveis_adicionals.index') }}"
+                <a href="{{ route('serveis_adicional.index') }}"
                    class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl transition shadow">
                     Cancel·lar
                 </a>
