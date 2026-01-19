@@ -46,8 +46,8 @@ class DatabaseSeeder extends Seeder
         $centreNordId = DB::table('center')->where('nom', 'Centre Nord')->value('id');
 
         // -------------------------------------------------
-        // 1️⃣ USUARI DE PROVA
-        // -------------------------------------------------
+            // 1️⃣ USUARI DE PROVA
+            // -------------------------------------------------
             User::updateOrCreate(
                 ['email' => 'tecnic@example.com'],
                 [
