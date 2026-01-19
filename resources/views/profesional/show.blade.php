@@ -43,10 +43,12 @@
         <div class="mt-4 mb-8">
             <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Gestió</h2>
             <div class="bg-gray-50 p-6 rounded-xl shadow-inner flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0">
-                <a href="{{ route('tracking.createForProfesional', ['profesional' => $profesional->id]) }}"
+                <!-- CORRECCIÓN: nombre de ruta correcto -->
+                <a href="{{ route('tracking.profesional.create', ['profesional' => $profesional->id]) }}"
                     class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
                     Donar d'alta Seguiment
                 </a>
+
                 <a href="{{ route('evaluation.create', ['from_profesional' => $profesional->id]) }}"
                     class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
                     Donar d'alta Avaluació
@@ -67,7 +69,7 @@
                     <ul class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
                         @foreach($profesional->trackings as $tracking)
                             <li 
-                                onclick="window.location='{{ route('tracking.showForProfesional', $tracking->id) }}'"
+                                onclick="window.location='{{ route('tracking.profesional.show', $tracking->id) }}'"
                                 class="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-orange-100 transition cursor-pointer"
                             >
                                 <div class="space-y-1">
