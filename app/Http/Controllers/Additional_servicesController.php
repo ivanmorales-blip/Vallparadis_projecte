@@ -36,7 +36,7 @@ class Additional_servicesController extends Controller
             'contacte'     => 'required|string|max:255',
             'responsable'  => 'required|string|max:255',
             'data_inici'   => 'required|date',
-            'centrserveis_adicionale_id'    => 'required|exists:center,id',
+            'centre_id'    => 'required|exists:center,id',
             'observacions' => 'nullable|string',
         ]);
 
