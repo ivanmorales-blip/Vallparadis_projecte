@@ -107,6 +107,35 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('serveis_adicionals', Additional_servicesController::class);
     });
 
+    // Seguimientos para Profesionales
+    Route::get('tracking/profesional/create/{profesional?}', [TrackingController::class, 'createForProfesional'])
+        ->name('tracking.profesional.create')
+        ->middleware('auth');
+
+    Route::post('tracking/profesional', [TrackingController::class, 'storeForProfesional'])
+        ->name('tracking.profesional.store')
+        ->middleware('auth');
+
+    Route::get('tracking/profesional/{tracking}', [TrackingController::class, 'showForProfesional'])
+        ->name('tracking.profesional.show')
+        ->middleware('auth');
+
+    Route::get('tracking/profesional/{tracking}/edit', [TrackingController::class, 'editForProfesional'])
+        ->name('tracking.profesional.edit')
+        ->middleware('auth');
+
+    Route::patch('tracking/profesional/{tracking}', [TrackingController::class, 'updateForProfesional'])
+        ->name('tracking.profesional.update')
+        ->middleware('auth');
+
+    Route::patch('tracking/profesional/{tracking}/active', [TrackingController::class, 'activeForProfesional'])
+        ->name('tracking.profesional.active')
+        ->middleware('auth');
+
+    Route::delete('tracking/profesional/{tracking}', [TrackingController::class, 'destroyForProfesional'])
+        ->name('tracking.profesional.destroy')
+        ->middleware('auth');
+        
    /*
     |--------------------------------------------------------------------------
     | SEGUIMENTS PER A SERVEIS GENERALS
