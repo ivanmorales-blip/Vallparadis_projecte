@@ -13,7 +13,6 @@
                 <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Data Inici</th>
                 <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Data Fi</th>
                 <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Formador</th>
-                <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Centre</th>
                 <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Estat</th>
                 <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Accions</th>
             </tr>
@@ -45,14 +44,10 @@
                 </td>
 
                 <td class="px-6 py-4 text-gray-600 cursor-pointer"
-                    onclick="window.location='{{ route('trainings.show', $training->id) }}'">
-                    {{ $training->formador }}
+                onclick="window.location='{{ route('trainings.show', $training->id) }}'">
+                {{ $training->formadorRelation->nom ?? '' }} {{ $training->formadorRelation->cognom ?? '' }}
                 </td>
 
-                <td class="px-6 py-4 text-gray-700 cursor-pointer"
-                    onclick="window.location='{{ route('trainings.show', $training->id) }}'">
-                    {{ $training->center->nom ?? '—' }}
-                </td>
 
                 <td class="px-6 py-4 cursor-pointer"
                     onclick="window.location='{{ route('trainings.show', $training->id) }}'">

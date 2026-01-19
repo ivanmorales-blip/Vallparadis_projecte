@@ -13,8 +13,8 @@ class Additional_servicesController extends Controller
      */
     public function index()
     {
-        $serveis_adicionals = Additional_services::with('center')->get();
-        return view('serveis_adicionals.lista', ['serveis_adicionals' => $serveis_adicionals]);
+        $serveis_adicional = Additional_services::with('center')->get();
+        return view('serveis_adicionals.lista', ['serveis_adicional' => $serveis_adicional]);
     }
 
     /**
@@ -42,7 +42,7 @@ class Additional_servicesController extends Controller
 
         Additional_services::create($request->all());
 
-        return redirect()->route('serveis_adicionals.index')
+        return redirect()->route('serveis_adicional.index')
             ->with('success', 'Servicio adicional añadido correctamente.');
     }
 
@@ -51,15 +51,15 @@ class Additional_servicesController extends Controller
      */
     public function show(Additional_services $serveis_adicional)
     {
-        return view('serveis_adicionals.show', ['aditional_service' => $serveis_adicional]);
+        return view('serveis_adicionals.show', ['serveis_adicional' => $serveis_adicional]);
     }
 
     /**
      * Mostrar formulario de edición.
      */
-    public function edit(Additional_services $service)
+    public function edit(Additional_services $serveis_adicional)
     {
-        return view('serveis_adicionals.editar', ['serveis_adicional' => $service]);
+        return view('serveis_adicionals.editar', ['serveis_adicional' => $serveis_adicional]);
     }
 
     /**
@@ -80,7 +80,7 @@ class Additional_servicesController extends Controller
             'tipus', 'contacte', 'responsable', 'data_inici', 'centre_id', 'observacions'
         ]));
 
-        return redirect()->route('serveis_adicionals.index')
+        return redirect()->route('serveis_adicional.index')
                         ->with('success', 'Servicio general actualizado correctamente.');
     }
 
@@ -93,7 +93,7 @@ class Additional_servicesController extends Controller
     $serveis_adicional->delete();
 
     return redirect()
-        ->route('serveis_adicionals.index')
+        ->route('serveis_adicional.index')
         ->with('success', 'Servicio eliminado correctamente.');
     }
 

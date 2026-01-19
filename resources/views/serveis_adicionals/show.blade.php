@@ -7,7 +7,7 @@
         <!-- Título y tipo de servicio -->
         <div class="flex justify-between items-start mb-6">
             <h1 class="text-3xl font-bold text-orange-500 tracking-tight">
-                {{ $aditional_services->tipus }}
+                {{ $serveis_adicional->tipus }}
             </h1>
             <span class="bg-gray-200 text-gray-700 px-4 py-1 rounded-full font-semibold text-sm shadow-sm">
                 Servei Adicional
@@ -19,25 +19,25 @@
             <!-- Card izquierda -->
             <div class="p-4 bg-gray-50 rounded-xl shadow-inner border border-gray-200 text-sm">
                 <p class="font-semibold text-gray-900">Contacte</p>
-                <p class="mb-2 text-gray-700">{{ $aditional_services->contacte }}</p>
+                <p class="mb-2 text-gray-700">{{ $serveis_adicional->contacte }}</p>
 
                 <p class="font-semibold text-gray-900">Responsable</p>
-                <p class="mb-2 text-gray-700">{{ $aditional_services->responsable }}</p>
+                <p class="mb-2 text-gray-700">{{ $serveis_adicional->responsable }}</p>
 
                 <p class="font-semibold text-gray-900">Data</p>
-                <p class="text-gray-700">{{ $aditional_services->data_inici}}</p>
+                <p class="text-gray-700">{{ $serveis_adicional->data_inici}}</p>
             </div>
 
             <!-- Card derecha -->
             <div class="p-4 bg-gray-50 rounded-xl shadow-inner border border-gray-200 text-sm">
                 <p class="font-semibold text-gray-900">Observacions</p>
-                <p class="text-gray-700 whitespace-pre-wrap leading-relaxed">{{ $aditional_services->observacions ?? '—' }}</p>
+                <p class="text-gray-700 whitespace-pre-wrap leading-relaxed">{{ $serveis_adicional->observacions ?? '—' }}</p>
             </div>
         </div>
 
         <!-- Botones finales -->
         <div class="flex flex-wrap justify-start gap-3 mt-4 text-sm">
-            <a href="{{ route('serveis_adicionals.index') }}" 
+            <a href="{{ route('serveis_adicional.index') }}" 
                class="px-5 py-2 bg-gray-200 text-gray-800 rounded-xl shadow hover:bg-gray-300 transition font-medium">
                 ← Tornar al llistat
             </a>

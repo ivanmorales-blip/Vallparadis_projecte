@@ -18,7 +18,7 @@ class Maintenance extends Model
     ];
 
     protected $casts = [
-        'data' => 'datetime',
+        'data_obertura' => 'date',
     ];
 
     public function centre()

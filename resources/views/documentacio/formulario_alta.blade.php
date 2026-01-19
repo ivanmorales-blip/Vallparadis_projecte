@@ -13,7 +13,7 @@
                 <label for="tipus" class="block text-gray-700 font-semibold mb-2">Tipus *</label>
                 <select id="tipus" name="tipus" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un centre --</option>
+                    <option value="">-- Selecciona un tipus --</option>
                     <option value="Organització del Centre">Organització del Centre</option>
                     <option value="Documents del Departament">Documents del Departament</option>
                     <option value="Memòries i Seguiment anual">Memòries i Seguiment anual</option>
@@ -65,16 +65,7 @@
 
             <!-- Centre -->
             <div>
-                <label for="centre_id" class="block text-sm font-medium text-gray-700 mb-1">Centre</label>
-                <select id="centre_id" name="centre_id" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un centre --</option>
-                    @foreach($center as $center)
-                        <option value="{{ $center->id }}" {{ old('centre_id') == $center->id ? 'selected' : '' }}>
-                            {{ $center->nom }}
-                        </option>
-                    @endforeach
-                </select>
+                <input type="hidden" id="id_center" name="id_center" value="{{ session('id_center') }}">
             </div>
 
             <!-- Botones -->

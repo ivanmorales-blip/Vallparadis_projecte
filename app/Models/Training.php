@@ -31,6 +31,13 @@ class Training extends Model
 {
     return $this->belongsTo(Center::class, 'id_center');
 }
+
+public function formadorRelation()
+    {
+        return $this->belongsTo(Profesional::class, 'formador'); 
+        // 'formador' is the column in training table storing the professional ID
+    }
+    
     /**
      * Relación muchos a muchos con profesionales
      */
