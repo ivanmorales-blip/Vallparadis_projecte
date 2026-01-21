@@ -43,6 +43,11 @@ class Profesional extends Model
         );
     }
 
+    public function Documentacio()
+    {
+        return $this->hasMany(Documentation::class, 'id_profesional');
+    }
+
     /*public function uniform(): HasMany{
         return $this->hasMany(Uniformity::class);
     }*/
