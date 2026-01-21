@@ -71,13 +71,18 @@
                 </select>
             </div>
 
-            <!-- Documentació Adjunta -->
+            <!-- Documentació Adjunta (SOLO 1 ARCHIVO) -->
             <div>
                 <label for="documentacio_adjunta" class="block text-gray-700 font-semibold mb-2">Documentació Adjunta</label>
                 <input id="documentacio_adjunta" name="documentacio_adjunta" type="file"
                     class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+
                 @if($tema->document)
-                    <p class="text-gray-500 text-sm mt-1">Actual: <a href="{{ asset($tema->document) }}" target="_blank" class="underline text-blue-500">Veure document</a></p>
+                    <p class="text-gray-500 text-sm mt-1">Actual: 
+                        <a href="{{ asset('storage/' . $tema->document) }}" target="_blank" class="underline text-blue-500">
+                            {{ basename($tema->document) }}
+                        </a>
+                    </p>
                 @endif
             </div>
 

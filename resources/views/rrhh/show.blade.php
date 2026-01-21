@@ -50,11 +50,31 @@
             <!-- Documentos adjuntos -->
             <div class="col-span-2 bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
                 <h3 class="font-semibold text-gray-700">Documents adjunts</h3>
-                @if($tema->document)
-                    <a href="{{ route('temes.download', $tema->id) }}"
-                       class="mt-2 inline-block text-blue-600 font-semibold hover:underline">
-                        Descarregar document
-                    </a>
+
+                @php
+                    $documents = [];
+
+                    if ($tema->document) {
+                        $decoded = json_decode($tema->document, true);
+                        if (json_last_error() === JSON_ERROR_NONE) {
+                            $documents = $decoded;
+                        } else {
+                            // si no es JSON, asumimos que es un solo archivo
+                            $documents[] = $tema->document;
+                        }
+                    }
+                @endphp
+
+                @if(count($documents) > 0)
+                    <ul class="mt-2 list-disc pl-5">
+                        @foreach($documents as $doc)
+                            <li>
+                                <a href="{{ asset('storage/' . $doc) }}" target="_blank" class="text-blue-600 font-semibold hover:underline">
+                                    {{ basename($doc) }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 @else
                     <p class="text-gray-600 mt-2">No hi ha documents adjunts</p>
                 @endif

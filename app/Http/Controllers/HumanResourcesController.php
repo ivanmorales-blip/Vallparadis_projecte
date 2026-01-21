@@ -39,37 +39,28 @@ class HumanResourcesController extends Controller
 
     // Guardar tema pendent
     public function store(Request $request, $centre_id)
-    {
-        $request->validate([
-            'data_obertura' => 'required|date',
-            'professional_afectat' => 'required|exists:profesional,id',
-            'professional_registra' => 'required|exists:users,id',
-            'derivat_a' => 'required|exists:profesional,id',
-            'descripcio' => 'required|string',
-            'documentacio_adjunta' => 'nullable|file|max:10240', // màxim 10MB
-        ]);
+{
+    $pathsToFiles = [];
 
-        // Processar fitxer si existeix
-        $pathToFile = null;
-        if ($request->hasFile('documentacio_adjunta')) {
-            $pathToFile = $request->file('documentacio_adjunta')->store('documents', 'public');
+    if ($request->hasFile('documentacio_adjunta')) {
+        foreach ($request->file('documentacio_adjunta') as $file) {
+            $pathsToFiles[] = $file->store('documents', 'public');
         }
-
-        // Crear registre únic amb tots els camps
-        $tema = TemaPendent::create([
-            'centre_id' => $centre_id,
-            'data_obertura' => $request->data_obertura,
-            'professional_afectat' => $request->professional_afectat,
-            'professional_registra' => $request->professional_registra,
-            'derivat_a' => $request->derivat_a,
-            'descripcio' => $request->descripcio,
-            'document' => $pathToFile,
-            'actiu' => true,
-            'estat' => true,
-        ]);
-
-        return redirect()->route('human_resources.index', $centre_id);
     }
+
+    $tema = TemaPendent::create([
+        'centre_id' => $centre_id,
+        'data_obertura' => $request->data_obertura,
+        'professional_afectat' => $request->professional_afectat,
+        'professional_registra' => $request->professional_registra,
+        'derivat_a' => $request->derivat_a,
+        'descripcio' => $request->descripcio,
+        'document' => json_encode($pathsToFiles),
+        'actiu' => true,
+    ]);
+
+    return redirect()->route('human_resources.index', $centre_id);
+}
 
     // Formulari d'edició
     public function edit(TemaPendent $tema)
@@ -94,19 +85,20 @@ class HumanResourcesController extends Controller
         ]);
 
         // Processar fitxer si existeix
-        if ($request->hasFile('documentacio_adjunta')) {
-            $tema->document = $request->file('documentacio_adjunta')->store('documents', 'public');
-        }
+       if ($request->hasFile('documentacio_adjunta')) {
+        $tema->document = $request->file('documentacio_adjunta')->store('documents', 'public');
+    }
+    
 
         $tema->update([
-            'data_obertura' => $request->data_obertura,
-            'professional_afectat' => $request->professional_afectat,
-            'professional_registra' => $request->professional_registra,
-            'derivat_a' => $request->derivat_a,
-            'descripcio' => $request->descripcio,
-            'actiu' => $tema->actiu,
-            'estat' => $tema->estat,
-        ]);
+        'data_obertura' => $request->data_obertura,
+        'professional_afectat' => $request->professional_afectat,
+        'professional_registra' => $request->professional_registra,
+        'derivat_a' => $request->derivat_a,
+        'descripcio' => $request->descripcio,
+        'actiu' => $tema->actiu,
+        'document' => $tema->document,
+    ]);
 
         return redirect()->route('human_resources.index', $tema->centre_id);
     }

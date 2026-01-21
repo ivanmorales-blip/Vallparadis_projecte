@@ -20,7 +20,7 @@ use App\Http\Controllers\{
     HumanResourcesController,
     Additional_servicesController,
     External_ContactsController,
-    serveis_adicionalsController,
+    
 };
 
 /*
@@ -104,7 +104,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*servicis adicionals*/
     Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu,equipadministracio'])->group(function () {
-    Route::resource('serveis_adicionals', serveis_adicionalsController::class);
+    Route::resource('serveis_adicionals', Additional_servicesController::class);
     });
 
    /*
