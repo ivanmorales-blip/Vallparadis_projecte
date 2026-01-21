@@ -33,7 +33,7 @@
             ['title'=>'Documentació interna','icon'=>'documentacio-icone','links'=>[['name'=>'Llistar Documentació','route'=>route('documentacio.index')],['name'=>'Alta Documentació','route'=>route('documentacio.create')]], 'roles'=>['equipdirectiu']],
             ['title'=>'Manteniment','icon'=>'manteniment-icone','links'=>[['name'=>'Llistar Manteniment','route'=>route('manteniment.index')],['name'=>'Alta Manteniment','route'=>route('manteniment.create')]], 'roles'=>['equipdirectiu','equipadministracio']],
             ['title'=>'Serveis Generals','icon'=>'general-services-icone','links'=>[['name'=>'Llistar Serveis','route'=>route('general_services.index')],['name'=>'Alta Servei','route'=>route('general_services.create')]], 'roles'=>['equipdirectiu','equipadministracio']],
-            ['title'=>'Serveis Complementaris','icon'=>'aditional-services-icone','links'=>[['name'=>'Llistar Serveis','route'=>route('serveis_adicionals.index')],['name'=>'Alta Servei','route'=>route('serveis_adicionals.create')]], 'roles'=>['equiptecnic','equipdirectiu','equipadministracio']],
+            ['title'=>'Serveis Complementaris','icon'=>'aditional-services-icone','links'=>[['name'=>'Llistar Serveis','route'=>route('serveis_adicional.index')],['name'=>'Alta Servei','route'=>route('serveis_adicional.create')]], 'roles'=>['equiptecnic','equipdirectiu','equipadministracio']],
             ['title'=>'Contactes Externs','icon'=>'general-services-icone','links'=>[['name'=>'Llistar Contactes','route'=>route('external_contacts.index')],['name'=>'Alta Contacte','route'=>route('external_contacts.create')]], 'roles'=>['equiptecnic','equipdirectiu','equipadministracio']],
         ];
         @endphp
