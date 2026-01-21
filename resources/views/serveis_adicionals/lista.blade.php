@@ -17,28 +17,28 @@
             </thead>
 
             <tbody id="services-table" class="divide-y divide-gray-200">
-                @foreach ($services as $index => $service)
+                @foreach ($serveis_adicional as $index => $serveis_adicional)
                 <tr class="hover:bg-orange-50 transition">
 
                     <!-- Clickable cells (except actions) -->
                     <td class="px-6 py-4 text-gray-600 font-medium cursor-pointer"
-                        onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
+                        onclick="window.location='{{ route('serveis_adicional.show', $serveis_adicional->id) }}'">
                         {{ $index + 1 }}
                     </td>
 
                     <td class="px-6 py-4 font-semibold text-gray-800 cursor-pointer"
-                        onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
-                        {{ $service->tipus }}
+                        onclick="window.location='{{ route('serveis_adicional.show', $serveis_adicional->id) }}'">
+                        {{ $serveis_adicional->tipus }}
                     </td>
 
                     <td class="px-6 py-4 text-gray-600 cursor-pointer"
-                        onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
-                        {{ $service->contacte }}
+                        onclick="window.location='{{ route('serveis_adicional.show', $serveis_adicional->id) }}'">
+                        {{ $serveis_adicional->contacte }}
                     </td>
 
                     <td class="px-6 py-4 text-gray-600 cursor-pointer"
-                        onclick="window.location='{{ route('serveis_adicionals.show', $service->id) }}'">
-                        {{ $service->responsable }}
+                        onclick="window.location='{{ route('serveis_adicional.show', $serveis_adicional->id) }}'">
+                        {{ $serveis_adicional->responsable }}
                     </td>
 
 
@@ -46,7 +46,7 @@
                     <td class="px-6 py-4 flex space-x-3">
 
                         <!-- Edit button -->
-                        <a href="{{ route('serveis_adicionals.edit', $service) }}" 
+                        <a href="{{ route('serveis_adicional.edit', $serveis_adicional) }}" 
                            class="text-orange-400 hover:text-orange-500 transition"
                            title="Editar">
                             <svg class="h-6 w-6" aria-label="Editar">
@@ -55,7 +55,7 @@
                         </a>
 
                         <!-- Delete / Toggle button -->
-                        <form action="{{ route('serveis_adicionals.destroy', $service) }}" method="POST">
+                        <form action="{{ route('serveis_adicional.destroy', $serveis_adicional) }}" method="POST">
 
                             @csrf
                             @method('DELETE')
@@ -77,7 +77,7 @@
     </div>
 
     <div class="mt-6 flex space-x-4">
-        <a href="{{ route('serveis_adicionals.create') }}" 
+        <a href="{{ route('serveis_adicional.create') }}" 
            class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">
            Afegir Servei Complementaris
         </a>

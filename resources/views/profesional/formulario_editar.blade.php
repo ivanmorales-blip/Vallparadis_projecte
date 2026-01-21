@@ -3,7 +3,7 @@
 @section('contingut')
 <div class="p-8 bg-gray-50 min-h-screen">
     <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-10">
-        <h1 class="text-3xl font-bold mb-8 text-center text-orange-500">🧑‍⚕️ Edició de Professional</h1>
+        <h1 class="text-3xl font-bold mb-8 text-center text-orange-500"> Edició de Professional</h1>
 
         <form action="{{ route('profesional.update', $profesional) }}" method="POST" class="space-y-6">
             @csrf
@@ -48,16 +48,7 @@
 
             {{-- Centre --}}
             <div>
-                <label for="id_center" class="block text-gray-700 font-semibold mb-1">Centre *</label>
-                <select id="id_center" name="id_center" required
-                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none">
-                    <option value="">-- Selecciona un centre --</option>
-                    @foreach ($centre as $c)
-                        <option value="{{ $c->id }}" {{ $profesional->id_center == $c->id ? 'selected' : '' }}>
-                            {{ $c->nom }}
-                        </option>
-                    @endforeach
-                </select>
+                <input type="hidden" id="id_center" name="id_center" value="{{ $profesional->id_center }}">
             </div>
 
             {{-- Talles --}}

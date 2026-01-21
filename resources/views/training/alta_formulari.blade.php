@@ -56,19 +56,10 @@
                 </select>
             </div>
 
+               <!-- Centre -->
             <div>
-                <label for="id_center" class="block text-sm font-medium text-gray-700 mb-1">Centre</label>
-                <select id="id_center" name="id_center" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
-                    <option value="">-- Selecciona un centre --</option>
-                    @foreach($centers as $center)
-                        <option value="{{ $center->id }}" {{ old('id_center') == $center->id ? 'selected' : '' }}>
-                            {{ $center->nom }}
-                        </option>
-                    @endforeach
-                </select>
+                <input type="hidden" id="id_center" name="id_center" value="{{ session('id_center') }}">
             </div>
-
 
             <div>
                 <label for="professionals" class="block text-sm font-medium text-gray-700 mb-1">Assignació de professionals</label>

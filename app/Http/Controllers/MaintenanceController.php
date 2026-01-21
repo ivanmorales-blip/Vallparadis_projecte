@@ -27,42 +27,44 @@ class MaintenanceController extends Controller
     public function create()
     {   
         $centerId = $this->currentCenterId();
-        $center = Center::where('id', $centerId)->get();
+        $center = Center::find($centerId); // devuelve un único modelo en vez de colección
+
+        if (!$center) {
+            abort(404, 'Centre no trobat');
+        }
+
         return view('manteniment.formulario_alta', [
             'center' => $center
         ]);
     }
 
-   public function store(Request $request)
-    {
 
-        $validated = $request->validate([
+   public function store(Request $request)
+{
+    $centerId = $this->currentCenterId();
+
+    $validated = $request->validate([
         'data_obertura' => 'required|date',
         'descripcio' => 'nullable|string',
-        'centre_id' => 'required|exists:center,id',
         'documentacio' => 'required|file|mimes:pdf,doc,docx,png,jpg,jpeg',
         'responsable' => 'required|string',
-        ]);
+    ]);
 
-        // Handle file upload
-        $path = null;
-        if ($request->hasFile('documentacio')) {
-            $path = $request->file('documentacio')->store('documentacio', 'public');
-        }
+    $path = $request->file('documentacio')->store('documentacio', 'public');
 
-        $manteniment = Maintenance::create([
-            'data_obertura' => $validated['data_obertura'],
-            'descripcio' => $validated['descripcio'] ?? null,
-            'centre_id' => $validated['centre_id'],
-            'documentacio' => $path,           // save uploaded file path
-            'responsable' => $validated['responsable'],
-            'estat' => true,
-        ]);
-
+    Maintenance::create([
+        'data_obertura' => $validated['data_obertura'],
+        'descripcio' => $validated['descripcio'] ?? null,
+        'centre_id' => $centerId,
+        'documentacio' => $path,
+        'responsable' => $validated['responsable'],
+        'estat' => true,
+    ]);
 
     return redirect()->route('manteniment.index')
         ->with('success', 'Manteniment guardat correctament.');
-    }
+}
+
 
 
     public function show(Maintenance $manteniment)

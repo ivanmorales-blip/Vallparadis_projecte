@@ -78,10 +78,7 @@
 
             <!-- Centre -->
             <div>
-                <label for="centre_id" class="block text-gray-700 font-semibold mb-1">Centre *</label>
                 <input type="hidden" id="centre_id" name="centre_id" value="{{ session('id_center') }}">
-                <input type="text" class="w-full px-4 py-2 border rounded-lg bg-gray-100 cursor-not-allowed" 
-                    value="{{ $centre->firstWhere('id', session('id_center'))->nom ?? 'No assignat' }}" >
             </div>
                 
             <div>

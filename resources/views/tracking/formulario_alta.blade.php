@@ -8,7 +8,7 @@
             Formulari de Seguiments
         </h1>
 
-        <form action="{{ route('tracking.storeForProfesional') }}" method="POST" class="space-y-6">
+        <form action="{{ route('tracking.profesional.store') }}" method="POST" class="space-y-6">
             @csrf
 
             <!-- Tema -->

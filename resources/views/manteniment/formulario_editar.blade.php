@@ -12,8 +12,8 @@
             <!-- Data -->
             <div>
                 <label for="data_obertura" class="block text-sm font-medium text-gray-700 mb-1">Data *</label>
-                <input type="date" id="data_obertura" name="data_obertura" value="{{ old('data_obertura', $manteniment->data_obertura) }}" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
+                <input type="date" id="data_obertura" name="data_obertura" required value="{{ old('data_obertura', optional($manteniment->data_obertura)->format('Y-m-d')) }}"
+                class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
             </div>
 
             <!-- Descripció -->

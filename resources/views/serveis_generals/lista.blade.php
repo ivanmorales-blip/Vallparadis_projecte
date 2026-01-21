@@ -12,7 +12,6 @@
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Tipus</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Contacte</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Encarregat</th>
-                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Centre</th>
                     <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase">Accions</th>
                 </tr>
             </thead>
@@ -40,11 +39,6 @@
                     <td class="px-6 py-4 text-gray-600 cursor-pointer"
                         onclick="window.location='{{ route('general_services.show', $service->id) }}'">
                         {{ $service->encarregat }}
-                    </td>
-
-                    <td class="px-6 py-4 text-gray-700 cursor-pointer"
-                        onclick="window.location='{{ route('general_services.show', $service->id) }}'">
-                        {{ $service->center->nom ?? '—' }}
                     </td>
 
                     <!-- Actions column (no redirect) -->
