@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('profesionalocumentation', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table-> string('nom', 255);
+            $table->string('nom', 255);
             $table->text('fitxer');
             $table->dateTime('data');
             $table->unsignedBigInteger('id_profesional');
