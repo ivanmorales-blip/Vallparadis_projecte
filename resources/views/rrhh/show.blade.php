@@ -10,18 +10,20 @@
         <div class="flex items-start justify-between mb-10">
             <div>
                 <h1 class="text-4xl font-extrabold text-gray-800 tracking-tight">
-                    Seguiment 
-                    <span class="text-orange-500">{{ $tema->profesional->nom ?? '' }} {{ $tema->profesional->cognom ?? '' }}</span>
+                    Seguiment
+                    <span class="text-orange-500">
+                        {{ $tema->professional->nom ?? '' }} {{ $tema->professional->cognom ?? '' }}
+                    </span>
                 </h1>
                 <p class="text-gray-500 mt-1 text-sm">
-                    Detalls del seguiment del professional assignat
+                    Detalls del tema pendent del professional assignat
                 </p>
             </div>
 
             <!-- Badge -->
             <div>
                 <span class="px-6 py-2 rounded-full bg-purple-100 text-purple-700 font-semibold text-sm shadow animate-pulse">
-                    Seguiment
+                    Recursos Humans
                 </span>
             </div>
         </div>
@@ -31,14 +33,30 @@
 
             <!-- Fecha -->
             <div class="bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                <h3 class="font-semibold text-gray-700">Data</h3>
+                <h3 class="font-semibold text-gray-700">Data d'obertura</h3>
                 <p class="text-gray-600 mt-1">{{ \Carbon\Carbon::parse($tema->data_obertura)->format('d/m/Y') }}</p>
             </div>
 
-            <!-- Professional -->
+            <!-- Professional afectat -->
             <div class="bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                <h3 class="font-semibold text-gray-700">Professional</h3>
-                <p class="text-gray-600 mt-1">{{ $tema->profesional->nom ?? 'N/A' }} {{ $tema->profesional->cognom ?? '' }}</p>
+                <h3 class="font-semibold text-gray-700">Professional afectat</h3>
+                <p class="text-gray-600 mt-1">
+                    {{ $tema->professional->nom ?? 'N/A' }} {{ $tema->professional->cognom ?? '' }}
+                </p>
+            </div>
+
+            <!-- Professional que registra -->
+            <div class="bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                <h3 class="font-semibold text-gray-700">Professional que registra</h3>
+                <p class="text-gray-600 mt-1">{{ $tema->professionalRegistra->name ?? 'N/A' }}</p>
+            </div>
+
+            <!-- Derivat a -->
+            <div class="bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                <h3 class="font-semibold text-gray-700">Derivat a</h3>
+                <p class="text-gray-600 mt-1">
+                    {{ $tema->derivatA->nom ?? 'N/A' }} {{ $tema->derivatA->cognom ?? '' }}
+                </p>
             </div>
 
             <!-- Descripción -->
@@ -84,12 +102,14 @@
 
         <!-- Botones -->
         <div class="mt-12 flex justify-between items-center">
+            {{-- Botón volver, pasa el centre_id para evitar error --}}
             <a href="{{ route('menu') }}"
                class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-2xl shadow transition">
                 Tornar
             </a>
 
-            <a href="{{ route('human_resources.edit', $tema->id) }}"
+            {{-- Botón editar, pasa el modelo completo --}}
+            <a href="{{ route('human_resources.edit', $tema->$id) }}"
                class="px-8 py-3 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white rounded-2xl shadow-lg font-semibold transition">
                 Editar
             </a>
@@ -98,5 +118,4 @@
     </div>
 
 </div>
-
 @endsection

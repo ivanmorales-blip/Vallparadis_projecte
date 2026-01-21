@@ -9,7 +9,9 @@ use App\Models\User;
 
 class HumanResourcesController extends Controller
 {
-    // Llistat de temes pendents
+    /**
+     * Mostrar todos los temes pendents de un centro.
+     */
     public function index($centre_id)
     {
         $temes_pendents = TemaPendent::with(['profesional', 'professionalRegistra', 'derivatA'])
@@ -19,25 +21,30 @@ class HumanResourcesController extends Controller
         return view('rrhh.lista', compact('temes_pendents', 'centre_id'));
     }
 
-    // Mostrar tema pendent
-    public function show($id)
+    /**
+     * Mostrar un tema pendent específico.
+     */
+    public function show(TemaPendent $tema)
     {
-        $tema = TemaPendent::with(['profesional', 'professionalRegistra', 'derivatA'])->findOrFail($id);
+        $tema->load(['profesional', 'professionalRegistra', 'derivatA']);
         return view('rrhh.show', compact('tema'));
     }
 
-    // Formulari de creació
+    /**
+     * Formulario de creación.
+     */
     public function create($centre_id)
-{
-    $type = 'pendent'; // si es fijo
-    $professionals = Profesional::all();
-    $users = User::all();
+    {
+        $professionals = Profesional::all();
+        $users = User::all();
+        $type = 'pendent'; // fijo para identificar tipo
 
-    return view('rrhh.human_resources', compact('centre_id', 'type', 'professionals', 'users'));
-}
+        return view('rrhh.human_resources', compact('centre_id', 'type', 'professionals', 'users'));
+    }
 
-
-    // Guardar tema pendent
+    /**
+     * Guardar un nuevo tema pendent.
+     */
     public function store(Request $request, $centre_id)
 {
     $pathsToFiles = [];
@@ -69,13 +76,16 @@ class HumanResourcesController extends Controller
         $users = User::all();
         $centre_id = $tema->centre_id; 
         $type = 'pendent';
+
         return view('rrhh.formulario_editar', compact('tema', 'professionals', 'users', 'centre_id', 'type'));
     }
 
-    // Actualitzar tema pendent
+    /**
+     * Actualizar un tema pendent existente.
+     */
     public function update(Request $request, TemaPendent $tema)
     {
-        $request->validate([
+        $validated = $request->validate([
             'data_obertura' => 'required|date',
             'professional_afectat' => 'required|exists:profesional,id',
             'professional_registra' => 'required|exists:users,id',
@@ -100,17 +110,18 @@ class HumanResourcesController extends Controller
         'document' => $tema->document,
     ]);
 
-        return redirect()->route('human_resources.index', $tema->centre_id);
+        return redirect()->route('human_resources.index', $tema->centre_id)
+                         ->with('success', 'Tema pendent actualitzat correctament.');
     }
 
-    // Activar / Desactivar tema
+    /**
+     * Activar / Desactivar un tema pendent.
+     */
     public function toggleActive(TemaPendent $tema)
-{
-    $tema->actiu = !$tema->actiu; // invierte el estado
-    $tema->save();
+    {
+        $tema->actiu = !$tema->actiu;
+        $tema->save();
 
-    return redirect()->back()->with('success', 'Estado actualizado correctamente.');
-}
-
-
+        return redirect()->back()->with('success', 'Estado actualizado correctamente.');
+    }
 }

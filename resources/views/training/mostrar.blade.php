@@ -52,21 +52,20 @@
         <!-- Profesionales asignados -->
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Professionals assignats</h2>
 
-        @if ($training->professionals->isEmpty())
-            <p class="text-gray-500 italic py-6 bg-gray-50 rounded-xl text-center text-sm">
-                No hi ha professionals assignats a aquesta formació.
-            </p>
-        @else
-            <ul class="space-y-3 max-h-96 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-orange-400 scrollbar-track-gray-200">
-                @foreach ($training->professionals as $prof)
-                    <li class="p-4 bg-white rounded-xl border border-gray-200 shadow-md
-                               hover:shadow-xl transition relative text-sm">
+        <ul id="assigned-professionals"
+            class="space-y-3 max-h-96 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-orange-400 scrollbar-track-gray-200">
+            @foreach ($training->professionals as $prof)
+                <li class="p-4 bg-white rounded-xl border border-gray-200 shadow-md
+                           hover:shadow-xl transition relative text-sm flex justify-between items-center"
+                    data-id="{{ $prof->id }}">
+                    <div>
                         <p class="font-semibold text-gray-900">{{ $prof->nom }} {{ $prof->cognom }}</p>
                         <p class="text-gray-600 text-sm">{{ $prof->email }}</p>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
+                    </div>
+                    <div class="text-gray-300 text-lg select-none cursor-move">☰</div>
+                </li>
+            @endforeach
+        </ul>
 
         <!-- Botones finales -->
         <div class="flex flex-wrap justify-between gap-4 mt-10">
@@ -94,6 +93,21 @@
 
         </div>
 
+        <!-- Toast notification -->
+        <div id="toast" class="fixed bottom-6 right-6 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg opacity-0 transition-all"></div>
+
     </div>
 </div>
+
+<script src="{{ asset('js/dragdrop.js') }}"></script>
+<script>
+    // Inicializar contadores al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        const assignedUL = document.getElementById('assigned-professionals');
+        const assignedCount = document.createElement('span');
+        assignedCount.id = 'assigned-count';
+        assignedCount.textContent = assignedUL.querySelectorAll('li').length;
+        assignedUL.before(assignedCount); // Muestra contador arriba (opcional)
+    });
+</script>
 @endsection

@@ -29,15 +29,15 @@ class TemaPendent extends Model
         return $this->belongsTo(Profesional::class, 'professional_afectat');
     }
 
-    // Profesional que registra (usuario)
+
     public function professionalRegistra()
     {
         return $this->belongsTo(User::class, 'professional_registra');
     }
 
-    // Profesional al que se deriva
     public function derivatA()
     {
         return $this->belongsTo(Profesional::class, 'derivat_a');
     }
+
 }

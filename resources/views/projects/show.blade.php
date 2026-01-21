@@ -58,20 +58,21 @@
                 Professionals assignats
             </h2>
 
-            @if (is_null($projecte->profesional))
-                <p class="text-gray-500 italic">No hi ha professionals assignats a aquest projecte.</p>
-            @else
-                <ul class="space-y-3 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-400 scrollbar-track-gray-200 pr-2">
-                    <li class="p-4 bg-white rounded-xl border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300">
-                        <p class="font-semibold text-gray-900">
-                            {{ $projecte->profesional->nom }} {{ $projecte->profesional->cognom }}
-                        </p>
-                        <p class="text-sm text-gray-500">
-                            {{ $projecte->profesional->email }}
-                        </p>
+            <ul id="assigned-professionals"
+                class="space-y-3 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-400 scrollbar-track-gray-200 pr-2">
+                @forelse ($projecte->professionals as $prof)
+                    <li class="p-4 bg-white rounded-xl border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 flex justify-between items-center"
+                        data-id="{{ $prof->id }}">
+                        <div>
+                            <p class="font-semibold text-gray-900">{{ $prof->nom }} {{ $prof->cognom }}</p>
+                            <p class="text-sm text-gray-500">{{ $prof->email }}</p>
+                        </div>
+                        <div class="text-gray-300 text-lg select-none cursor-move">☰</div>
                     </li>
-                </ul>
-            @endif
+                @empty
+                    <p class="text-gray-500 italic">No hi ha professionals assignats a aquest projecte.</p>
+                @endforelse
+            </ul>
         </div>
 
         <!-- Botones finales -->
@@ -100,6 +101,21 @@
 
         </div>
 
+        <!-- Toast notification -->
+        <div id="toast" class="fixed bottom-6 right-6 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg opacity-0 transition-all"></div>
+
     </div>
 </div>
+
+<script src="{{ asset('js/dragdrop.js') }}"></script>
+<script>
+    // Inicializar contadores si quieres mostrar número de assignats
+    document.addEventListener('DOMContentLoaded', () => {
+        const assignedUL = document.getElementById('assigned-professionals');
+        const assignedCount = document.createElement('span');
+        assignedCount.id = 'assigned-count';
+        assignedCount.textContent = assignedUL.querySelectorAll('li').length;
+        assignedUL.before(assignedCount); // Opcional, muestra contador arriba
+    });
+</script>
 @endsection

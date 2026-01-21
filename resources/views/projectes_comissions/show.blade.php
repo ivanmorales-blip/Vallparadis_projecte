@@ -10,7 +10,7 @@
                 {{ $projecte->nom }}
             </h1>
 
-            <!-- Tipo Projecte siempre azul -->
+            <!-- Tipo Projecte -->
             <div class="ml-4 flex items-center">
                 <span class="bg-blue-200 text-blue-500 px-5 py-2 rounded-full font-semibold text-sm shadow-lg animate-pulse">
                     Comissió
@@ -31,18 +31,25 @@
             </div>
         </div>
 
-        <!-- Professionals assignats -->
+        <!-- Profesionales asignados -->
         <div class="mb-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Professionals assignats</h2>
 
-            @if (is_null($projecte->profesional))
+            @if($projecte->professionals->isEmpty())
                 <p class="text-gray-500 italic">No hi ha professionals assignats a aquest projecte.</p>
             @else
-                <ul class="space-y-3 max-h-72 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-gray-200 pr-2">
-                    <li class="p-4 bg-white rounded-xl border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300">
-                        <p class="font-semibold text-gray-900">{{ $projecte->profesional->nom }} {{ $projecte->profesional->cognom }}</p>
-                        <p class="text-sm text-gray-500">{{ $projecte->profesional->email }}</p>
-                    </li>
+                <ul id="assigned-professionals"
+                    class="space-y-3 max-h-72 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-gray-200 pr-2">
+                    @foreach($projecte->professionals as $prof)
+                        <li class="p-4 bg-white rounded-xl border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 flex justify-between items-center"
+                            data-id="{{ $prof->id }}">
+                            <div>
+                                <p class="font-semibold text-gray-900">{{ $prof->nom }} {{ $prof->cognom }}</p>
+                                <p class="text-sm text-gray-500">{{ $prof->email }}</p>
+                            </div>
+                            <div class="text-gray-300 text-lg select-none cursor-move">☰</div>
+                        </li>
+                    @endforeach
                 </ul>
             @endif
         </div>
@@ -57,7 +64,7 @@
                 Tornar al llistat
             </a>
 
-            <!-- Afegir Professionals -->
+            <!-- Gestionar profesionales -->
             <a href="{{ route('projectes_comissions.addProfessionals', $projecte->id) }}"
                class="px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 
                       text-white font-bold rounded-2xl shadow-xl transition-all transform hover:-translate-y-1 hover:scale-105">
@@ -73,6 +80,23 @@
 
         </div>
 
+        <!-- Toast notification -->
+        <div id="toast" class="fixed bottom-6 right-6 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg opacity-0 transition-all"></div>
+
     </div>
 </div>
+
+<script src="{{ asset('js/dragdrop.js') }}"></script>
+<script>
+    // Inicializar contadores si quieres mostrar número de assignats
+    document.addEventListener('DOMContentLoaded', () => {
+        const assignedUL = document.getElementById('assigned-professionals');
+        if (assignedUL) {
+            const assignedCount = document.createElement('span');
+            assignedCount.id = 'assigned-count';
+            assignedCount.textContent = assignedUL.querySelectorAll('li').length;
+            assignedUL.before(assignedCount); // Opcional, muestra contador arriba
+        }
+    });
+</script>
 @endsection

@@ -54,7 +54,7 @@
             <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Gestió</h2>
 
             <div class="bg-gray-50 p-6 rounded-xl shadow-inner flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0">
-                <a href="{{ route('tracking.create', ['id_manteniment' => $manteniment->id]) }}"
+                <a href="{{ route('tracking.tracking_maintenance.create', ['id_manteniment' => $manteniment->id]) }}"
                     class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
                     ➕ Donar d'alta Seguiment
                 </a>

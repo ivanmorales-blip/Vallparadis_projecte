@@ -99,7 +99,7 @@
 <script>
 document.getElementById('save-btn').addEventListener('click', function() {
     saveDragDrop(
-        "{{ route('trainings.updateProfessionals', $training->id) }}",
+        "{{ route('trainings.update_professionals', $training->id) }}", // ⚡ nombre de ruta corregido
         "#assigned-professionals",
         "#assigned-count",
         "#available-count"

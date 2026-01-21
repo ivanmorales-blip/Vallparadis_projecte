@@ -106,6 +106,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu,equipadministracio'])->group(function () {
     Route::resource('serveis_adicional', Additional_servicesController::class);
     });
+    /*
+    |--------------------------------------------------------------------------
+    | TRACKING - PROFESIONAL
+    |--------------------------------------------------------------------------
+    */
+    Route::get('tracking/profesional/create/{profesional?}', [TrackingController::class, 'createForProfesional'])->name('tracking.profesional.create');
+    Route::post('tracking/profesional', [TrackingController::class, 'storeForProfesional'])->name('tracking.profesional.store');
+    Route::get('tracking/profesional/{tracking}', [TrackingController::class, 'showForProfesional'])->name('tracking.profesional.show');
+    Route::get('tracking/profesional/{tracking}/edit', [TrackingController::class, 'editForProfesional'])->name('tracking.profesional.edit');
+    Route::patch('tracking/profesional/{tracking}', [TrackingController::class, 'updateForProfesional'])->name('tracking.profesional.update');
+    Route::patch('tracking/profesional/{tracking}/active', [TrackingController::class, 'activeForProfesional'])->name('tracking.profesional.active');
+    Route::delete('tracking/profesional/{tracking}', [TrackingController::class, 'destroyForProfesional'])->name('tracking.profesional.destroy');
 
    /*
     |--------------------------------------------------------------------------
@@ -208,22 +220,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
         /*
     | Recursos Humans
     */
-    Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu'])->group(function () {
+// Listado de temes pendents por centro
     Route::get('human_resources/{centre_id}', [HumanResourcesController::class, 'index'])
         ->name('human_resources.index');
+
+    // Mostrar un tema pendent
     Route::get('human_resources/show/{id}', [HumanResourcesController::class, 'show'])
         ->name('human_resources.show');
-    Route::get('human_resources/create/{centre_id}/{type}', [HumanResourcesController::class, 'create'])
+
+    // Formulario de creación
+    Route::get('human_resources/create/{centre_id}', [HumanResourcesController::class, 'create'])
         ->name('human_resources.create');
+
+    // Guardar nuevo tema pendent
     Route::post('human_resources/store/{centre_id}', [HumanResourcesController::class, 'store'])
         ->name('human_resources.store');
+
+    // Formulario de edición
     Route::get('human_resources/{tema}/edit', [HumanResourcesController::class, 'edit'])
         ->name('human_resources.edit');
+
+    // Actualizar tema pendent
     Route::put('human_resources/{tema}', [HumanResourcesController::class, 'update'])
         ->name('human_resources.update');
+
+    // Activar / desactivar tema pendent
     Route::patch('human_resources/{tema}/active', [HumanResourcesController::class, 'toggleActive'])
         ->name('human_resources.active');
-});
 
     
     /*
