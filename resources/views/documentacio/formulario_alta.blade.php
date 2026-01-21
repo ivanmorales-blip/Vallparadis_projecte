@@ -40,7 +40,7 @@
             <!-- Descripció -->
             <div class="space-y-1">
                 <label for="descripcio" class="block text-gray-700 font-semibold">Descripció *</label>
-                <textarea id="descripcio" name="descripcio" rows="4" required
+                <textarea id="descripcio" name="descripcio" rows="4" 
                     class="w-full border border-gray-300 rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('descripcio') }}</textarea>
             </div>
 
@@ -65,7 +65,7 @@
 
             <!-- Centre -->
             <div>
-                <input type="hidden" id="id_center" name="id_center" value="{{ session('id_center') }}">
+                <input type="hidden" id="centre_id" name="centre_id" value="{{ session('id_center') }}">
             </div>
 
             <!-- Botones -->

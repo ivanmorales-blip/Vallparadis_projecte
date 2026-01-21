@@ -7,18 +7,7 @@
     </a>
   </div>
 
-  <div class="flex-1"></div>
-
-  <!-- Search bar -->
-  <div class="ml-auto w-48 pr-4">
-    <input 
-      type="text" 
-      placeholder="Cercar..." 
-      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-  </div>
-
-  
+  <div class="flex-1"></div>  
   
   <!-- Logout button -->
   <form method="POST" action="{{ route('logout') }}" class="inline">

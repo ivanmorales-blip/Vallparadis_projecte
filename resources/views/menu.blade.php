@@ -75,9 +75,6 @@
                 </svg>
                 <h2 class="text-lg font-semibold text-gray-700">Seguiments i Avaluacions</h2>
             </div>
-            @if (session('privilegis') === 'equipdirectiu')
-            <a href="{{ route('tracking.create') }}" class="{{ $linkBase }} mb-2">Donar d'alta Seguiment</a>
-            @endif
             <a href="{{ route('evaluation.create') }}" class="{{ $linkBase }}">Donar d'alta Avaluació</a>
         </div>
 
