@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Documentation extends Model
 {
     
+    protected $table = 'profesionaldocumentation';
+
     protected $fillable = ['nom', 'data', 'fitxer', 'id_profesional'];
 
     protected $casts = [

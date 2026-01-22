@@ -53,10 +53,11 @@
                     Donar d'alta Avaluació
                 </a>
 
-                <a href="{{ route('documentacio.create', ['profesional' => $profesional->id]) }}"
-                    class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
+                <a href="{{ route('documentacioprofesional.create', ['profesional' => $profesional->id]) }}"
+                class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
                     Afegir Documentació
                 </a>
+
             </div>
         </div>
 
@@ -172,12 +173,12 @@
             </div>
 
 
-            <!-- Avaluacions -->
+            <!-- Accidentabilitat -->
             <div class="bg-white shadow-lg rounded-xl p-6">
-                <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Avaluacions</h2>
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Accidentabilitat</h2>
 
                 @if($profesional->evaluations->isEmpty())
-                    <p class="text-gray-500 italic">Encara no hi ha avaluacions registrades.</p>
+                    <p class="text-gray-500 italic">Encara no hi ha accidents registrats.</p>
                 @else
                     <ul class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
                         @foreach($profesional->evaluations as $evaluation)

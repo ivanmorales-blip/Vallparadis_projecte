@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documentation;
+use App\Models\Profesional;
 use Illuminate\Http\Request;
 use App\Traits\Activable;
 use App\Traits\CenterFilterable;
@@ -12,12 +13,13 @@ class DocumentacioprofesionalController extends Controller
 {
     use Activable, CenterFilterable;
 
-    public function create(Request $request)
+        public function create($profesional)
     {
         return view('documentacioprofesional.alta', [
-            'id_profesional' => $request->get('profesional'),
+            'id_profesional' => $profesional,
         ]);
     }
+
 
 
    public function store(Request $request)
@@ -43,8 +45,9 @@ class DocumentacioprofesionalController extends Controller
         ]);
 
         return redirect()
-            ->route('menu')
+            ->route('profesional.show', ['profesional' => $validated['id_profesional']])
             ->with('success', 'Document guardat correctament.');
+
     }
 
     /**

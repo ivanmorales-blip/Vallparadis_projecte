@@ -8,14 +8,11 @@
             Nova Documentació
         </h1>
 
-        <form method="POST"
-              action="{{ route('documentacio.store') }}"
-              enctype="multipart/form-data"
-              class="space-y-5">
+        <form method="POST" action="{{ route('documentacioprofesional.store') }}" enctype="multipart/form-data" class="space-y-6">
+    
+        @csrf
 
-            @csrf
-
-            <input type="hidden" name="id_profesional" value="{{ $id_profesional }}">
+    <input type="hidden" name="id_profesional" value="{{ $id_profesional }}">
 
             <!-- Nom -->
             <div>
@@ -43,10 +40,10 @@
 
             <!-- Buttons -->
             <div class="flex justify-between pt-4">
-                <a href="{{ route('profesional.show', $id_profesional) }}"
-                   class="px-4 py-2 bg-gray-200 rounded-xl hover:bg-gray-300">
-                    Cancel·lar
-                </a>
+            <a href="{{ route('profesional.show', ['profesional' => $id_profesional]) }}">
+                Cancel·lar
+            </a>
+
 
                 <button type="submit" class="px-6 py-2 bg-orange-500 text-white rounded-xl hover:bg-orange-600">
                     Guardar

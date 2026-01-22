@@ -20,7 +20,7 @@ use App\Http\Controllers\{
     HumanResourcesController,
     Additional_servicesController,
     External_ContactsController,
-    serveis_adicionalsController,
+    DocumentacioprofesionalController,
 };
 
 /*
@@ -286,6 +286,33 @@ Route::patch('external-contacts/{id}/active', [External_ContactsController::clas
 
 Route::put('external-contacts/{id}', [External_ContactsController::class, 'update'])
     ->name('external_contacts.update');
+
+   
+
+    // Show form
+    Route::get('documentacioprofesional/create/{profesional}', [DocumentacioprofesionalController::class, 'create'])
+        ->name('documentacioprofesional.create');
+
+    // Store document
+    Route::post('documentacioprofesional', [DocumentacioprofesionalController::class, 'store'])
+        ->name('documentacioprofesional.store');
+
+    // Show single document
+    Route::get('documentacioprofesional/{documentacio}', [DocumentacioprofesionalController::class, 'show'])
+        ->name('documentacioprofesional.show');
+
+    // Edit document
+    Route::get('documentacioprofesional/{documentacio}/edit', [DocumentacioprofesionalController::class, 'edit'])
+        ->name('documentacioprofesional.edit');
+
+    // Update document
+    Route::put('documentacioprofesional/{documentacio}', [DocumentacioprofesionalController::class, 'update'])
+        ->name('documentacioprofesional.update');
+
+    // Activate/deactivate
+    Route::patch('documentacioprofesional/{documentacio}/active', [DocumentacioprofesionalController::class, 'active'])
+        ->name('documentacioprofesional.active');
+
 
 
 

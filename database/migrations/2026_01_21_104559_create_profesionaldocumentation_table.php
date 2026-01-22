@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profesionalocumentation', function (Blueprint $table) {
+        Schema::create('profesionaldocumentation', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('nom', 255);
