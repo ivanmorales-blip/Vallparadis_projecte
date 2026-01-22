@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
                     'name' => 'Usuari Prova1',
                     'password' => Hash::make('secret123'),
                     'id_center' => $vallparadisId, // assign a center here
-                    'privilegis' => 'Equip Tecnic' // Equip tecnic, equip directiu, administracio
+                    'privilegis' => 'equiptecnic' // Equip tecnic, equip directiu, administracio
                 ]
             );
 
@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
                     'name' => 'Usuari Prova2',
                     'password' => Hash::make('secret123'),
                     'id_center' => $vallparadisId, // assign a center here
-                    'privilegis' => 'Equip Directiu' // Equip tecnic, equip directiu, administracio
+                    'privilegis' => 'equipdirectiu' // Equip tecnic, equip directiu, administracio
                 ]
             );
 
@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
                     'name' => 'Usuari Prova3',
                     'password' => Hash::make('secret123'),
                     'id_center' => $vallparadisId, // assign a center here
-                    'privilegis' => 'Equip Administracio' // Equip tecnic, equip directiu, administracio
+                    'privilegis' => 'equipadministracio' // Equip tecnic, equip directiu, administracio
                 ]
             );
 

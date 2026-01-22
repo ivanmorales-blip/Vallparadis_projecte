@@ -106,13 +106,8 @@
             <a href="{{ route('menu') }}"
                class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-2xl shadow transition">
                 Tornar
-            </a>
+                </a>
 
-            {{-- Botón editar, pasa el modelo completo --}}
-            <a href="{{ route('human_resources.edit', $tema->$id) }}"
-               class="px-8 py-3 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white rounded-2xl shadow-lg font-semibold transition">
-                Editar
-            </a>
         </div>
 
     </div>

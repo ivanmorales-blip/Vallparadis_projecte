@@ -24,6 +24,8 @@ class HumanResourcesController extends Controller
     /**
      * Mostrar un tema pendent específico.
      */
+
+
     public function show(TemaPendent $tema)
     {
         $tema->load(['profesional', 'professionalRegistra', 'derivatA']);
