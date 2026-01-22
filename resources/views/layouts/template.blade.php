@@ -20,7 +20,6 @@
         @include('components.header')
 
 
-
         <div class="flex flex-1 min-h-0"> 
             @include('components.sidebar')
         <main class="flex-1 overflow-auto p-6 bg-gray-50 min-h-0">

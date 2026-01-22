@@ -20,7 +20,8 @@ use App\Http\Controllers\{
     HumanResourcesController,
     Additional_servicesController,
     External_ContactsController,
-    DocumentacioprofesionalController,
+    serveis_adicionalsController,
+    AccidentabilitatController,
 };
 
 /*
@@ -313,13 +314,11 @@ Route::put('external-contacts/{id}', [External_ContactsController::class, 'updat
     Route::patch('documentacioprofesional/{documentacio}/active', [DocumentacioprofesionalController::class, 'active'])
         ->name('documentacioprofesional.active');
 
-
-
-
-
-
-
-
+/* Accidentabilitat */
+Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdirectiu,equipadministracio'])->group(function () {
+    Route::resource('accidentabilitat', AccidentabilitatController::class);
+    Route::patch('accidentabilitat/{accidentabilitat}/active', [AccidentabilitatController::class, 'active'])->name('accidentabilitat.active');
+});
 
      
 

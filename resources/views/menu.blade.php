@@ -172,6 +172,18 @@
             <a href="{{ route('external_contacts.create',) }}" class="{{ $linkBase }}">Alta Contactes Externs</a>
         </div>
 
+        <!-- Accidentabilitat -->
+        <div class="{{ $cardBase }}">
+            <div class="flex items-center mb-4">
+                <svg class="h-6 w-6 text-gray-600 mr-2">
+                    <use href="{{ asset('icons/sprite.svg#general-services-icone') }}"></use>
+                </svg>
+                <h2 class="text-lg font-semibold text-gray-700">Accidentabilitat</h2>
+            </div>
+            <a href="{{ route('accidentabilitat.index',) }}" class="{{ $linkBase }} mb-2">Llistar Accidentabilitat</a>
+            <a href="{{ route('accidentabilitat.create',) }}" class="{{ $linkBase }}">Alta Accidentabilitat</a>
+        </div>
+
     </div>
 </div>
 
