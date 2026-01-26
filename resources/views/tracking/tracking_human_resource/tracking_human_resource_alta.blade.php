@@ -11,19 +11,19 @@
         <form action="{{ route('tracking.human_resource.store') }}" method="POST" class="space-y-6">
             @csrf
 
-            <!-- Human Resource (visual) -->
+            <!-- Tema Pendent visual -->
             <div class="space-y-1">
                 <label class="block text-gray-700 font-semibold">
-                    Recurs Humà
+                    Tema Pendent
                 </label>
                 <input type="text"
-                       value="{{ $humanResource->nom ?? $humanResource->tipus ?? '—' }}"
+                       value="{{ optional($humanResource)->nom ?? optional($humanResource)->tipus ?? '—' }}"
                        disabled
                        class="w-full px-4 py-2 border rounded-2xl bg-gray-100 text-gray-700 cursor-not-allowed">
             </div>
 
-            <!-- Human Resource real -->
-            <input type="hidden" name="id_human_resource" value="{{ $humanResource->id }}">
+            <!-- Tema Pendent real (hidden) -->
+            <input type="hidden" name="id_human_resource" value="{{ $humanResource->id ?? '' }}">
 
             <!-- Tipus -->
             <div>
@@ -49,7 +49,7 @@
             <!-- Comentari -->
             <div>
                 <label class="block text-gray-700 font-semibold">Comentari *</label>
-                <textarea name="comentari" rows="4"
+                <textarea name="comentari" rows="4" required
                           class="w-full border rounded-2xl px-4 py-2 focus:ring-2 focus:ring-orange-300"></textarea>
             </div>
 
@@ -74,7 +74,7 @@
                     Guardar Seguiment
                 </button>
 
-                <a href="{{ route('human_resources.show', $humanResource->id) }}"
+                <a href="{{ $humanResource->id ? route('human_resources.show', $humanResource->id) : route('human_resources.index') }}"
                    class="flex-1 px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold rounded-2xl shadow text-center">
                     Cancel·lar
                 </a>

@@ -40,4 +40,8 @@ class TemaPendent extends Model
         return $this->belongsTo(Profesional::class, 'derivat_a');
     }
 
+    public function trackings()
+    {
+        return $this->hasMany(\App\Models\Tracking::class, 'id_human_resource'); 
+    }
 }

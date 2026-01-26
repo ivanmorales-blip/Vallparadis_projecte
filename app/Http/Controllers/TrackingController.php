@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Tracking;
 use App\Models\Profesional;
 use App\Models\General_services;
+use App\Models\Maintenance;
+use App\Models\TemaPendent;
 use App\Traits\Activable;
 use App\Traits\CenterFilterable;
 
@@ -197,10 +199,11 @@ class TrackingController extends Controller
         $professionals = $this->professionalsInCenter()->get();
         $maintenance = Maintenance::findOrFail($maintenanceId);
 
-        return view('tracking.tracking_maintenance.alta', [
+        return view('tracking.tracking_maintenance.tracking_maintenance_alta', [
             'professionals' => $professionals,
             'maintenance' => $maintenance
         ]);
+
     }
 
     public function storeForMaintenance(Request $request)
@@ -216,7 +219,7 @@ class TrackingController extends Controller
 
         Tracking::create($validated);
 
-        return redirect()->route('maintenance.show', $validated['id_manteniment'])
+        return redirect()->route('manteniment.show', $validated['id_manteniment'])
                         ->with('success', 'Seguiment creat correctament.');
     }
 
@@ -224,7 +227,7 @@ class TrackingController extends Controller
     {
         $tracking->load(['profesional', 'registrador']);
 
-        return view('tracking.tracking_maintenance.show', compact('tracking'));
+        return view('tracking.tracking_maintenance.tracking_maintenance_show.', compact('tracking'));
     }
 
     public function editForMaintenance(Tracking $tracking)
@@ -260,21 +263,23 @@ class TrackingController extends Controller
         return redirect()->route('maintenance.show', $tracking->id_manteniment)
                         ->with('success', 'Seguiment eliminat correctament.');
     }
-    /* ==========================================================
-    |  SEGUIMENTS ORIENTATS A RECURSOS HUMANS
-    ========================================================== */
-
+    /**
+     * FORMULARIO DE CREACIÓN DE SEGUIMENT PARA RECURSOS HUMANS
+     */
     public function createForHumanResource($humanResourceId)
     {
         $professionals = $this->professionalsInCenter()->get();
-        $humanResource = HumanResource::findOrFail($humanResourceId);
+        $humanResource = TemaPendent::findOrFail($humanResourceId);
 
-        return view('tracking.tracking_human_resource.alta', [
+        return view('tracking.tracking_human_resource.tracking_human_resource_alta', [
             'professionals' => $professionals,
             'humanResource' => $humanResource
         ]);
     }
 
+    /**
+     * GUARDAR SEGUIMENT PARA RECURSOS HUMANS
+     */
     public function storeForHumanResource(Request $request)
     {
         $validated = $request->validate([
@@ -283,22 +288,32 @@ class TrackingController extends Controller
             'tipus' => 'required|string|max:255',
             'comentari' => 'required|string',
             'id_profesional' => 'required|exists:profesional,id',
-            'id_human_resource' => 'required|exists:human_resources,id',
+            'id_human_resource' => 'required|exists:temes_pendents,id',
         ]);
 
         Tracking::create($validated);
 
         return redirect()->route('human_resources.show', $validated['id_human_resource'])
-                        ->with('success', 'Seguiment creat correctament.');
+                         ->with('success', 'Seguiment creat correctament.');
     }
 
+    /**
+     * MOSTRAR UN SEGUIMENT ORIENTAT A RECURSOS HUMANS
+     */
     public function showForHumanResource(Tracking $tracking)
     {
         $tracking->load(['profesional', 'registrador']);
 
-        return view('tracking.tracking_human_resource.show', compact('tracking'));
+        // Traemos el TemaPendent asociado para mostrar información completa
+        $tema = TemaPendent::with('profesional', 'professionalRegistra', 'derivatA', 'trackings')
+                           ->findOrFail($tracking->id_human_resource);
+
+        return view('tracking.tracking_human_resource.tracking_human_resource_show', compact('tracking', 'tema'));
     }
 
+    /**
+     * FORMULARIO DE EDICIÓN DE SEGUIMENT
+     */
     public function editForHumanResource(Tracking $tracking)
     {
         $professionals = $this->professionalsInCenter()->get();
@@ -309,6 +324,9 @@ class TrackingController extends Controller
         ]);
     }
 
+    /**
+     * ACTUALIZAR SEGUIMENT
+     */
     public function updateForHumanResource(Request $request, Tracking $tracking)
     {
         $validated = $request->validate([
@@ -322,15 +340,18 @@ class TrackingController extends Controller
         $tracking->update($validated);
 
         return redirect()->route('human_resources.show', $tracking->id_human_resource)
-                        ->with('success', 'Seguiment actualitzat correctament.');
+                         ->with('success', 'Seguiment actualitzat correctament.');
     }
 
+    /**
+     * ELIMINAR SEGUIMENT
+     */
     public function destroyForHumanResource(Tracking $tracking)
     {
         $tracking->delete();
 
         return redirect()->route('human_resources.show', $tracking->id_human_resource)
-                        ->with('success', 'Seguiment eliminat correctament.');
+                         ->with('success', 'Seguiment eliminat correctament.');
     }
 
 }

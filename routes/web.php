@@ -169,13 +169,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('tracking/maintenance/{tracking}', [TrackingController::class, 'destroyForMaintenance'])->name('tracking.maintenance.destroy');
     Route::get('tracking/maintenance/{tracking}', [TrackingController::class, 'showForMaintenance'])->name('tracking.maintenance.show');
 
-    // Seguiments Recursos Humans
-    Route::get('tracking/human_resource/{humanResource}/create', [TrackingController::class, 'createForHumanResource'])->name('tracking.human_resource.create');
-    Route::post('tracking/human_resource', [TrackingController::class, 'storeForHumanResource'])->name('tracking.human_resource.store');
-    Route::get('tracking/human_resource/{tracking}/edit', [TrackingController::class, 'editForHumanResource'])->name('tracking.human_resource.edit');
-    Route::put('tracking/human_resource/{tracking}', [TrackingController::class, 'updateForHumanResource'])->name('tracking.human_resource.update');
-    Route::delete('tracking/human_resource/{tracking}', [TrackingController::class, 'destroyForHumanResource'])->name('tracking.human_resource.destroy');
-    Route::get('tracking/human_resource/{tracking}', [TrackingController::class, 'showForHumanResource'])->name('tracking.human_resource.show');
+    // CREAR SEGUIMENT (para un TemaPendent específico)
+    Route::get('tracking/human_resource/{humanResource}/create', [TrackingController::class, 'createForHumanResource'])
+        ->name('tracking.human_resource.create');
+
+
+    // GUARDAR SEGUIMENT
+    Route::post('tracking/human_resource', [TrackingController::class, 'storeForHumanResource'])
+        ->name('tracking.human_resource.store');
+
+    // EDITAR SEGUIMENT
+    Route::get('tracking/human_resource/{tracking}/edit', [TrackingController::class, 'editForHumanResource'])
+        ->name('tracking.human_resource.edit');
+
+    // ACTUALIZAR SEGUIMENT
+    Route::put('tracking/human_resource/{tracking}', [TrackingController::class, 'updateForHumanResource'])
+        ->name('tracking.human_resource.update');
+
+    // ELIMINAR SEGUIMENT
+    Route::delete('tracking/human_resource/{tracking}', [TrackingController::class, 'destroyForHumanResource'])
+        ->name('tracking.human_resource.destroy');
+
+    // MOSTRAR SEGUIMENT
+    Route::get('tracking/human_resource/{tracking}', [TrackingController::class, 'showForHumanResource'])
+        ->name('tracking.human_resource.show');
 
         /*
     | Evaluaciones

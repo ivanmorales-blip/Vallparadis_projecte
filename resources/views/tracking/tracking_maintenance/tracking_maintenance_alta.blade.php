@@ -74,7 +74,7 @@
                     Guardar Seguiment
                 </button>
 
-                <a href="{{ route('maintenance.show', $maintenance->id) }}"
+                <a href="{{ route('manteniment.show', $maintenance->id) }}"
                    class="flex-1 px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold rounded-2xl shadow transition text-center">
                     Cancel·lar
                 </a>
