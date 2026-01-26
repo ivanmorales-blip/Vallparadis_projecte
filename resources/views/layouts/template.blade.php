@@ -20,13 +20,6 @@
         @include('components.header')
 
 
-<<<<<<< Updated upstream
-        <div class="flex flex-1 min-h-0"> 
-            @include('components.sidebar')
-        <main class="flex-1 overflow-auto p-6 bg-gray-50 min-h-0">
-            @yield('contingut')
-        </main>
-=======
 
         <div class="flex min-h-screen">
             <aside class="w-72 bg-white/95 backdrop-blur-sm border-r border-gray-200 shadow-xl flex flex-col sticky top-0 h-screen overflow-y-auto scroll-smooth custom-scrollbar">
@@ -36,7 +29,6 @@
             <main class="flex-1 overflow-auto p-6 bg-gray-50">
                 @yield('contingut')
             </main>
->>>>>>> Stashed changes
         </div>
 
 
