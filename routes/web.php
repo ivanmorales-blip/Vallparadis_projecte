@@ -319,6 +319,19 @@ Route::middleware(['auth', \App\Http\verificador\verificador::class . ':equipdir
     Route::resource('accidentabilitat', AccidentabilitatController::class);
     Route::patch('accidentabilitat/{accidentabilitat}/active', [AccidentabilitatController::class, 'active'])->name('accidentabilitat.active');
 });
+    // web.php
+    Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'show'])
+        ->name('projectes_comissions.show');
+
+    Route::get('training/{training}', [TrainingController::class, 'show'])
+        ->name('training.show');
+
+
+
+
+
+
+
 
      
 

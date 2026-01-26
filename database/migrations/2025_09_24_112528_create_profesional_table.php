@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('talla_pantalons', 255);
             $table->string('talla_sabates', 255);
             $table->datetime('data_renovacio');
-            $table->boolean('estat')->default(true);
+            $table->string('estat', 255);
             $table->timestamps();
         });
     }

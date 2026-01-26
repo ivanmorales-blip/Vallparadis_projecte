@@ -37,7 +37,7 @@ class ProfesionalController extends Controller
             'telefon' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
             'adreça' => 'nullable|string|max:255',
-            'estat' => 'required|boolean',
+            'estat' => 'required|string|max:255',
             'id_center' => 'required|exists:center,id',
             'taquilla' => 'nullable|string|max:50',
             'talla_samarreta' => 'nullable|string|max:10',
@@ -88,16 +88,6 @@ class ProfesionalController extends Controller
         $profesional->update($request->all());
 
         return redirect()->route('profesional.index');
-        }
-    }
-
-    public function active(Profesional $profesional)
-    {
-        if ($profesional->estat== 1){
-            return $this->toggleActive($profesional, false, 'profesional.index');
-        }
-        else{
-            return $this->toggleActive($profesional, true, 'profesional.index');
         }
     }
 

@@ -35,10 +35,24 @@
                     <td class="px-6 py-4 text-gray-700">{{ $profesionalItem->email }}</td>
                     <td class="px-6 py-4 text-gray-700">{{ $profesionalItem->adreça }}</td>
                     <td class="px-6 py-4">
-                        <span class="estado px-2 py-1 rounded-full {{ $profesionalItem->estat ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
-                            {{ $profesionalItem->estat ? 'Actiu' : 'Inactiu' }}
+                        @php
+                            $colorClass = match($profesionalItem->estat) {
+                                'actiu', 'suplencia habitual' => 'bg-green-200 text-green-800',
+                                'baixa' => 'bg-red-200 text-red-800',
+                                default => 'bg-gray-200 text-gray-800',
+                            };
+                            $estatText = match($profesionalItem->estat) {
+                                'actiu' => 'Actiu',
+                                'suplencia habitual' => 'Suplencia habitual',
+                                'baixa' => 'Baixa',
+                                default => $profesionalItem->estat,
+                            };
+                        @endphp
+                        <span class="estado px-2 py-1 rounded-full {{ $colorClass }}">
+                            {{ $estatText }}
                         </span>
                     </td>
+
                     <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
                         <!-- Editar -->
                         <a href="{{ route('profesional.edit', $profesionalItem) }}" class="text-orange-400 hover:text-orange-500 transition" title="Editar">
@@ -46,19 +60,6 @@
                                 <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
                             </svg>
                         </a>
-
-                        <!-- Activar / Desactivar -->
-                        <form action="{{ route('profesional.active', $profesionalItem) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="activar-desactivar" 
-                                title="{{ $profesionalItem->estat ? 'Desactivar' : 'Activar' }}">
-                                <svg class="h-6 w-6 {{ $profesionalItem->estat ? 'text-red-400 hover:text-red-500' : 'text-green-400 hover:text-green-500' }}"
-                                    aria-label="{{ $profesionalItem->estat ? 'Desactivar' : 'Activar' }}">
-                                    <use href="{{ asset('icons/sprite.svg#' . ($profesionalItem->estat ? 'icon-x' : 'icon-check')) }}"></use>
-                                </svg>
-                            </button>
-                        </form>
                     </td>
                 </tr>
                 @endforeach

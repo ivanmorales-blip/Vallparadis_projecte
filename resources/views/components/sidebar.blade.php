@@ -1,13 +1,13 @@
-<aside class="w-72 bg-white/95 backdrop-blur-sm border-r border-gray-200 shadow-xl h-screen flex flex-col">
 
     {{-- Perfil usuario --}}
     <div class="p-5 flex items-center space-x-4 border-b border-gray-200">
-        <img src="{{ auth()->user()->avatar ?? asset('default-avatar.png') }}" 
-             alt="Avatar" 
-             class="w-12 h-12 rounded-full border-2 border-orange-400 shadow-md hover:scale-105 transition-transform duration-300">
         <div>
             <p class="font-bold text-gray-900 text-lg">{{ auth()->user()->name }}</p>
-            <p class="text-xs text-gray-500">{{ session('privilegis') ?? 'Usuari' }}</p>
+            <p class="text-xs text-gray-500">{{
+            ['equiptecnic' => 'Equip tècnic','equipdirectiu' => 'Equip directiu','equipadministracio' => 'Equip d’administració',] 
+            [session('privilegis')] ?? (session('privilegis') ?? 'Usuari')}}
+    </p>
+
         </div>
     </div>
 

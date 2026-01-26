@@ -53,14 +53,15 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"></textarea>
             </div>
 
-            <!-- Estat i Centre -->
+            <!-- Estat -->
             <div>
                     <label for="estat" class="block text-gray-700 font-semibold mb-2">Estat *</label>
                     <select id="estat" name="estat" required
                         class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
                         <option value="">-- Selecciona un estat --</option>
-                        <option value="1">Actiu</option>
-                        <option value="0">Inactiu</option>
+                        <option value="actiu">Actiu</option>
+                        <option value="suplencia">Suplencia</option>
+                        <option value="baixa">Baixa</option>
                     </select>
             </div>
 

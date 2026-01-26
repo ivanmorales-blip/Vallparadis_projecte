@@ -51,6 +51,21 @@
                 <input type="hidden" id="id_center" name="id_center" value="{{ $profesional->id_center }}">
             </div>
 
+            <!-- Estat -->
+            <div>
+                <label for="estat" class="block text-gray-700 font-semibold mb-2">Estat *</label>
+                <select id="estat" name="estat" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                    <option value="">-- Selecciona un estat --</option>
+                    @foreach (['actiu', 'suplencia habitual', 'baixa'] as $estatOption)
+                        <option value="{{ $estatOption }}" {{ $profesional->estat === $estatOption ? 'selected' : '' }}>
+                            {{ ucfirst($estatOption) }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+
             {{-- Talles --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
@@ -72,7 +87,8 @@
                         class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none">
                         <option value="">-- Selecciona --</option>
                         @for ($i = 36; $i <= 56; $i += 2)
-                            <option value="{{ $i }}" {{ $profesional->talla_pantalons == $i ? 'selected' : '' }}>
+                            <option value="{{ $i }}" 
+                                {{ old('talla_pantalons', $profesional->talla_pantalons) == $i ? 'selected' : '' }}>
                                 {{ $i }}
                             </option>
                         @endfor
@@ -101,7 +117,7 @@
                 </a>
                 <button type="submit"
                     class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-md transition">
-                    💾 Guardar Canvis
+                    Guardar Canvis
                 </button>
             </div>
         </form>

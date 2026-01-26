@@ -129,7 +129,80 @@
 
         </div>
 
-        <!-- Documentacio y Accidentabilitat lado a lado -->
+        <!-- Cursos y projectes/comissions lado a lado -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+            <!-- Projectes / Comissions -->
+            <div class="bg-white shadow-lg rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">
+                    Projectes / Comissions
+                </h2>
+
+                @php
+                    // Combine projects and commissions
+                    $entries = $profesional->projectesComissions()->with('profesional')->get();
+                @endphp
+
+                @if($entries->isEmpty())
+                    <p class="text-gray-500 italic">
+                        Aquest professional no està registrat a cap projecte ni comissió.
+                    </p>
+                @else
+                    <ul class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                        @foreach($entries as $entry)
+                            <li class="cursor-pointer p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-orange-100 transition"
+                                onclick="window.location='{{ route('projectes_comissions.show', $entry->id) }}'">
+                                <div class="space-y-1">
+                                    <div class="font-semibold text-orange-600 text-lg">
+                                        {{ $entry->nom }}
+                                    </div>
+                                    <div class="text-sm text-gray-500">
+                                        {{ \Carbon\Carbon::parse($entry->data_inici)->format('d/m/Y') }}
+                                    </div>
+                                    <div class="text-sm text-gray-700">
+                                        <span class="font-semibold">Tipus:</span> {{ ucfirst($entry->tipus) }}
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+            <!-- Cursos / Trainings -->
+            <div class="bg-white shadow-lg rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Cursos</h2>
+
+                @if($profesional->trainings->isEmpty())
+                    <p class="text-gray-500 italic">El professional no està assignat a cap curs.</p>
+                @else
+                    <ul class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                        @foreach($profesional->trainings as $training)
+                            <li class="cursor-pointer p-3 bg-gray-50 rounded-xl border border-gray-200 hover:bg-orange-50 transition"
+                                onclick="window.location='{{ route('training.show', $training->id) }}'">
+                                <div class="flex flex-col space-y-1">
+                                    <p class="font-medium text-orange-600">
+                                        {{ $training->nom_curs }}
+                                    </p>
+                                    <p class="text-sm text-gray-500">
+                                        Inici: {{ \Carbon\Carbon::parse($training->data_inici)->format('d/m/Y') }}
+                                        | Fi: {{ \Carbon\Carbon::parse($training->data_fi)->format('d/m/Y') }}
+                                    </p>
+                                    @if($training->descripcio)
+                                        <p class="text-gray-700 mt-2 whitespace-pre-line">
+                                            {{ Str::limit($training->descripcio, 120) }}
+                                        </p>
+                                    @endif
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+        </div>
+
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             
             <!-- Documentacio -->

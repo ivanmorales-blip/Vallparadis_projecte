@@ -48,6 +48,14 @@ class Profesional extends Model
         return $this->hasMany(Documentation::class, 'id_profesional');
     }
 
+    // Professional has many projectes/comissions
+    public function projectesComissions()
+    {
+        return $this->hasMany(Projectes_comissions::class, 'profesional_id');
+    }
+
+
+
     /*public function uniform(): HasMany{
         return $this->hasMany(Uniformity::class);
     }*/
