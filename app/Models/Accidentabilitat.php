@@ -13,6 +13,18 @@ class Accidentabilitat extends Model
         'tipus',
         'descripcio',
         'context',
-        'durada'
+        'durada',
+        'id_profesional',
+        'centre_id',
+        'document',
+        'estat'
     ];
+
+    public function professional()
+    {
+        return $this->belongsTo(Profesional::class, 'id_profesional');
+    }
+
+    
 }
+

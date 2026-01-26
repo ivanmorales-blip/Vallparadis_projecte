@@ -9,7 +9,7 @@
             <h1 class="text-3xl font-extrabold text-orange-500 tracking-tight">
                 Alta Accidentabilitat
             </h1>
-            <span class="text-gray-400 text-sm">Formulari d'alta</span>
+            <span class="text-gray-400 text-sm">Formulari d'accidentabilitat</span>
         </div>
 
         <!-- Form -->
@@ -34,29 +34,26 @@
 
             <!-- Data de l'accident -->
             <div>
-                <label for="data_accident" class="block text-gray-700 font-semibold mb-2">
+                <label for="data" class="block text-gray-700 font-semibold mb-2">
                     Data de l'accident 
                 </label>
-                <input id="data_accident" type="date" name="data_accident" required
+                <input id="data" type="date" name="data" required
                        class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
             </div>
 
-            <!-- Centre i Professional -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <!-- Professional que emplena -->
-                <div>
-                    <label for="professional_id" class="block text-gray-700 font-semibold mb-2">
-                        Professional que emplena 
-                    </label>
-                    <select id="professional_id" name="professional_id" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
-                        <option value="">Selecciona professional...</option>
-                        @foreach($professionals as $professional)
-                            <option value="{{ $professional->id }}">{{ $professional->nom }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <!-- Professional que emplena -->
+            <div>
+                <label for="id_profesional" class="block text-gray-700 font-semibold mb-2">
+                    Professional que emplena    
+                </label>
+                <select id="id_profesional" name="id_profesional" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm 
+                               focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                    <option value="">Selecciona professional...</option>
+                    @foreach($professionals as $professional)
+                        <option value="{{ $professional->id }}">{{ $professional->nom }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <!-- Context -->
@@ -79,11 +76,11 @@
 
             <!-- Durada baixa -->
             <div>
-                <label for="durada_baixa" class="block text-gray-700 font-semibold mb-2">
+                <label for="durada" class="block text-gray-700 font-semibold mb-2">
                     Durada de la baixa
                 </label>
-                <input id="durada_baixa" type="number" name="durada_baixa"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+                <input type="text" name="durada"
+                class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
             </div>
 
             <!-- Botons -->

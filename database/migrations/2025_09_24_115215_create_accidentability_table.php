@@ -17,7 +17,7 @@ return new class extends Migration
             $table-> string('tipus', 255);
             $table-> text('descripcio', 255);
             $table-> text('context', 255);
-            $table->date('durada');
+            $table->string('durada', 255)->nullable();
             $table->unsignedBigInteger('id_profesional');
             $table->foreign('id_profesional')->references('id')->on('profesional')->onDelete('cascade');
             $table->timestamps();

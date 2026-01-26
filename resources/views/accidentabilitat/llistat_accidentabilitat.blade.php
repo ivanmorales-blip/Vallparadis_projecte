@@ -2,91 +2,96 @@
 
 @section('contingut')
 <div class="p-8 bg-gray-50 min-h-screen">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-orange-500">Accidentabilitat</h1>
+    <h1 class="text-3xl font-bold mb-6 text-orange-500 text-center">
+        Llistat d'Accidentabilitats
+    </h1>
+
+    <div class="flex justify-center mb-6">
     </div>
 
-    <div class="overflow-x-auto bg-white shadow-lg rounded-xl border border-gray-200">
-        <table class="min-w-full divide-y divide-gray-200">
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-lg rounded-xl border border-gray-200">
             <thead class="bg-orange-100">
                 <tr>
-                    <th class="px-6 py-3 text-left text-gray-700 font-semibold uppercase text-sm">Data</th>
-                    <th class="px-6 py-3 text-left text-gray-700 font-semibold uppercase text-sm">Tipus</th>
-                    <th class="px-6 py-3 text-left text-gray-700 font-semibold uppercase text-sm">Centre</th>
-                    <th class="px-6 py-3 text-left text-gray-700 font-semibold uppercase text-sm">Professional</th>
-                    <th class="px-6 py-3 text-left text-gray-700 font-semibold uppercase text-sm">Estat</th>
-                    <th class="px-6 py-3 text-left text-gray-700 font-semibold uppercase text-sm">Accions</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">#</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Data</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Tipus</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Professional que emplena</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Context</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Descripció</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Durada</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase text-sm">Accions</th>
                 </tr>
             </thead>
 
             <tbody class="divide-y divide-gray-200">
-                @forelse($accidents as $accident)
-                    <tr class="hover:bg-orange-50 transition cursor-pointer"
-                        onclick="window.location='{{ route('accidentabilitat.show', $accident) }}'">
+                @foreach($accidents as $accident)
+                    <tr id="row-{{ $accident->id }}" 
+                        class="hover:bg-orange-50 transition duration-200 cursor-pointer"
+                        onclick="window.location='{{ route('accidentabilitat.show', $accident->id) }}'">
+
+                        <!-- ID -->
+                        <td class="px-6 py-4 text-gray-600 font-medium">{{ $accident->id }}</td>
 
                         <!-- Data -->
-                        <td class="px-6 py-4 text-gray-700">
-                            {{ \Carbon\Carbon::parse($accident->data_accident)->format('d/m/Y') }}
-                        </td>
+                        <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($accident->data)->format('d/m/Y') }}</td>
 
                         <!-- Tipus -->
                         <td class="px-6 py-4 text-gray-700">
-                            {{ $accident->tipus === 'amb_baixa' ? 'Amb baixa' : 'Sense baixa' }}
+                            @if ($accident->tipus === 'sense_baixa')
+                                Sense Baixa
+                            @elseif ($accident->tipus === 'amb_baixa')
+                                Amb Baixa
+                            @else
+                                {{ $accident->tipus }}
+                            @endif
                         </td>
 
-                        <!-- Centre -->
+                        <!-- Professional que emplena -->
                         <td class="px-6 py-4 text-gray-700">
-                            {{ $accident->centre->nom ?? '-' }}
+                            {{ optional($accident->professional)->nom ?? 'N/A' }}
                         </td>
 
-                        <!-- Professional -->
-                        <td class="px-6 py-4 text-gray-700">
-                            {{ $accident->professional->nom ?? '-' }}
-                        </td>
+                        <!-- Context -->
+                        <td class="px-6 py-4 text-gray-700">{{ $accident->context }}</td>
 
-                        <!-- Estat -->
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 rounded-full text-sm font-semibold
-                                {{ $accident->estat === 'activa' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800' }}">
-                                {{ ucfirst($accident->estat) }}
-                            </span>
-                        </td>
+                        <!-- Descripció -->
+                        <td class="px-6 py-4 text-gray-700">{{ $accident->descripcio }}</td>
+
+                        <!-- Durada -->
+                        <td class="px-6 py-4 text-gray-700">{{ $accident->durada ?? '-' }}</td>
 
                         <!-- Accions -->
                         <td class="px-6 py-4 flex space-x-3" onclick="event.stopPropagation()">
-                            <!-- Veure -->
-                            <a href="{{ route('accidentabilitat.show', $accident) }}"
-                               class="text-blue-500 hover:text-blue-600 transition"
-                               title="Veure">
-                                <svg class="h-5 w-5" aria-hidden="true">
-                                    <use href="{{ asset('icons/sprite.svg#icon-eye') }}"></use>
-                                </svg>
-                            </a>
-
                             <!-- Editar -->
-                            <a href="{{ route('accidentabilitat.edit', $accident) }}"
-                               class="text-yellow-500 hover:text-yellow-600 transition"
-                               title="Editar">
-                                <svg class="h-5 w-5" aria-hidden="true">
+                            <a href="{{ route('accidentabilitat.edit', $accident->id) }}" 
+                               class="text-orange-400 hover:text-orange-500 transition" 
+                               title="Editar" 
+                               onclick="event.stopPropagation()">
+                                <svg class="h-6 w-6" aria-label="Editar">
                                     <use href="{{ asset('icons/sprite.svg#icon-edit') }}"></use>
                                 </svg>
                             </a>
-                        </td>
 
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" class="px-6 py-4 text-center text-gray-400">
-                            No hi ha accidents registrats
+                            <!-- Eliminar -->
+                            <form action="{{ route('accidentabilitat.destroy', $accident) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-400 hover:text-red-500 transition" title="Eliminar"
+                                        onclick="return confirm('Segur que vols eliminar aquest accident?')">
+                                    <svg class="h-6 w-6" aria-label="Eliminar">
+                                        <use href="{{ asset('icons/sprite.svg#icon-x') }}"></use>
+                                    </svg>
+                                </button>
+                            </form>
                         </td>
                     </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
     </div>
 
-    <!-- Paginació -->
-    <div class="mt-6">
+    <div class="mt-6 text-center">
         {{ $accidents->links() }}
     </div>
 
@@ -95,12 +100,10 @@
            class="inline-block px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl shadow-lg transition">
             Tornar al menú
         </a>
-
         <a href="{{ route('accidentabilitat.create') }}"
-            class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition">
-            + Alta accident
-        </a>
+               class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-md transition">
+               Nou Accident
+            </a>
     </div>
-
 </div>
 @endsection
