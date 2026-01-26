@@ -344,6 +344,9 @@ Route::put('external-contacts/{id}', [External_ContactsController::class, 'updat
     Route::get('training/{training}', [TrainingController::class, 'show'])
         ->name('training.show');
 
+    Route::get('training/{training}', [TrainingController::class, 'show'])
+        ->name('training.show');
+
     /*
     | Exportaciones
     */
