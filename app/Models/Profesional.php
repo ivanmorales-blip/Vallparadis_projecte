@@ -54,6 +54,10 @@ class Profesional extends Model
         return $this->hasMany(Projectes_comissions::class, 'profesional_id');
     }
 
+    public function accidentabilitats()
+    {
+        return $this->hasMany(Accidentabilitat::class, 'id_profesional');
+    }
 
 
     /*public function uniform(): HasMany{

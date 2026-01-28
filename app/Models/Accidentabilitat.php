@@ -17,7 +17,8 @@ class Accidentabilitat extends Model
         'id_profesional',
         'centre_id',
         'document',
-        'estat'
+        'estat',
+        
     ];
 
     public function professional()
@@ -25,6 +26,5 @@ class Accidentabilitat extends Model
         return $this->belongsTo(Profesional::class, 'id_profesional');
     }
 
-    
 }
 

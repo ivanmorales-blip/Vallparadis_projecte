@@ -91,4 +91,17 @@ class ProfesionalController extends Controller
         }
     }
 
+    public function search(Request $request)
+{
+    $q = $request->get('q', '');
+    $profesionales = Profesional::where('nom', 'like', "%{$q}%")
+                        ->orWhere('cognom', 'like', "%{$q}%")
+                        ->limit(20)
+                        ->get();
+    return response()->json($profesionales);
+}
+
+
+
+
 }
