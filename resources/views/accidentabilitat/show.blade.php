@@ -60,7 +60,7 @@
                 <h3 class="font-semibold text-gray-700">Durada de la baixa</h3>
                 <p class="text-gray-600 mt-1">
                     @if($accident->durada)
-                        {{ $accident->durada }} dies
+                        {{ $accident->durada }} 
                     @else
                         Sense baixa
                     @endif
