@@ -88,22 +88,78 @@
 
 <!-- Script de búsqueda -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const input = document.getElementById('searchInput');
-        const table = document.getElementById('profesionalTable').getElementsByTagName('tbody')[0];
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('searchInput');
+    const tableBody = document.querySelector('#profesionalTable tbody');
+    const ICON_SPRITE = '/icons/sprite.svg';
 
-        input.addEventListener('keyup', function() {
-            const filter = input.value.toLowerCase();
-            const rows = table.getElementsByTagName('tr');
+    function renderEstat(estat) {
+        let colorClass = 'bg-gray-200 text-gray-800';
+        let text = estat;
 
-            for (let i = 0; i < rows.length; i++) {
-                const nomCell = rows[i].getElementsByTagName('td')[1];
-                if (nomCell) {
-                    const nomText = nomCell.textContent || nomCell.innerText;
-                    rows[i].style.display = nomText.toLowerCase().includes(filter) ? '' : 'none';
+        switch (estat) {
+            case 'actiu':
+                colorClass = 'bg-green-200 text-green-800';
+                text = 'Actiu';
+                break;
+            case 'suplencia habitual':
+                colorClass = 'bg-green-200 text-green-800';
+                text = 'Suplencia habitual';
+                break;
+            case 'baixa':
+                colorClass = 'bg-red-200 text-red-800';
+                text = 'Baixa';
+                break;
+        }
+
+        return `<span class="px-2 py-1 rounded-full ${colorClass}">${text}</span>`;
+    }
+
+    input.addEventListener('input', function() {
+        const query = input.value.trim();
+
+        fetch(`/profesionales/search?q=${encodeURIComponent(query)}`)
+            .then(res => res.json())
+            .then(profesionales => {
+                tableBody.innerHTML = '';
+
+                if (!profesionales.length) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="8" class="text-center text-gray-500 py-4">
+                                No se encontraron profesionales
+                            </td>
+                        </tr>
+                    `;
+                    return;
                 }
-            }
-        });
+
+                profesionales.forEach((p, i) => {
+                    tableBody.innerHTML += `
+                        <tr class="hover:bg-orange-50 cursor-pointer"
+                            onclick="window.location='/profesional/${p.id}'">
+                            <td class="px-6 py-4">${i + 1}</td>
+                            <td class="px-6 py-4 font-semibold">${p.nom}</td>
+                            <td class="px-6 py-4">${p.cognom}</td>
+                            <td class="px-6 py-4">${p.telefon || ''}</td>
+                            <td class="px-6 py-4">${p.email || ''}</td>
+                            <td class="px-6 py-4">${p.adreça || ''}</td>
+                            <td class="px-6 py-4">${renderEstat(p.estat)}</td>
+                            <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                <a href="/profesional/${p.id}/edit"
+                                   class="text-orange-400 hover:text-orange-500"
+                                   title="Editar">
+                                    <svg class="h-6 w-6">
+                                        <use href="${ICON_SPRITE}#icon-edit"></use>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                });
+            })
+            .catch(err => console.error('Error en búsqueda:', err));
     });
+});
 </script>
 @endsection

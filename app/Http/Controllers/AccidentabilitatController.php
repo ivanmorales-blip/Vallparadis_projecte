@@ -98,7 +98,7 @@ class AccidentabilitatController extends Controller
         $accident = Accidentabilitat::findOrFail($id);
 
         $validated = $request->validate([
-            'tipus' => 'required|in:Sense_baixa,Amb_baixa',
+            'tipus' => 'required|in:sense_baixa,amb_baixa',
             'data' => 'required|date',
             'context' => 'required|string',
             'descripcio' => 'required|string',

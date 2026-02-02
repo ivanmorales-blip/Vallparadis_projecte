@@ -22,6 +22,7 @@ use App\Http\Controllers\{
     External_ContactsController,
     serveis_adicionalsController,
     AccidentabilitatController,
+    DocumentacioprofesionalController,
 };
 
 /*
@@ -65,6 +66,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     */
     Route::resource('profesional', ProfesionalController::class);
     Route::patch('profesional/{profesional}/active', [ProfesionalController::class, 'active'])->name('profesional.active');
+    Route::get('/profesionales/search', [ProfesionalController::class, 'search'])->name('profesionales.search');
+
 
     /*
     | Proyectos / Comisiones
@@ -342,6 +345,9 @@ Route::put('external-contacts/{id}', [External_ContactsController::class, 'updat
     // web.php
     Route::get('projectes_comissions/{projectes_comission}', [Projectes_comissionsController::class, 'show'])
         ->name('projectes_comissions.show');
+
+    Route::get('training/{training}', [TrainingController::class, 'show'])
+        ->name('training.show');
 
     Route::get('training/{training}', [TrainingController::class, 'show'])
         ->name('training.show');
