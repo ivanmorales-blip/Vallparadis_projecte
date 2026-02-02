@@ -14,6 +14,7 @@ class TemaPendent extends Model
     protected $fillable = [
         'centre_id',
         'data_obertura',
+        'tema_pendent',
         'professional_afectat',
         'professional_registra',
         'derivat_a',
@@ -28,7 +29,6 @@ class TemaPendent extends Model
         // Ajusta 'Profesional' al nombre de tu modelo de profesionales
         return $this->belongsTo(Profesional::class, 'professional_afectat');
     }
-
 
     public function professionalRegistra()
     {

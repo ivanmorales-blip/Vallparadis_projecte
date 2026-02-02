@@ -16,6 +16,7 @@ class Tracking extends Model
         'id_profesional',
         'id_profesional_registrador',
         'id_general_services',
+        'id_human_resource',
         'id_manteniment',
         'estat'
     ];
@@ -29,7 +30,10 @@ class Tracking extends Model
     {
         return $this->belongsTo(Profesional::class, 'id_profesional_registrador');
     }
-
+    public function humanResource()
+    {
+        return $this->belongsTo(TemaPendent::class, 'id_human_resource');
+    }
     /**
      * Tracking pertenece a un servicio general
      */

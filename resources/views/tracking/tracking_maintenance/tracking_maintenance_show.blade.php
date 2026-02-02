@@ -57,7 +57,7 @@
             </a>
 
             <a href="{{ route('tracking.maintenance.edit', $tracking->id) }}"
-               class="px-5 py-2 bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700 transition font-medium">
+               class="px-5 py-2 bg-indio-600 text-white rounded-xl shadow hover:bg-indigo-700 transition font-medium">
                 Editar Seguiment
             </a>
         </div>

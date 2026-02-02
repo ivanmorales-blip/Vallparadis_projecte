@@ -60,7 +60,7 @@
                     href="{{ route('tracking.maintenance.create', $manteniment->id) }}"
                     class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition"
                 >
-                    ➕ Donar d'alta Seguiment
+                    Donar d'alta Seguiment
                 </a>
             </div>
         </div>

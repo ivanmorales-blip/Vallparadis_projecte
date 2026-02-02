@@ -235,15 +235,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
     
-        /*
+    /*
     | Recursos Humans
     */
-// Listado de temes pendents por centro
+
+    // Listado de temes pendents por centro
     Route::get('human_resources/{centre_id}', [HumanResourcesController::class, 'index'])
         ->name('human_resources.index');
 
-    // Mostrar un tema pendent
-    Route::get('human_resources/show/{id}', [HumanResourcesController::class, 'show'])
+    // Mostrar un tema pendent 
+    Route::get('human_resources/show/{tema}', [HumanResourcesController::class, 'show'])
         ->name('human_resources.show');
 
     // Formulario de creación
@@ -265,6 +266,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Activar / desactivar tema pendent
     Route::patch('human_resources/{tema}/active', [HumanResourcesController::class, 'toggleActive'])
         ->name('human_resources.active');
+
 
     
     /*

@@ -12,14 +12,10 @@
             @csrf
 
             <!-- Tema Pendent visual -->
-            <div class="space-y-1">
-                <label class="block text-gray-700 font-semibold">
-                    Tema Pendent
-                </label>
-                <input type="text"
-                       value="{{ optional($humanResource)->nom ?? optional($humanResource)->tipus ?? '—' }}"
-                       disabled
-                       class="w-full px-4 py-2 border rounded-2xl bg-gray-100 text-gray-700 cursor-not-allowed">
+            <div>
+                <label class="block text-gray-700 font-semibold">Tema Pendent</label>
+                <input type="text" value="{{ $humanResource->tema_pendent ?? '' }}" disabled
+                       class="w-full px-4 py-2 border rounded-2xl bg-gray-100 cursor-not-allowed">
             </div>
 
             <!-- Tema Pendent real (hidden) -->

@@ -32,6 +32,17 @@
                            class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
                 </div>
             </div>
+            <!-- Tema Pendent -->
+            <div>
+                <label for="tema_pendent" class="block text-gray-700 font-semibold mb-2">
+                    Tema Pendent
+                </label>
+                <input id="tema_pendent"
+                       name="tema_pendent"
+                       type="text"
+                       required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
+            </div>
 
             <!-- Professional Afectat -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

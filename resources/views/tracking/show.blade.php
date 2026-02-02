@@ -56,10 +56,6 @@
                 </div>
             </div>
         </div>
-        <a href="{{ route('tracking.human_resource.create', $tema->id_human_resource) }}"
-            class="px-4 py-2 bg-orange-100 text-orange-700 rounded-xl font-medium shadow hover:bg-orange-200 transition">
-            Donar d'alta Seguiment
-        </a>
 
         <!-- Comentari -->
         <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 mb-8 shadow-sm hover:shadow-md transition">
@@ -74,10 +70,7 @@
                 Tornar
             </a>
 
-            <a href="{{ route('tracking.profesional.edit', $tracking->id) }}" 
-               class="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-2xl shadow-lg transition-all transform hover:-translate-y-0.5 hover:scale-105 text-center flex-1">
-                Editar
-            </a>
+
         </div>
 
     </div>

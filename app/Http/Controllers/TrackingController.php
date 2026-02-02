@@ -153,7 +153,7 @@ class TrackingController extends Controller
         // Cargar relaciones necesarias
         $tracking->load(['profesional', 'registrador']);
 
-        return view('tracking.tracking_general_service.show', compact('tracking'));
+        return view('tracking.tracking_general_service_show', compact('tracking'));
     }
 
 
@@ -291,10 +291,12 @@ class TrackingController extends Controller
             'id_human_resource' => 'required|exists:temes_pendents,id',
         ]);
 
-        Tracking::create($validated);
+        // Guardamos el seguimiento
+        $tracking = Tracking::create($validated);
 
-        return redirect()->route('human_resources.show', $validated['id_human_resource'])
-                         ->with('success', 'Seguiment creat correctament.');
+        // Redirigimos al show del TemaPendent
+        return redirect()->route('tracking.human_resource.show', $tracking->id)
+                        ->with('success', 'Seguiment creat correctament.');
     }
 
     /**
@@ -302,11 +304,12 @@ class TrackingController extends Controller
      */
     public function showForHumanResource(Tracking $tracking)
     {
+        // Cargamos el seguimiento con profesional y registrador
         $tracking->load(['profesional', 'registrador']);
 
-        // Traemos el TemaPendent asociado para mostrar información completa
-        $tema = TemaPendent::with('profesional', 'professionalRegistra', 'derivatA', 'trackings')
-                           ->findOrFail($tracking->id_human_resource);
+        // Cargamos el tema pendent asociado y sus trackings
+        $tema = TemaPendent::with(['profesional', 'professionalRegistra', 'derivatA', 'trackings.profesional'])
+                        ->findOrFail($tracking->id_human_resource);
 
         return view('tracking.tracking_human_resource.tracking_human_resource_show', compact('tracking', 'tema'));
     }

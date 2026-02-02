@@ -62,17 +62,6 @@
             </div>
 
             <div>
-                <label for="professionals" class="block text-sm font-medium text-gray-700 mb-1">Assignació de professionals</label>
-                <select id="professionals" name="professionals[]" multiple
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
-                    @foreach($professionals as $prof)
-                        <option value="{{ $prof->id }}">{{ $prof->nom }} {{ $prof->cognom }}</option>
-                    @endforeach
-                </select>
-                <p class="text-xs text-gray-500 mt-1">Mantén premut Ctrl o Cmd per seleccionar diversos.</p>
-            </div>
-
-            <div>
                 <label for="estat" class="block text-sm font-medium text-gray-700 mb-1">Estat</label>
                 <select id="estat" name="estat" class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-400">
                     <option value="1">Actiu</option>
