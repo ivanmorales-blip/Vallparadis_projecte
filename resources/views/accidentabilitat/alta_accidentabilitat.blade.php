@@ -83,6 +83,33 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition">
             </div>
 
+            <!-- Signatura -->
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2">
+                    Signatura del professional
+                </label>
+            
+                <div class="border border-gray-300 rounded-2xl p-4 bg-gray-50">
+                    <canvas id="signatureCanvas"
+                            width="600"
+                            height="200"
+                            class="bg-white rounded-xl border border-gray-200 w-full cursor-crosshair">
+                    </canvas>
+            
+                    <div class="flex justify-between items-center mt-3">
+                        <p class="text-xs text-gray-400">
+                            Signa amb el ratolí o el dit
+                        </p>
+            
+                        <button type="button"
+                                onclick="clearSignature()"
+                                class="px-4 py-2 text-sm bg-gray-200 hover:bg-gray-300 rounded-xl transition">
+                            Esborrar signatura
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Botons -->
             <div class="flex justify-end space-x-4 pt-6 border-t mt-6">
                 <a href="{{ route('menu') }}"
