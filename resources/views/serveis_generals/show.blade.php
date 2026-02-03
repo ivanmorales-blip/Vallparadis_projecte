@@ -57,8 +57,7 @@
             @else
                 <div class="space-y-3 max-h-[450px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-orange-400 scrollbar-track-gray-200">
                     @foreach($general_service->trackings as $tracking)
-                        <a href="{{ route('tracking.general_service.show', $tracking->id) }}"
-                           class="block p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative text-sm no-underline hover:no-underline">
+                        <div class="block p-4 bg-white rounded-xl border border-gray-200 shadow-sm relative text-sm">
 
                             <!-- Header tarjeta -->
                             <div class="flex justify-between items-center mb-2">
@@ -79,7 +78,7 @@
                                 {{ $tracking->estat ? 'Actiu' : 'Inactiu' }}
                             </span>
 
-                        </a>
+                        </div>
                     @endforeach
                 </div>
             @endif

@@ -22,25 +22,25 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-gray-700">
             <div class="space-y-3">
                 <div>
-                    <span class="font-semibold">📅 Data:</span>
+                    <span class="font-semibold">Data:</span>
                     <span>{{ $evaluation->data instanceof \Carbon\Carbon ? $evaluation->data->format('d/m/Y') : $evaluation->data }}</span>
                 </div>
                 <div>
-                    <span class="font-semibold">👤 Professional:</span>
+                    <span class="font-semibold">Professional:</span>
                     <span>{{ $evaluation->profesional->nom ?? '—' }} {{ $evaluation->profesional->cognom ?? '' }}</span>
                 </div>
                 <div>
-                    <span class="font-semibold">🧑‍🏫 Avaluador:</span>
+                    <span class="font-semibold">Avaluador:</span>
                     <span>{{ $evaluation->avaluador->nom ?? '—' }} {{ $evaluation->avaluador->cognom ?? '' }}</span>
                 </div>
             </div>
             <div class="space-y-3">
                 <div>
-                    <span class="font-semibold">📊 Mitjana:</span>
+                    <span class="font-semibold">Mitjana:</span>
                     <span class="text-lg font-bold text-orange-500">{{ $evaluation->sumatori ?? '—' }}</span>
                 </div>
                 <div>
-                    <span class="font-semibold">📁 Arxiu:</span>
+                    <span class="font-semibold">Arxiu:</span>
                     @if($evaluation->arxiu)
                         <a href="{{ asset('storage/' . $evaluation->arxiu) }}" target="_blank"
                            class="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow transition">
@@ -55,16 +55,16 @@
 
         <!-- Preguntas -->
         <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Respostes</h2>
+            <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Respostes del qüestionari</h2>
             <div class="overflow-x-auto rounded-xl border border-gray-200">
                 <table class="min-w-full text-sm text-gray-700">
                     <thead class="bg-gray-100 text-center font-semibold">
                         <tr>
                             <th class="px-4 py-2 text-left">Aspecte</th>
-                            <th>Gens</th>
-                            <th>Poc</th>
-                            <th>Bastant</th>
-                            <th>Molt</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,24 +87,24 @@
                                 "La quantitat de treball que desenvolupa en relació amb el treball encomanat és adequada",
                                 "Realitza les tasques amb la qualitat esperada i/o necessària",
                                 "Expressa amb claredat i ordre els aspectes rellevants de la informació",
-                                "Disposa dels coneixements necessaris per a desenvolupar les tasques requerides del lloc de treball",
+                                "Disposa dels coneixements necessaris per desenvolupar les tasques requerides del lloc de treball",
                                 "Mostra interès i motivació envers el seu lloc de treball",
                                 "La seva entrada i permanència en el lloc de treball es duu a terme sense retards o absències no justificades"
                             ];
                         @endphp
                         @foreach($questions as $index => $text)
                             @php
-                                $field = 'q'.$index;
-                                $selected = $evaluation->$field ?? 0;
+                                $field = 'pregunta'.($index+1);
+                                $selected = (int) $evaluation->$field;
                             @endphp
                             <tr class="{{ $index % 2 == 0 ? 'bg-gray-50' : 'bg-white' }}">
-                                <td class="px-4 py-2">{{ $text }}</td>
+                                <td class="px-4 py-2 text-left">{{ $text }}</td>
                                 @for($i=1; $i<=4; $i++)
                                     <td class="text-center">
                                         @if($selected == $i)
-                                            <span class="text-green-600 font-bold text-xl">✔️</span>
+                                            <span class="inline-block w-6 h-6 bg-green-500 text-white rounded-full font-bold leading-6">✔</span>
                                         @else
-                                            <span class="text-gray-300">—</span>
+                                            <span class="inline-block w-6 h-6 text-gray-300">—</span>
                                         @endif
                                     </td>
                                 @endfor
@@ -125,9 +125,10 @@
         <div class="flex flex-wrap justify-start gap-4">
             <a href="{{ route('evaluation.index') }}"
                class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl shadow transition">
-                ⬅️ Tornar
+                ← Tornar
             </a>
         </div>
+
     </div>
 </div>
 @endsection

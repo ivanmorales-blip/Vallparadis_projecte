@@ -61,8 +61,9 @@ class EvaluationController extends Controller
     }
 
 
-        public function store(Request $request)
+   public function store(Request $request)
     {
+        // Validación
         $validated = $request->validate([
             'data' => 'required|date',
             'sumatori' => 'required|numeric',
@@ -70,6 +71,7 @@ class EvaluationController extends Controller
             'arxiu' => 'nullable|file',
             'id_profesional' => 'required|exists:profesional,id',
             'id_profesional_avaluador' => 'nullable|exists:profesional,id',
+            // Preguntas 1 a 20
             'pregunta1' => 'nullable|integer',
             'pregunta2' => 'nullable|integer',
             'pregunta3' => 'nullable|integer',
@@ -92,6 +94,7 @@ class EvaluationController extends Controller
             'pregunta20' => 'nullable|integer',
         ]);
 
+        // Preparar datos para guardar
         $evaluationData = [
             'data' => $validated['data'],
             'sumatori' => $validated['sumatori'],
@@ -105,12 +108,13 @@ class EvaluationController extends Controller
             $evaluationData['arxiu'] = $request->file('arxiu')->store('evaluations', 'public');
         }
 
-        // Guardar preguntas q0..q19 basadas en input pregunta1..pregunta20
+        // Guardar preguntas 1 a 20 directamente en el modelo
         for ($i = 1; $i <= 20; $i++) {
-            $evaluationData['q'.($i-1)] = $request->input('pregunta'.$i);
+            $evaluationData['pregunta'.$i] = (int) $request->input('pregunta'.$i, 0);
         }
 
-        Evaluation::create($evaluationData);
+        // Crear evaluación
+        $evaluation = Evaluation::create($evaluationData);
 
         // Redirigir a la ficha del profesional si venimos desde ella
         $returnTo = $request->input('return_to_profesional') ?: $request->input('id_profesional');
@@ -122,6 +126,7 @@ class EvaluationController extends Controller
         return redirect()->route('menu')
             ->with('success', 'Avaluació guardada correctament.');
     }
+
 
     /**
      * Display the specified resource.

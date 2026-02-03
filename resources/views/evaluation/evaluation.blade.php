@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Assoleix els objectius, esforçant-se per aconseguir el resultat esperat",
         "La quantitat de treball que desenvolupa en relació amb el treball encomanat és adequada",
         "Realitza les tasques amb la qualitat esperada i/o necessària",
-        "Expressa amb claredat y ordre els aspectes rellevants",
+        "Expressa amb claredat i ordre els aspectes rellevants",
         "Disposa dels coneixements necessaris per desenvolupar les tasques",
         "Mostra interès i motivació envers el seu lloc de treball",
         "La seva entrada i permanència es duu sense retards"
@@ -145,6 +145,14 @@ document.addEventListener("DOMContentLoaded", () => {
     QUESTIONS.forEach((q, i) => {
         const field = 'pregunta' + (i+1);
 
+        // Crear input hidden inicial con valor 0
+        let input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = field;
+        input.value = 0;
+        document.querySelector('form').appendChild(input);
+
+        // Crear fila de la tabla
         const tr = document.createElement("tr");
         tr.classList.add(i % 2 === 0 ? 'bg-gray-50' : 'bg-white');
 
@@ -159,7 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     </button>
                 </td>`).join('')}
         `;
-
         tbody.appendChild(tr);
     });
 
@@ -178,13 +185,9 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.classList.remove('bg-white','text-gray-700','border-gray-300');
 
             let input = document.querySelector(`input[name="${field}"]`);
-            if(!input){
-                input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = field;
-                document.querySelector('form').appendChild(input);
+            if(input){
+                input.value = value;
             }
-            input.value = value;
 
             updateSum();
         });

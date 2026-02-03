@@ -40,12 +40,12 @@
         <!-- Description and file -->
         <div class="mb-8">
             <div class="space-y-4 p-5 bg-gray-50 rounded-xl border border-gray-200 shadow-inner">
-            @if (empty($manteniment->descripcio))
-                <p class="text-gray-500 italic">No hi ha una descripció assignada a aquest manteniment.</p>
-            @else
-                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Descripció</h2>
-                <p class="text-gray-700 mb-4">{{ $manteniment->descripcio }}</p>
-            @endif
+                @if (empty($manteniment->descripcio))
+                    <p class="text-gray-500 italic">No hi ha una descripció assignada a aquest manteniment.</p>
+                @else
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-2">Descripció</h2>
+                    <p class="text-gray-700 mb-4">{{ $manteniment->descripcio }}</p>
+                @endif
             </div>
         </div>
 
@@ -72,38 +72,34 @@
                 <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b border-gray-300 pb-2">Seguiments</h2>
 
                 <ul class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
-            @forelse($manteniment->trackings as $tracking)
-        <li 
-            onclick="window.location='{{ route('tracking.show', $tracking->id) }}'"
-            class="p-4 bg-gray-50 rounded-xl border border-gray-200 hover:bg-orange-100 transition cursor-pointer"
-        >
-            <div class="space-y-1">
-                <div class="font-semibold text-orange-600 text-lg">
-                    {{ $tracking->tema ?? 'Seguiment sense títol' }}
-                </div>
+                    @forelse($manteniment->trackings as $tracking)
+                        <li 
+                            class="p-4 bg-gray-50 rounded-xl border border-gray-200"
+                        >
+                            <div class="space-y-1">
+                                <div class="font-semibold text-orange-600 text-lg">
+                                    {{ $tracking->tema ?? 'Seguiment sense títol' }}
+                                </div>
 
-                <div class="text-sm text-gray-500">
-                    {{ \Carbon\Carbon::parse($tracking->data)->format('d/m/Y') }}
-                </div>
+                                <div class="text-sm text-gray-500">
+                                    {{ \Carbon\Carbon::parse($tracking->data)->format('d/m/Y') }}
+                                </div>
 
-                <div class="text-sm text-gray-700">
-                    <span class="font-semibold">Tipus:</span> {{ $tracking->tipus ?? '—' }}
-                </div>
-
-                <div class="text-sm text-gray-700">
-                    <span class="font-semibold">Avaluador:</span>
-                    {{ optional($tracking->registrador)->nom }}
-                    {{ optional($tracking->registrador)->cognom }}
-                </div>
-            </div>
-        </li>
-    @empty
-        <p class="text-gray-500 italic">
-            Encara no hi ha seguiments registrats.
-        </p>
-    @endforelse
-</ul>
-
+                                <div class="text-sm text-gray-700">
+                                    <span class="font-semibold">Tipus:</span> {{ $tracking->tipus ?? '—' }}
+                                </div>
+                                <div class="text-sm text-gray-700">
+                                    <span class="font-semibold">comentari:</span> {{ $tracking->comentari ?? '—' }}
+                                </div>
+                                
+                            </div>
+                        </li>
+                    @empty
+                        <p class="text-gray-500 italic">
+                            Encara no hi ha seguiments registrats.
+                        </p>
+                    @endforelse
+                </ul>
             </div>
 
         </div>
